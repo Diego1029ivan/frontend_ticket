@@ -9,7 +9,7 @@ import { InventarioService } from './services/inventario.service';
 })
 export class AppComponent implements OnInit {
   public urlCodigoBarra: string =
-    'http://localhost/backend_ticket/inventarioBarra';
+    'http://localhost:8012/backend_ticket/inventarioBarra';
   constructor(private inventarioService: InventarioService) {}
   inventarios: Inventario[] = [];
   ngOnInit(): void {
