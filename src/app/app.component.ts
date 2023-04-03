@@ -16,8 +16,6 @@ export class AppComponent implements OnInit {
     this.inventarioService.getInventario().subscribe((inventario) => {
       this.inventarios = inventario;
     });
-    //mostrar el inventario por codigo de barras
   }
   title = 'front_ticket';
-  mostrarCodigoBarra(idCogoBarra: string) {}
 }

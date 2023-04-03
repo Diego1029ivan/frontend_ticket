@@ -9,8 +9,9 @@
         <th scope="col">fecha</th>
         <th scope="col">codigo</th>
         <th scope="col">correlativo</th>
-        <th scope="col">Codigo Barra</th>
-        <th scope="col">Codigo QR</th>
+        <th scope="col">Imprimir</th>
+        <th scope="col">Imprimir2</th>
+
       </tr>
 
     </thead>
@@ -22,8 +23,17 @@
         <td>{{inventario.fecha}}</td>
         <td>{{inventario.codigo}}</td>
         <td>{{inventario.correlativo}}</td>
-        <td><img src="http://localhost:8012/backend_ticket/inventarioBarra/{{inventario.codigo}}"></td>
-        <td><img src="http://localhost:8012/backend_ticket/inventarioQR/{{inventario.codigo}}"></td>
+       
+        <td><a type="button" class="btn btn-primary"
+            href="http://localhost/backend_ticket/ticketPDF/{{inventario.codigo}}" target="_blank">
+            Imprimir
+          </a></td>
+        <td><a type="button" class="btn btn-primary"
+            href="http://localhost/backend_ticket/ticketapi/{{inventario.codigo}}" target="_blank">
+            Imprimir
+          </a></td>
+
+
       </tr>
     </tbody>
   </table>
