@@ -27,4 +27,11 @@ export class InventarioService {
   getinventarioBarra(barra: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}inventarioBarra/${barra}`);
   }
+  getinventarioBarraExcel(barra: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}inventarioBarraExcel/${barra}`);
+  }
+
+  getticketPDF(codigo: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}ticketPDFExcel/${codigo}`);
+  }
 }

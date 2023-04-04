@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { InventarioService } from 'src/app/services/inventario.service';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -13,7 +15,12 @@ export class InventarioOfflineComponent {
   collectionSize:number=10
   tableData:any=[];
   tablaParcial:any=[];
+  codigoPatrimoniales:any=[]
+  fechaPatrimoniales:any=[]
+  codigoImpre:any=[]
   
+  constructor(private inventarioService: InventarioService,private http: HttpClient) {}
+
   onFileChange(event: any) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -26,7 +33,14 @@ export class InventarioOfflineComponent {
       this.tablaParcial=this.refreshInventario();
       this.collectionSize=tableData.length;
       console.log(tableData);
-      
+      for (let i = 0; i < tableData.length; i++) {
+        this.codigoPatrimoniales.push(this.tableData[i][1]);
+        this.fechaPatrimoniales.push(this.tableData[i][6])
+        
+      }
+      this.codigoImpre=this.codigoPatrimoniales;
+      console.log(this.codigoImpre)
+      console.log(this.fechaPatrimoniales)
       
       
     };
@@ -41,4 +55,13 @@ export class InventarioOfflineComponent {
 		);
     return this.tablaParcial
 	}
+
+  // imprimirPDF(codigo:string){
+  //   console.log(codigo)
+  //   this.inventarioService.getticketPDF(codigo).subscribe((response)=>{
+  //     console.log(response)
+  //     window.open(response['url'], '_blank');
+  //   });
+    
+  // }
 }
