@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8012/backend_ticket/',
+  baseUrl: 'http://localhost',
 };
 
 /*

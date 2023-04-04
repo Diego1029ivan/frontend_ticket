@@ -15,8 +15,7 @@ import { Inventario } from '../interfaces/inventario';
   providedIn: 'root',
 })
 export class InventarioService {
-  private baseUrl: string = environment.baseUrl;
-  private apiUrl = 'http://tu-api.com/generar-pdf';
+  private baseUrl: string = environment.baseUrl + '/backend_ticket/';
 
   constructor(private http: HttpClient) {}
   getInventario(): Observable<Inventario[]> {
