@@ -7,15 +7,6 @@ import { InventarioService } from './services/inventario.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
-  public urlCodigoBarra: string =
-    'http://localhost:8012/backend_ticket/inventarioBarra';
-  constructor(private inventarioService: InventarioService) {}
-  inventarios: Inventario[] = [];
-  ngOnInit(): void {
-    this.inventarioService.getInventario().subscribe((inventario) => {
-      this.inventarios = inventario;
-    });
-  }
-  title = 'front_ticket';
+export class AppComponent {
+ 
 }

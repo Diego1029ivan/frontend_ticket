@@ -1,0 +1,36 @@
+<p>inventario-offline works!</p>
+<div class="container overflow-auto">
+    <form>
+        <input type="file" (change)="onFileChange($event)" accept=".xlsx">
+    </form>
+      <table class="table table-striped" *ngIf="tableData[0]?.length > 0">
+        
+        <thead>
+          <tr>
+            <th scope="col" *ngFor="let header of tableData[0]">{{ header }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of tablaParcial.slice(1)">
+            <td *ngFor="let cell of row">{{ cell }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="d-flex justify-content-between p-2" *ngIf="tableData[0]?.length > 0">
+            
+        <ngb-pagination
+            [collectionSize]="collectionSize"
+            [(page)]="page"
+            [pageSize]="pageSize"
+            (pageChange)="refreshInventario()"
+        >
+        </ngb-pagination>
+
+        <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshInventario()">
+            <option [ngValue]="2">2 items per page</option>
+            <option [ngValue]="4">4 items per page</option>
+            <option [ngValue]="6">6 items per page</option>
+        </select>
+      </div>
+</div>
