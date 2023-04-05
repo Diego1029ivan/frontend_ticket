@@ -11,14 +11,16 @@ import * as XLSX from 'xlsx';
 export class InventarioOfflineComponent {
 
   page:number=1
-  pageSize:number=4
+  pageSize:number=10
   collectionSize:number=10
   tableData:any=[];
   tablaParcial:any=[];
+
+  tablaParcial2:any=[];
   codigoPatrimoniales:any=[]
   fechaPatrimoniales:any=[]
   codigoImpre:any=[]
-  
+  tablaReducida:any= [];
   constructor(private inventarioService: InventarioService,private http: HttpClient) {}
 
   onFileChange(event: any) {
@@ -31,8 +33,11 @@ export class InventarioOfflineComponent {
       const tableData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
       this.tableData=tableData;
       this.tablaParcial=this.refreshInventario();
+      
+      this.tablaParcial2=this.refreshInventarioReducido();
+      console.log(this.tablaParcial2,'tabla2')
       this.collectionSize=tableData.length;
-      console.log(tableData);
+     
       for (let i = 0; i < tableData.length; i++) {
         this.codigoPatrimoniales.push(this.tableData[i][1]);
         this.fechaPatrimoniales.push(this.tableData[i][6])
@@ -43,6 +48,13 @@ export class InventarioOfflineComponent {
       console.log(this.fechaPatrimoniales)
       
       
+      for (let i = 1; i < this.tableData.length; i++) {
+        this.tablaReducida.push({codigo: this.tableData[i][1], 
+                                 fecha: this.tableData[i][6],
+                                 nombre: this.tableData[i][2],
+                                 estado: this.tableData[i][9]});
+      }
+      console.log( this.tablaReducida)
     };
     reader.readAsArrayBuffer(file);
     
@@ -55,6 +67,15 @@ export class InventarioOfflineComponent {
 		);
     return this.tablaParcial
 	}
+
+  public refreshInventarioReducido() {
+		this.tablaParcial2 = this.tablaReducida.slice(
+			(this.page - 1) * this.pageSize,
+			(this.page - 1) * this.pageSize + this.pageSize+1,
+		);
+    return this.tablaParcial2
+	}
+
 
   // imprimirPDF(codigo:string){
   //   console.log(codigo)
