@@ -1,9 +1,10 @@
 <p>inventario-offline works!</p>
+<form class="container">
+  <input type="file" class="form-control" (change)="onFileChange($event)" accept=".xlsx">
+  
+</form>
 <div class="container overflow-auto">
-    <form>
-        <input type="file" class="form-control" (change)="onFileChange($event)" accept=".xlsx">
-        
-    </form>
+    
     
       <table class="table table-striped" *ngIf="tableData[0]?.length > 0">
         
@@ -16,7 +17,7 @@
         <tbody>
           
           <tr *ngFor="let row of tablaParcial.slice(1)">
-            <td class="icono-cursor text-center"><i class="fa-solid fa-print"></i></td>
+            <td class=" text-center celda-icono"><a href="http://localhost:8012/backend_ticket/ticketPDFExcel/{{row[1]}}/{{row[6]}}" target="_blank"><i class="fa-solid fa-print icono-cursor" ></i></a></td>
             <td *ngFor="let cell of row">{{ cell }}</td>
           </tr>
         </tbody>
