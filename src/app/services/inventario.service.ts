@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PipeTransform } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { map, catchError } from 'rxjs/operators';
+
+import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 
 import {
   HttpClient,
@@ -9,15 +10,23 @@ import {
   HttpHeaders,
   HttpParams,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { Inventario } from '../interfaces/inventario';
+
+
 @Injectable({
   providedIn: 'root',
 })
 export class InventarioService {
+
+  constructor(
+      private http: HttpClient
+  )
+  {}
+
+
   private baseUrl: string = environment.baseUrl + '/backend_ticket/';
 
-  constructor(private http: HttpClient) {}
   getInventario(): Observable<Inventario[]> {
     return this.http.get<Inventario[]>(`${this.baseUrl}inventario`);
   }
