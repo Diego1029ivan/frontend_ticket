@@ -1,88 +1,62 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { InventarioService } from 'src/app/services/inventario.service';
+import { environment } from 'src/environments/environment';
 import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-inventario-offline',
   templateUrl: './inventario-offline.component.html',
-  styleUrls: ['./inventario-offline.component.css']
+  styleUrls: ['./inventario-offline.component.css'],
 })
 export class InventarioOfflineComponent {
+  public urlCodigoBarra: string = environment.baseUrl;
+  page: number = 1;
+  pageSize: number = 10;
+  collectionSize: number = 0;
+  data: any[] = [];
 
-  page:number=1
-  pageSize:number=10
-  collectionSize:number=10
-  tableData:any=[];
-  tablaParcial:any=[];
+  tablaParcial: any = [];
 
-  tablaParcial2:any=[];
-  codigoPatrimoniales:any=[]
-  fechaPatrimoniales:any=[]
-  codigoImpre:any=[]
-  tablaReducida:any= [];
-  constructor(private inventarioService: InventarioService,private http: HttpClient) {}
+  file: File | null = null;
 
-  onFileChange(event: any) {
-    const file = event.target.files[0];
+  header: string[] = [];
+  constructor(
+    private inventarioService: InventarioService,
+    private http: HttpClient
+  ) {}
+
+  onFileChange(ev: any) {
+    let workBook: any = null;
+    let jsonData: any = null;
     const reader = new FileReader();
-    reader.onload = (e: any) => {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: 'array' });
-      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-      const tableData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-      this.tableData=tableData;
-      this.tablaParcial=this.refreshInventario();
-      
-      this.tablaParcial2=this.refreshInventarioReducido();
-      console.log(this.tablaParcial2,'tabla2')
-      this.collectionSize=tableData.length;
-     
-      for (let i = 0; i < tableData.length; i++) {
-        this.codigoPatrimoniales.push(this.tableData[i][1]);
-        this.fechaPatrimoniales.push(this.tableData[i][6])
-        
-      }
-      this.codigoImpre=this.codigoPatrimoniales;
-      console.log(this.codigoImpre)
-      console.log(this.fechaPatrimoniales)
-      
-      
-      for (let i = 1; i < this.tableData.length; i++) {
-        this.tablaReducida.push({codigo: this.tableData[i][1], 
-                                 fecha: this.tableData[i][6],
-                                 nombre: this.tableData[i][2],
-                                 estado: this.tableData[i][9]});
-      }
-      console.log( this.tablaReducida)
+    const file = ev.target.files[0];
+    reader.onload = (event) => {
+      const data = reader.result;
+      workBook = XLSX.read(data, { type: 'binary' });
+      jsonData = workBook.SheetNames.reduce((initial: any, name: any) => {
+        const sheet = workBook.Sheets[name];
+        initial[name] = XLSX.utils.sheet_to_json(sheet);
+        return initial;
+      }, {});
+      this.data = jsonData[Object.keys(jsonData)[0]];
+      this.header = Object.keys(this.data[0]);
+      // console.log(this.data.length);
+      // console.log(this.header);
+      this.collectionSize = this.data.length;
+
+      this.tablaParcial = this.data;
+      this.refreshInventario();
     };
-    reader.readAsArrayBuffer(file);
-    
+    reader.readAsBinaryString(file);
   }
 
   public refreshInventario() {
-		this.tablaParcial = this.tableData.slice(
-			(this.page - 1) * this.pageSize,
-			(this.page - 1) * this.pageSize + this.pageSize+1,
-		);
-    return this.tablaParcial
-	}
-
-  public refreshInventarioReducido() {
-		this.tablaParcial2 = this.tablaReducida.slice(
-			(this.page - 1) * this.pageSize,
-			(this.page - 1) * this.pageSize + this.pageSize+1,
-		);
-    return this.tablaParcial2
-	}
-
-
-  // imprimirPDF(codigo:string){
-  //   console.log(codigo)
-  //   this.inventarioService.getticketPDF(codigo).subscribe((response)=>{
-  //     console.log(response)
-  //     window.open(response['url'], '_blank');
-  //   });
-    
-  // }
+    this.data = this.tablaParcial
+      .map((country: any, i: any) => ({ id: i + 1, ...country }))
+      .slice(
+        (this.page - 1) * this.pageSize,
+        (this.page - 1) * this.pageSize + this.pageSize
+      );
+  }
 }

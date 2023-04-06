@@ -11,7 +11,13 @@ import { NgBoostrapModule } from './pages/ng-boostrap/ng-boostrap.module';
 
 @NgModule({
   declarations: [AppComponent, InventarioOfflineComponent, InventarioComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgbModule,NgBoostrapModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    NgbModule,
+    NgBoostrapModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
