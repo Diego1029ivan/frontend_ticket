@@ -3,10 +3,9 @@
   <input type="file" class="form-control" (change)="onFileChange($event)" accept=".xlsx">
 
 </form>
-<div class="container overflow-auto">
+<div class="container overflow-auto" *ngIf="data.length > 0">
 
-
-  <table class="table table-striped" *ngIf="data.length > 0">
+  <table class="table table-striped">
 
     <thead>
       <tr>
