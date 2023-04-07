@@ -19,7 +19,6 @@ export class InventarioOfflineComponent {
   tablaParcial: any = [];
 
   file: File | null = null;
-
   header: string[] = [];
   constructor(
     private inventarioService: InventarioService,
@@ -31,6 +30,17 @@ export class InventarioOfflineComponent {
     let jsonData: any = null;
     const reader = new FileReader();
     const file = ev.target.files[0];
+    const allowedExtensions = ['.xlsx', '.xls'];
+    const fileExtension = file.name
+      .substr(file.name.lastIndexOf('.'))
+      .toLowerCase();
+
+    if (!allowedExtensions.includes(fileExtension)) {
+      alert('Solo se permiten archivos de Excel (.xlsx o .xls)');
+      ev.target.value = '';
+      return;
+    }
+
     reader.onload = (event) => {
       const data = reader.result;
       workBook = XLSX.read(data, { type: 'binary' });
@@ -41,8 +51,6 @@ export class InventarioOfflineComponent {
       }, {});
       this.data = jsonData[Object.keys(jsonData)[0]];
       this.header = Object.keys(this.data[0]);
-      // console.log(this.data.length);
-      // console.log(this.header);
       this.collectionSize = this.data.length;
 
       this.tablaParcial = this.data;
