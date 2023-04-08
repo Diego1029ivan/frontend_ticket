@@ -9,6 +9,8 @@ import * as XLSX from 'xlsx';
   templateUrl: './inventario-offline.component.html',
   styleUrls: ['./inventario-offline.component.css'],
 })
+
+
 export class InventarioOfflineComponent {
   public urlCodigoBarra: string = environment.baseUrl;
   page: number = 1;
@@ -17,7 +19,7 @@ export class InventarioOfflineComponent {
   data: any[] = [];
 
   tablaParcial: any = [];
-
+  busqueda:string = '';
   file: File | null = null;
   header: string[] = [];
   constructor(
@@ -50,10 +52,12 @@ export class InventarioOfflineComponent {
         return initial;
       }, {});
       this.data = jsonData[Object.keys(jsonData)[0]];
+      
       this.header = Object.keys(this.data[0]);
       this.collectionSize = this.data.length;
 
       this.tablaParcial = this.data;
+      console.log(this.data)
       this.refreshInventario();
     };
     reader.readAsBinaryString(file);
@@ -67,4 +71,14 @@ export class InventarioOfflineComponent {
         (this.page - 1) * this.pageSize + this.pageSize
       );
   }
+
+  /*========Buscar============*/
+  actualizarBusqueda(event:KeyboardEvent) {
+    this.busqueda = (event.target as HTMLInputElement).value;
+    console.log(this.busqueda)
+  }
+
+  
+
+  
 }
