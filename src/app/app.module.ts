@@ -8,9 +8,10 @@ import { InventarioOfflineComponent } from './pages/inventario-offline/inventari
 import { InventarioComponent } from './pages/inventario/inventario.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgBoostrapModule } from './pages/ng-boostrap/ng-boostrap.module';
+import { FiltroPipe } from './pipes/filtro.pipe';
 
 @NgModule({
-  declarations: [AppComponent, InventarioOfflineComponent, InventarioComponent],
+  declarations: [AppComponent, InventarioOfflineComponent, InventarioComponent, FiltroPipe],
   imports: [
     BrowserModule,
     AppRoutingModule,
