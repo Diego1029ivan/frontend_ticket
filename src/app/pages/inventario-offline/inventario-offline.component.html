@@ -31,7 +31,7 @@
 
       <tr *ngFor="let row of data | filtro:busqueda">
         <td class=" text-center celda-icono"><a
-            href="{{urlCodigoBarra}}/backend_ticket/impresionExcel/{{row.CODIGO_PATRIMONIAL}}/{{row.FECHA_DOCUMENTO_ADQUIS}}"
+            href="{{urlCodigoBarra}}/backend_ticket/impresionExcel/{{row.CODIGO_PATRIMONIAL}}/{{row.FECHA_DOCUMENTO_ADQUIS}}/{{row.DENOMINACION_BIEN}}"
             target="_blank"><i class="fa-solid fa-print icono-cursor"></i></a></td>
         <td>{{ row.NRO}}</td>
         <td>{{ row.CODIGO_PATRIMONIAL}}</td>
