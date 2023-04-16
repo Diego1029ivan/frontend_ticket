@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { InventarioService } from 'src/app/services/inventario.service';
 import { environment } from 'src/environments/environment';
 import * as XLSX from 'xlsx';
+import * as moment from 'moment';
+import { Bien } from 'src/app/interfaces/bien';
 
 @Component({
   selector: 'app-inventario-offline',
@@ -16,7 +18,7 @@ export class InventarioOfflineComponent {
   page: number = 1;
   pageSize: number = 10;
   collectionSize: number = 0;
-  data: any[] = [];
+  data: Bien[] = [];
 
   tablaParcial: any = [];
   busqueda:string = '';
@@ -76,6 +78,42 @@ export class InventarioOfflineComponent {
   actualizarBusqueda(event:KeyboardEvent) {
     this.busqueda = (event.target as HTMLInputElement).value;
     console.log(this.busqueda)
+  }
+
+  /*====== POST ========*/
+  enviarBienes():void{
+    
+    for (let i = 0; i < this.data.length; i++) {
+      console.log(this.data[i])
+
+      this.data[i]['FECHA_DOCUMENTO_ADQUIS']=moment(this.data[i]['FECHA_DOCUMENTO_ADQUIS'],'DD/MM/YYYY').format('YYYY-MM-DD');
+      console.log(this.data[i]['FECHA_DOCUMENTO_ADQUIS']) 
+      
+      this.data[i]['NOM_EST_BIEN']=this.data[i]['NOM_EST_BIEN'].charAt(0);
+      console.log(this.data[i]['NOM_EST_BIEN'])
+      this.data[i]['CONDICION']=this.data[i]['CONDICION'].charAt(0);
+      console.log(this.data[i]['CONDICION'])
+
+      this.inventarioService.getCodigo(this.data[i]['CODIGO_PATRIMONIAL']).subscribe((check)=>{
+        console.log("ya existe")
+      },
+      (error)=>{
+        this.inventarioService.postLista(this.data[i]).subscribe(() => {
+          console.log('Objeto creado exitosamente');
+        },
+        (error) => {
+          console.error('Error al crear objeto', error);
+        }
+        );
+      })
+
+        
+      
+    }
+     
+
+   
+    
   }
 
   
