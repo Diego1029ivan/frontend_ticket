@@ -13,6 +13,7 @@
 
 .buscar{
   width: 50%;
+  position: absolute;
 }
 .buscar span{
   border-radius: 50%;

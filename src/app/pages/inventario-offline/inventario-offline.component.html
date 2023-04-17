@@ -1,6 +1,7 @@
 <h1 style="text-align: center;">GESTIÓN INVENTARIO UNSM</h1>
-<form class="container">
-  <input type="file" class="form-control" (change)="onFileChange($event)" accept=".xlsx">
+<form class="container ">
+  <input type="file" class="form-control " (change)="onFileChange($event)" accept=".xlsx">
+  <button type="submit" class="btn btn-primary " (click)="enviarBienes()">Guardar</button>
 
 </form>
 <div class="container overflow-auto" *ngIf="data.length > 0">
@@ -14,10 +15,12 @@
       <i class="fas fa-search"></i>
     </span>
 
+
+
   </div>
 
 
-  <table class="table table-striped">
+  <table class="table table-striped mt-5">
 
     <thead>
       <tr>
@@ -26,6 +29,10 @@
         <th scope="col">{{ header[1] }}</th>
         <th scope="col">{{ header[2] }}</th>
         <th scope="col">{{ header[6] }}</th>
+        <th scope="col">{{ header[3] }}</th>
+        <th scope="col">{{ header[7] }}</th>
+        <th scope="col">{{ header[9] }}</th>
+        <th scope="col">{{ header[10] }}</th>
       </tr>
     </thead>
     <tbody>
@@ -38,6 +45,10 @@
         <td>{{ row.CODIGO_PATRIMONIAL}}</td>
         <td>{{ row.DENOMINACION_BIEN}}</td>
         <td>{{ row.FECHA_DOCUMENTO_ADQUIS}}</td>
+        <td>{{ row.NRO_CTA_CONTABLE}}</td>
+        <td>{{ row.VALOR_ADQUIS}}</td>
+        <td>{{ row.NOM_EST_BIEN}}</td>
+        <td>{{ row.OPC_ASEGURADO}}</td>
       </tr>
     </tbody>
   </table>
