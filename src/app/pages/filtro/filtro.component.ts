@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
-import { Bien } from 'src/app/interfaces/bien';
+
 import { InventarioService } from 'src/app/services/inventario.service';
 import { environment } from 'src/environments/environment';
-import * as XLSX from 'xlsx';
+
 
 @Component({
   selector: 'app-filtro',
@@ -56,11 +55,10 @@ export class FiltroComponent implements OnInit{
 
   search() {
     
-    this.items = this.items.filter((item:any) =>
+    this.itemParcial = this.itemParcial.filter((item:any) =>
       item['DENOMINACION_BIEN'].toLowerCase().includes(this.searchTerm.toLowerCase()) ||
       item['ESTADO_BIEN'].toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-    this.collectionSize = this.filteredItems.length;
     this.page = 1;
   }
 
@@ -68,9 +66,10 @@ export class FiltroComponent implements OnInit{
   get filteredItems() {
     const startIndex = (this.page - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    return this.items?.slice(startIndex, endIndex);
+    return this.itemParcial?.slice(startIndex, endIndex);
   }
 
+  
   
 
 }
