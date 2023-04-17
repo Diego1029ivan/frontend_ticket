@@ -24,6 +24,7 @@ export class InventarioOfflineComponent {
   valor:Boolean=false
 
   tablaParcial: any = [];
+  tablaParcial2: any = [];
   tablaFiltro: any = [];
   busqueda:string = '';
   file: File | null = null;
@@ -63,6 +64,7 @@ export class InventarioOfflineComponent {
       this.collectionSize = this.data.length;
 
       this.tablaParcial = this.data;
+      this.tablaParcial2 = this.data;
       console.log(this.data)
       this.refreshInventario();
     };
@@ -88,7 +90,8 @@ export class InventarioOfflineComponent {
   actualizarBusqueda(event:KeyboardEvent) {
     this.busqueda = (event.target as HTMLInputElement).value;
     this.page = 1;
-    this.tablaFiltro = this.filtro.transform(this.tablaParcial,this.busqueda)
+    this.tablaFiltro = this.filtro.transform(this.tablaParcial2,this.busqueda)
+    this.tablaParcial=this.tablaFiltro;
     this.refreshInventario()
     console.log(this.busqueda, this.tablaFiltro)
     
