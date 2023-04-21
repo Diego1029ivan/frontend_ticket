@@ -17,5 +17,12 @@
   .buscar span{
     border-radius: 50%;
   }
+  .buscar2{
+    width: 50%;
+  }
   
-  
+  .check{
+    display: flex;
+    justify-content: center;
+    padding-top: 10%;
+  }
