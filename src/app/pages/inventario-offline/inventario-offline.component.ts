@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { Bien } from 'src/app/interfaces/bien';
 import { FiltroPipe } from 'src/app/pipes/filtro.pipe';
 import { catchError, of, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-inventario-offline',
@@ -86,50 +87,40 @@ export class InventarioOfflineComponent {
     this.page=1;
     return this.tablaParcial?.slice(startIndex, endIndex);
   }
-  /*========Buscar============*/
-  actualizarBusqueda(event:KeyboardEvent) {
-    this.busqueda = (event.target as HTMLInputElement).value;
-    this.page = 1;
-    this.tablaFiltro = this.filtro.transform(this.tablaParcial2,this.busqueda)
-    this.tablaParcial=this.tablaFiltro;
-    this.refreshInventario()
-    console.log(this.busqueda, this.tablaFiltro)
-    
-  }
+ 
 
   /*====== POST ========*/
   enviarBienes():void{
     
     for (let i = 0; i < this.tablaParcial.length; i++) {
-      console.log(this.tablaParcial[i])
+      //console.log(this.tablaParcial[i])
 
       this.tablaParcial[i]['FECHA_DOCUMENTO_ADQUIS']=moment(this.tablaParcial[i]['FECHA_DOCUMENTO_ADQUIS'],'DD/MM/YYYY').format('YYYY-MM-DD');
-      console.log(this.tablaParcial[i]['FECHA_DOCUMENTO_ADQUIS']) 
+      //console.log(this.tablaParcial[i]['FECHA_DOCUMENTO_ADQUIS']) 
       
       this.tablaParcial[i]['NOM_EST_BIEN']=this.tablaParcial[i]['NOM_EST_BIEN'].charAt(0);
-      console.log(this.tablaParcial[i]['NOM_EST_BIEN'])
+      //console.log(this.tablaParcial[i]['NOM_EST_BIEN'])
       this.tablaParcial[i]['CONDICION']=this.tablaParcial[i]['CONDICION'].charAt(0);
-      console.log(this.tablaParcial[i]['CONDICION'])
+      //console.log(this.tablaParcial[i]['CONDICION'])
 
-      this.inventarioService.getCodigo(this.tablaParcial[i]['CODIGO_PATRIMONIAL']).subscribe({
+      this.inventarioService.getCodigo(String(this.tablaParcial[i]['CODIGO_PATRIMONIAL']))
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError(error);
+        }))
+      .subscribe({
         next:(data)=>{
-          //console.log("ya existe en la base de datos")
-        },
-        error: (error)=>{
-          try {
-            // intentar manejar el error
-            if (error.status === 404) {
-              console.log("ya existe en la base de datos")
-            } else {
-              // hacer algo para otros errores
-            }
-          }catch (e) {
-            // manejar cualquier excepción generada al manejar el error
-          }
+          console.log("ya existe en la base de datos")
         }
       })
 
-      this.inventarioService.postLista(this.tablaParcial[i]).subscribe({
+      this.inventarioService.postLista(this.tablaParcial[i])
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+         
+          return throwError(error);
+        }))
+      .subscribe({
       next:(data) => {
         console.log('Enviando objeto');
       },
