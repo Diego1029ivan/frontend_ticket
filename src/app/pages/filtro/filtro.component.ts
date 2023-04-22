@@ -4,44 +4,40 @@ import { Component, OnInit } from '@angular/core';
 import { InventarioService } from 'src/app/services/inventario.service';
 import { environment } from 'src/environments/environment';
 
-
 @Component({
   selector: 'app-filtro',
   templateUrl: './filtro.component.html',
-  styleUrls: ['./filtro.component.css']
+  styleUrls: ['./filtro.component.css'],
 })
-export class FiltroComponent implements OnInit{
-  items:any
+export class FiltroComponent implements OnInit {
+  items: any;
   header: string[] = [];
   itemParcial: any = [];
   page: number = 1;
   pageSize: number = 10;
   collectionSize: number = 0;
   searchTerm = '';
-  
 
   public urlCodigoBarra: string = environment.baseUrl;
- 
+
   constructor(
     private inventarioService: InventarioService,
     private http: HttpClient
   ) {}
 
   ngOnInit(): void {
-    this.inventarioService.getBienes().subscribe((respo)=>{
-      this.items=respo
-      this.cargaTabla()
+    this.inventarioService.getBienes().subscribe((respo) => {
+      this.items = respo;
+      this.cargaTabla();
     });
-    
   }
 
   public cargaTabla() {
-    console.log(this.items)
+    console.log(this.items);
     this.header = Object.keys(this.items[0]);
     this.collectionSize = this.items.length;
     this.itemParcial = this.items;
     this.refreshBien();
-    
   }
 
   public refreshBien() {
@@ -54,10 +50,14 @@ export class FiltroComponent implements OnInit{
   }
 
   search() {
-    
-    this.itemParcial = this.itemParcial.filter((item:any) =>
-      item['DENOMINACION_BIEN'].toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      item['ESTADO_BIEN'].toLowerCase().includes(this.searchTerm.toLowerCase())
+    this.itemParcial = this.itemParcial.filter(
+      (item: any) =>
+        item['DENOMINACION_BIEN']
+          .toLowerCase()
+          .includes(this.searchTerm.toLowerCase()) ||
+        item['ESTADO_BIEN']
+          .toLowerCase()
+          .includes(this.searchTerm.toLowerCase())
     );
     this.page = 1;
   }
@@ -68,8 +68,4 @@ export class FiltroComponent implements OnInit{
     const endIndex = startIndex + this.pageSize;
     return this.itemParcial?.slice(startIndex, endIndex);
   }
-
-  
-  
-
 }
