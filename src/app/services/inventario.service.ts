@@ -1,16 +1,28 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Inventario } from '../interfaces/inventario';
 import { Bien } from '../interfaces/bien';
+import { ItemsSelect } from '../interfaces/itemsSelect';
 @Injectable({
   providedIn: 'root',
 })
 export class InventarioService {
   private baseUrl: string = environment.baseUrl + '/backend_ticket/';
   constructor(private http: HttpClient) {}
+
+  private apiUrl = 'http://example.com/api/downloadpdf';
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/pdf'
+    }),
+    responseType: 'blob' as 'json'
+  };
+
+  
   getInventario(): Observable<Inventario[]> {
     return this.http.get<Inventario[]>(`${this.baseUrl}inventario`);
   }
@@ -36,5 +48,10 @@ export class InventarioService {
   }
   postLista(data:Bien):Observable<any>{
     return this.http.post<Bien>(`${this.baseUrl}agregar`,data);
+  }
+
+  //cargar un nuevo pdf con post
+  postpaqueteCodigo(codigo:ItemsSelect):Observable<Blob>{
+    return this.http.post<Blob>(`${this.baseUrl}imprimir`,codigo,this.httpOptions);
   }
 }

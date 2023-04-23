@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ItemsSelect } from 'src/app/interfaces/itemsSelect';
 import { FiltroPipe } from 'src/app/pipes/filtro.pipe';
 
 import { InventarioService } from 'src/app/services/inventario.service';
@@ -41,7 +42,7 @@ export class FiltroComponent implements OnInit {
   }
 
   public cargaTabla() {
-    console.log(this.items);
+    //console.log(this.items)
     this.header = Object.keys(this.items[0]);
     this.collectionSize = this.items.length;
     this.itemParcial = this.items;
@@ -86,5 +87,67 @@ export class FiltroComponent implements OnInit {
     this.itemParcial != null ? this.refreshBien() : console.log('buscando');
     //this.refreshInventario()
     console.log(this.busqueda, this.tablaFiltro);
+  }
+
+  /*=========CheckBox=============*/
+  maxSelected = 5;
+  selectedCount = 0;
+  arregloSelect: any[] = [];
+  jsonSelect: ItemsSelect = {};
+
+  getSelectedCount() {
+    const checkboxes = document.querySelectorAll(
+      'table input[type="checkbox"]'
+    );
+    let count = 0;
+    checkboxes.forEach((checkbox: any) => {
+      if (checkbox.checked === true) {
+        count++;
+      }
+      this.selectedCount = count;
+    });
+    console.log(this.selectedCount);
+  }
+  disableCheckboxes() {
+    const checkboxes = document.querySelectorAll(
+      'table input[type="checkbox"]'
+    );
+    checkboxes.forEach((checkbox: any) => {
+      if (
+        this.selectedCount >= this.maxSelected &&
+        checkbox.checked === false
+      ) {
+        checkbox.disabled = true;
+      } else {
+        checkbox.disabled = false;
+      }
+    });
+  }
+
+  imprimirPaquete() {
+    const checkboxes = document.querySelectorAll(
+      'table input[type="checkbox"]'
+    );
+    this.arregloSelect.splice(0, this.arregloSelect.length);
+    this.jsonSelect = {};
+    checkboxes.forEach((checkbox: any) => {
+      if (checkbox.checked === true) {
+        this.arregloSelect.push(checkbox.value);
+      }
+    });
+    //equivalencia con nombre de variables
+    for (let i = 0; i < this.maxSelected; i++) {
+      if (!this.arregloSelect[i]) {
+        this.arregloSelect[i] = null;
+      }
+      eval('this.jsonSelect.item' + i + '= this.arregloSelect[' + i + ']');
+    }
+
+    this.inventarioService
+      .postpaqueteCodigo(this.jsonSelect)
+      .subscribe((pdf: Blob) => {
+        const fileUrl = URL.createObjectURL(pdf);
+        window.open(fileUrl);
+      });
   }
 }
