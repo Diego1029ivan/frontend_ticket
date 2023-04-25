@@ -7,6 +7,8 @@ import { Bien } from 'src/app/interfaces/bien';
 import { FiltroPipe } from 'src/app/pipes/filtro.pipe';
 import { catchError, of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inventario-offline',
@@ -30,6 +32,8 @@ export class InventarioOfflineComponent {
   header: string[] = [];
   constructor(
     private inventarioService: InventarioService,
+    private authService: AuthService,
+    private router: Router,
     private filtro: FiltroPipe
   ) {}
 
@@ -142,5 +146,12 @@ export class InventarioOfflineComponent {
           },
         });
     }
+  }
+
+  /*======  logout========*/
+  logout(): void {
+    this.authService.logout();
+    alert('Sesión cerrada');
+    this.router.navigate(['login']);
   }
 }

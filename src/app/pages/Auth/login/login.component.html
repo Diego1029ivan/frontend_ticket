@@ -1,0 +1,30 @@
+<div class="text-center container_login">
+  <div class="form-signin">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <img class="mb-4" src="https://unsm.edu.pe/wp-content/uploads/2016/10/cropped-logo-ICONO.png" alt="" width="100">
+      <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="name" placeholder="ingresa tu Username" autocomplete="off"
+          formControlName="name">
+        <label for="name">Username</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="password" placeholder="Password" autocomplete="off"
+          formControlName="password">
+        <label for="password">Password</label>
+        <span *ngIf="this.loginForm.get('password')?.errors?.['minlength']?.requiredLength" class="errors">
+          minimo 6 caracteres
+        </span>
+      </div>
+
+      <div class="checkbox mb-3">
+        <label>
+          <a href="https://www.google.com.pe/">Olvidaste tu contraseña?</a>
+        </label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+    </form>
+  </div>
+</div>
