@@ -38,8 +38,8 @@ export class LoginComponent implements OnInit {
           alert(response.msg);
           return;
         }
-
-        this.router.navigate(['/inventario_off']);
+        // this.router.navigate(['../sistemaInventario/inventario_off']);
+        location.href = '../sistemaInventario/inventario_off'; //TODO: RECARGA LA PAGINA
         this.authService.guardarToken(response.access_token);
         this.authService.guardarUsuario(response.user);
       },
