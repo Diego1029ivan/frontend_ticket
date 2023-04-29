@@ -8,16 +8,21 @@
     <div class="login-aside w-50 d-flex align-items-center justify-content-center bg-white">
       <div class="container container-login container-transparent animated fadeIn">
         <h3 class="text-center">Sign In To Admin</h3>
-        <div class="login-form">
+
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="form-group">
-            <label for="username">Username</label>
-            <input id="username" name="username" type="text" class="form-control" required>
+            <label for="name">Username</label>
+            <input id="name" name="name" type="text" class="form-control" required formControlName="name">
           </div>
           <div class="form-group">
             <label for="password">Password</label>
             <a href="#" class="float-right  textnone">Forget Password ?</a>
             <div class="position-relative">
-              <input id="password" name="password" type="password" class="form-control" required>
+              <input id="password" name="password" type="password" class="form-control" required
+                formControlName="password">
+              <span *ngIf="this.loginForm.get('password')?.errors?.['minlength']?.requiredLength" class="errors">
+                minimo 6 caracteres
+              </span>
             </div>
           </div>
           <div class="form-group form-action-d-flex mb-3">
@@ -25,15 +30,16 @@
               <input type="checkbox" class="custom-control-input" id="rememberme">
               <label class="custom-control-label m-0" for="rememberme">Remember Me</label>
             </div>
-            <a href="../sistemaInventario/inventario_off"
-              class="btn btn-secondary col-md-5 float-right mt-3 mt-sm-0 fw-bold">Sign
-              In</a>
+            <button class="btn btn-secondary col-md-5 float-right mt-3 mt-sm-0 fw-bold" [disabled]="loginForm.invalid"
+              type="submit">Sign
+              In</button>
           </div>
           <div class="login-account">
             <span class="msg">Don't have an account yet ?</span>
             <a href="#" id="show-signup" class="link textnone">Sign Up</a>
           </div>
-        </div>
+        </form>
+
       </div>
 
     </div>

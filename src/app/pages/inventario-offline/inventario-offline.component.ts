@@ -147,11 +147,4 @@ export class InventarioOfflineComponent {
         });
     }
   }
-
-  /*======  logout========*/
-  logout(): void {
-    this.authService.logout();
-    alert('Sesión cerrada');
-    this.router.navigate(['login']);
-  }
 }
