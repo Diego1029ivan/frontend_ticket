@@ -3,23 +3,35 @@ import { RouterModule, Routes } from '@angular/router';
 import { InventarioOfflineComponent } from './pages/inventario-offline/inventario-offline.component';
 import { FiltroComponent } from './pages/filtro/filtro.component';
 import { LoginComponent } from './pages/Auth/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: 'auth',
     component: LoginComponent,
   },
   {
-    path: 'inventario_off',
-    component: InventarioOfflineComponent,
+    path: 'sistemaInventario',
+    component: HomeComponent,
+    children: [
+      {
+        path: 'inventario_off',
+        component: InventarioOfflineComponent,
+      },
+      {
+        path: 'inventario_filtro',
+        component: FiltroComponent,
+      },
+      {
+        path: '**',
+        redirectTo: 'inventario_off',
+      },
+    ],
   },
-  {
-    path: 'inventario_filtro',
-    component: FiltroComponent,
-  },
+
   {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: 'auth',
   },
 ];
 

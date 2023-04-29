@@ -13,6 +13,9 @@ import { UserComponent } from './pages/user/user.component';
 import { LoginComponent } from './pages/Auth/login/login.component';
 import { RegisterComponent } from './pages/Auth/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HomeComponent } from './pages/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     UserComponent,
     LoginComponent,
     RegisterComponent,
+    HomeComponent,
+    NavbarComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
