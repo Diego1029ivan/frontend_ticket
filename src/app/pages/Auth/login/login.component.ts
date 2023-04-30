@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Users } from '../../../interfaces/users';
@@ -35,11 +36,14 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.users).subscribe(
       (response) => {
         if (response.success == false) {
-          alert(response.msg);
+          swal.fire('Error Login', `${response.msg}`, 'error');
+          //resetear formulario
+          this.loginForm.reset();
           return;
         }
         // this.router.navigate(['../sistemaInventario/inventario_off']);
         location.href = '../sistemaInventario/inventario_off'; //TODO: RECARGA LA PAGINA
+
         this.authService.guardarToken(response.access_token);
         this.authService.guardarUsuario(response.user);
       },

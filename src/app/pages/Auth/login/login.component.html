@@ -31,7 +31,7 @@
               <label class="custom-control-label m-0" for="rememberme">Remember Me</label>
             </div>
             <button class="btn btn-secondary col-md-5 float-right mt-3 mt-sm-0 fw-bold" [disabled]="loginForm.invalid"
-              type="submit">Sign
+              [ngClass]="loginForm.invalid ?  'desactive': '' " type="submit">Sign
               In</button>
           </div>
           <div class="login-account">

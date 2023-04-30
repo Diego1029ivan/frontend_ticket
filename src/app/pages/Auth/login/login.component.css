@@ -32,3 +32,13 @@ label {
 .btn:hover {
   opacity: 0.9;
 }
+.desactive {
+  background: #d5d5d5 !important;
+  color: #fff !important;
+  border: 1px solid #d5d5d5 !important;
+}
+.errors {
+  color: #ff0000;
+  font-size: 0.75em;
+  margin-top: 10px;
+}

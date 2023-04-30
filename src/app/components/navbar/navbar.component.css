@@ -1,0 +1,11 @@
+i {
+  font-size: 50px;
+  background-color: rgb(49, 147, 104) !important;
+}
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: rgb(49, 147, 104) !important;
+}

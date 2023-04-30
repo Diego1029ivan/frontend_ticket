@@ -1,10 +1,15 @@
-<div class="container">
-  <div class="row">
+<div class="page-header">
+  <h4 class="page-title">GESTIÓN INVENTARIO UNSM</h4>
+</div>
+<div class="row">
 
-    <div class="col-10">
+  <div class="col-md-12">
 
-      <div>
-        <h1 style="text-align: center;">GESTIÓN INVENTARIO UNSM</h1>
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Basic</h4>
+      </div>
+      <div class="card-body">
         <form>
           <input type="file" class="form-control " (change)="onFileChange($event)" accept=".xlsx">
           <button type="submit" class="btn btn-primary " (click)="enviarBienes()">Guardar</button>
@@ -63,6 +68,8 @@
       </div>
 
     </div>
+
+
 
   </div>
 </div>
