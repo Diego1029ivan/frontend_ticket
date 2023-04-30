@@ -5,6 +5,7 @@ import { FiltroComponent } from './pages/filtro/filtro.component';
 import { LoginComponent } from './pages/Auth/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthGuard } from './guards/auth.guard';
+import { UserComponent } from './pages/user/user.component';
 const routes: Routes = [
   {
     path: 'auth',
@@ -23,6 +24,11 @@ const routes: Routes = [
       {
         path: 'inventario_filtro',
         component: FiltroComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'usarios',
+        component: UserComponent,
         canActivate: [AuthGuard],
       },
       {
