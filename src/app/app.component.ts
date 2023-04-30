@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Inventario } from './interfaces/inventario';
 import { InventarioService } from './services/inventario.service';
 
 @Component({
@@ -7,6 +6,4 @@ import { InventarioService } from './services/inventario.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
- 
-}
+export class AppComponent {}
