@@ -14,38 +14,18 @@ export class AuthService {
   private baseUrl: string = environment.baseUrl;
   constructor(private http: HttpClient) {}
 
-  public get usuario(): Users {
-    if (this._usuario !== null) {
-      return this._usuario;
-    } else if (sessionStorage.getItem('usuario') !== null) {
-      let usuario = sessionStorage.getItem('usuario') as string;
-      try {
-        this._usuario = JSON.parse(usuario) as Users;
-        return this._usuario;
-      } catch (error) {
-        console.error(
-          'Error al convertir el usuario desde sessionStorage',
-          error
-        );
-      }
+  isAuthenticated(): boolean {
+    if (sessionStorage.getItem('token') !== null) {
+      return true;
     }
-    return new Users();
+    return false;
   }
-  public get token(): any {
-    if (this._token !== null) {
-      return this._token;
-    } else if (sessionStorage.getItem('token') !== null) {
-      this._token = sessionStorage.getItem('token') as string;
-      return this._token;
+  obtenerDatosToken(accessToken: string): any {
+    if (accessToken != null) {
+      return JSON.parse(atob(accessToken.split('.')[1]));
     }
-
     return null;
   }
-
-  isAuthenticated(): boolean {
-    return this.token !== null;
-  }
-
   guardarToken(accessToken: string): void {
     this._token = accessToken;
     sessionStorage.setItem('token', accessToken);
