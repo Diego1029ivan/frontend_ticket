@@ -4,7 +4,7 @@ import { InventarioOfflineComponent } from './pages/inventario-offline/inventari
 import { FiltroComponent } from './pages/filtro/filtro.component';
 import { LoginComponent } from './pages/Auth/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
-
+import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: 'auth',
@@ -17,10 +17,13 @@ const routes: Routes = [
       {
         path: 'inventario_off',
         component: InventarioOfflineComponent,
+        canActivate: [AuthGuard],
+        pathMatch: 'full',
       },
       {
         path: 'inventario_filtro',
         component: FiltroComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: '**',
