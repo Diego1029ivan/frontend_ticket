@@ -115,6 +115,7 @@ export class FiltroComponent implements OnInit{
     });
     console.log(this.selectedCount) ;
   }
+  
   disableCheckboxes() {
     const checkboxes = document.querySelectorAll('table input[type="checkbox"]');
     checkboxes.forEach((checkbox: any) => {
