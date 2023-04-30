@@ -25,6 +25,7 @@
               "node_modules/sweetalert2/dist/sweetalert2.min.css",
               "src/assets/css/bootstrap.min.css",
               "src/assets/css/atlantis.min.css",
+              "src/assets/css/demo.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -34,9 +35,33 @@
               "src/assets/js/core/jquery.3.2.1.min.js",
               "src/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js",
               "src/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js",
+              "src/assets/js/plugin/moment/moment.min.js",
+              "src/assets/js/plugin/chart.js/chart.min.js",
+              "src/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js",
+              "src/assets/js/plugin/chart-circle/circles.min.js",
+              "src/assets/js/plugin/datatables/datatables.min.js",
+              "src/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js",
+              "src/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js",
+              "src/assets/js/plugin/jqvmap/jquery.vmap.min.js",
+              "src/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js",
+              "src/assets/js/plugin/gmaps/gmaps.js",
+              "src/assets/js/plugin/dropzone/dropzone.min.js",
+              "src/assets/js/plugin/fullcalendar/fullcalendar.min.js",
+              "src/assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js",
+              "src/assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js",
+              "src/assets/js/plugin/bootstrap-wizard/bootstrapwizard.js",
+              "src/assets/js/plugin/jquery.validate/jquery.validate.min.js",
+              "src/assets/js/plugin/summernote/summernote-bs4.min.js",
+              "src/assets/js/plugin/select2/select2.full.min.js",
+              "src/assets/js/plugin/sweetalert/sweetalert.min.js",
+              "src/assets/js/plugin/owl-carousel/owl.carousel.min.js",
+              "src/assets/js/plugin/jquery.magnific-popup/jquery.magnific-popup.min.js",
+              
               "src/assets/js/core/popper.min.js",
               "src/assets/js/core/bootstrap.min.js",
-              "src/assets/js/atlantis.min.js"
+              "src/assets/js/atlantis.min.js",
+              "src/assets/js/setting-demo.js",
+              "src/assets/js/demo.js"
             ]
           },
           "configurations": {
