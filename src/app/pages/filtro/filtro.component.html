@@ -62,16 +62,16 @@
           </div>
         </td> -->
         <td class=" text-center celda-icono"><a
-            href="{{urlCodigoBarra}}/backend_ticket/impresionBD/{{row.CODIGO_PATRIMONIAL}}/{{row.FECHA_ADQUISICION}}/{{row.DENOMINACION_BIEN}}"
-            target="_blank"><i class="fa-solid fa-print icono-cursor"></i></a></td>
+            href="http://127.0.0.1:8000/inventaryPDF/{{row.codigo_patrimonial}}/{{row.fecha_adquisicion}}/{{row.denominacion_bien}}"
+            target="_blank"><i class="fa fa-print icono-cursor"></i></a></td>
         <td>{{ row.id}}</td>
         <td>{{ row.codigo_patrimonial}}</td>
         <td>{{ row.denominacion_bien}}</td>
         <td>{{ row.fecha_adquisicion}}</td>
-        <td>{{ row.NRO_CUENTA_CONTABLE}}</td>
-        <td>{{ row.VALOR_ADQUISICION}}</td>
-        <td>{{ row.ESTADO_BIEN}}</td>
-        <td>{{ row.CTA_CON_SEGURO}}</td>
+        <td>{{ row.nro_cuenta_contable}}</td>
+        <td>{{ row.valor_adquisicion}}</td>
+        <td>{{ row.estado_bien}}</td>
+        <td>{{ row.cta_con_seguro}}</td>
       </tr>
     </tbody>
   </table>
