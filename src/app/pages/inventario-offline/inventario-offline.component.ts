@@ -108,18 +108,18 @@ export class InventarioOfflineComponent {
         this.tablaParcial[i]['CONDICION'].charAt(0);
       //console.log(this.tablaParcial[i]['CONDICION'])
 
-      this.inventarioService
-        .getCodigo(String(this.tablaParcial[i]['CODIGO_PATRIMONIAL']))
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            return throwError(error);
-          })
-        )
-        .subscribe({
-          next: (data) => {
-            console.log('ya existe en la base de datos');
-          },
-        });
+      // this.inventarioService
+      //   .getCodigo(String(this.tablaParcial[i]['CODIGO_PATRIMONIAL']))
+      //   .pipe(
+      //     catchError((error: HttpErrorResponse) => {
+      //       return throwError(error);
+      //     })
+      //   )
+      //   .subscribe({
+      //     next: (data) => {
+      //       console.log('ya existe en la base de datos');
+      //     },
+      //   });
 
       this.inventarioService
         .postLista(this.tablaParcial[i])
@@ -130,15 +130,16 @@ export class InventarioOfflineComponent {
         )
         .subscribe({
           next: (data) => {
-            console.log('Enviando objeto');
+            console.log(data);
           },
           error: (error) => {
             try {
               // intentar manejar el error
               if (error.status === 500) {
-                console.log('No se puede enviar');
+                console.log(error);
               } else {
                 // hacer algo para otros errores
+                console.log(error);
               }
             } catch (e) {
               console.log(e);

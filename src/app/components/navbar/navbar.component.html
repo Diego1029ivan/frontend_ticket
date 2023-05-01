@@ -8,7 +8,7 @@
         <div class="info">
           <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
             <span>
-              Hizrian
+              {{perfil().name}}
               <span class="user-level">Administrator</span>
               <span class="caret"></span>
             </span>
@@ -37,7 +37,7 @@
         </div>
       </div>
       <ul class="nav nav-primary">
-        <li class="nav-item active">
+        <li class="nav-item " routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
             <i class="fas fa-home"></i>
             <p>Dashboard</p>
@@ -50,17 +50,17 @@
                   <span class="sub-item">Reportes</span>
                 </a>
               </li>
-              
+
             </ul>
           </div>
-        </li> 
-        <li class="nav-section">
+        </li>
+        <li class="nav-section" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <span class="sidebar-mini-icon">
             <i class="fa fa-ellipsis-h"></i>
           </span>
           <h4 class="text-section">Bienes</h4>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a data-toggle="collapse" href="#base">
             <i class="fas fa-layer-group"></i>
             <p>Tablas</p>
@@ -78,11 +78,11 @@
                   <span class="sub-item">Tabla BD</span>
                 </a>
               </li>
-             
+
             </ul>
           </div>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a data-toggle="collapse" href="#sidebarLayouts">
             <i class="fas fa-th-list"></i>
             <p>Usuarios</p>
@@ -100,12 +100,12 @@
                   <span class="sub-item">Editar Usuario</span>
                 </a>
               </li>
-              
+
             </ul>
           </div>
         </li>
-       
-        
+
+
       </ul>
     </div>
   </div>
