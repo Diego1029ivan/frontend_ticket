@@ -6,6 +6,7 @@ import { LoginComponent } from './pages/Auth/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UserComponent } from './pages/user/user.component';
+import { ReporteComponent } from './pages/reporte/reporte.component';
 const routes: Routes = [
   {
     path: 'auth',
@@ -32,8 +33,13 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'reporte',
+        component: ReporteComponent,
+        canActivate: [AuthGuard],
+      },
+      {
         path: '**',
-        redirectTo: 'inventario_off',
+        redirectTo: 'reporte',
       },
     ],
   },

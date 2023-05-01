@@ -20,6 +20,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ReporteComponent } from './pages/reporte/reporte.component';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { HeaderComponent } from './components/header/header.component';
     HomeComponent,
     NavbarComponent,
     HeaderComponent,
+    ReporteComponent,
+    BarChartComponent,
+    LineChartComponent,
   ],
   imports: [
     BrowserModule,
