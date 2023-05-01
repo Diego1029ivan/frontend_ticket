@@ -51,7 +51,7 @@ export class AuthService {
     return false;
   }
   login(usuario: Users): Observable<any> {
-    const url = `${this.baseUrl}login`;
+    const url = `${this.baseUrl}/login`;
     return this.http.post(url, usuario);
   }
 

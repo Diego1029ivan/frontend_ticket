@@ -10,6 +10,7 @@ import { ItemsSelect } from '../interfaces/itemsSelect';
 })
 export class InventarioService {
   private baseUrl: string = environment.baseUrl + '/backend_ticket/';
+  private baseUrl1: string = environment.baseUrl;
   constructor(private http: HttpClient) {}
 
   private apiUrl = 'http://example.com/api/downloadpdf';
@@ -26,13 +27,13 @@ export class InventarioService {
   }
 
   getBienes(): Observable<Bien> {
-    return this.http.get<Bien>(`${this.baseUrl}/bien`);
+    return this.http.get<Bien>(`${this.baseUrl1}/inventaryAll`);
   }
   getCodigo(codigo: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/biencodigo/${codigo}`);
   }
   postLista(data: Bien): Observable<any> {
-    return this.http.post<Bien>(`${this.baseUrl}agregar`, data);
+    return this.http.post<Bien>(`${this.baseUrl1}/inventary`, data);
   }
 
   //cargar un nuevo pdf con post

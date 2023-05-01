@@ -9,14 +9,16 @@ import swal from 'sweetalert2';
 })
 export class HeaderComponent {
   constructor(private authService: AuthService, private router: Router) {}
-
+  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  perfil() {
+    return this.username;
+  }
   /*======  logout========*/
   logout(): void {
-    let username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
     this.authService.logout();
     swal.fire(
       'Logout',
-      `Hola ${username.name}, has cerrado sesión con éxito!`,
+      `Hola ${this.username.name}, has cerrado sesión con éxito!`,
       'success'
     );
     this.router.navigate(['login']);

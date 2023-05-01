@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
           return;
         }
         // this.router.navigate(['../sistemaInventario/inventario_off']);
-        location.href = '../sistemaInventario/inventario_off'; //TODO: RECARGA LA PAGINA
+        location.href = '../sistemaInventario/reporte'; //TODO: RECARGA LA PAGINA
 
         this.authService.guardarToken(response.access_token);
         this.authService.guardarUsuario(response.user);

@@ -37,6 +37,7 @@ export class FiltroComponent implements OnInit {
   ngOnInit(): void {
     this.inventarioService.getBienes().subscribe((respo) => {
       this.items = respo;
+      console.log(this.items);
       this.cargaTabla();
     });
   }
@@ -44,6 +45,7 @@ export class FiltroComponent implements OnInit {
   public cargaTabla() {
     //console.log(this.items)
     this.header = Object.keys(this.items[0]);
+    console.log(this.header);
     this.collectionSize = this.items.length;
     this.itemParcial = this.items;
     this.itemParcial2 = this.items;
@@ -62,10 +64,10 @@ export class FiltroComponent implements OnInit {
   search() {
     this.itemParcial = this.itemParcial2.filter(
       (item: any) =>
-        item['DENOMINACION_BIEN']
+        item['denominacion_bien']
           .toLowerCase()
           .includes(this.searchTerm.toLowerCase()) ||
-        item['ESTADO_BIEN']
+        item['estado_bien']
           .toLowerCase()
           .includes(this.searchTerm.toLowerCase())
     );
@@ -108,7 +110,7 @@ export class FiltroComponent implements OnInit {
     });
     console.log(this.selectedCount);
   }
-  
+
   disableCheckboxes() {
     const checkboxes = document.querySelectorAll(
       'table input[type="checkbox"]'
@@ -144,11 +146,11 @@ export class FiltroComponent implements OnInit {
       eval('this.jsonSelect.item' + i + '= this.arregloSelect[' + i + ']');
     }
 
-    this.inventarioService
-      .postpaqueteCodigo(this.jsonSelect)
-      .subscribe((pdf: Blob) => {
-        const fileUrl = URL.createObjectURL(pdf);
-        window.open(fileUrl);
-      });
+    // this.inventarioService
+    //   .postpaqueteCodigo(this.jsonSelect)
+    //   .subscribe((pdf: Blob) => {
+    //     const fileUrl = URL.createObjectURL(pdf);
+    //     window.open(fileUrl);
+    //   });
   }
 }
