@@ -30,7 +30,6 @@
               "src/assets/js/core/jquery.3.2.1.min.js",
               "src/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js",
               "src/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js",
-<<<<<<< HEAD
               "src/assets/js/plugin/moment/moment.min.js",
               "src/assets/js/plugin/chart.js/chart.min.js",
               "src/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js",
@@ -53,10 +52,6 @@
               "src/assets/js/plugin/owl-carousel/owl.carousel.min.js",
               "src/assets/js/plugin/jquery.magnific-popup/jquery.magnific-popup.min.js",
 
-=======
-             
-              
->>>>>>> 97599f694f791f8591f97d35a4d44449ba6c2b29
               "src/assets/js/core/popper.min.js",
               "src/assets/js/core/bootstrap.min.js",
               "src/assets/js/atlantis.min.js",
