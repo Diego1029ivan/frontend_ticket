@@ -20,8 +20,6 @@
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              
-              
               "node_modules/sweetalert2/dist/sweetalert2.min.css",
               "src/assets/css/bootstrap.min.css",
               "src/assets/css/atlantis.min.css",
@@ -29,9 +27,6 @@
               "src/styles.css"
             ],
             "scripts": [
-              
-              
-              
               "src/assets/js/core/jquery.3.2.1.min.js",
               "src/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js",
               "src/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js",
@@ -56,7 +51,7 @@
               "src/assets/js/plugin/sweetalert/sweetalert.min.js",
               "src/assets/js/plugin/owl-carousel/owl.carousel.min.js",
               "src/assets/js/plugin/jquery.magnific-popup/jquery.magnific-popup.min.js",
-              
+
               "src/assets/js/core/popper.min.js",
               "src/assets/js/core/bootstrap.min.js",
               "src/assets/js/atlantis.min.js",
