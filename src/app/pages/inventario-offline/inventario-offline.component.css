@@ -18,4 +18,6 @@
 .buscar span{
   border-radius: 50%;
 }
-
+.tabla-excel{
+  overflow-x: auto;
+}

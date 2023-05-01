@@ -2,5 +2,14 @@ a {
   cursor: pointer;
 }
 .log-tam{
-width: 50%;
+ height: 50px;
+}
+.fondo-header{
+  background: linear-gradient(63deg, rgba(0,197,100,1) 28%, rgba(0,121,61,1) 100%);
+}
+i{
+  color: white;
+}
+.menu{
+  color: #8d9498 !important;
 }
