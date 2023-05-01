@@ -41,8 +41,8 @@ export class LoginComponent implements OnInit {
           this.loginForm.reset();
           return;
         }
-        // this.router.navigate(['../sistemaInventario/inventario_off']);
-        location.href = '../sistemaInventario/reporte'; //TODO: RECARGA LA PAGINA
+        this.router.navigate(['../sistemaInventario/reporte']);
+        //location.href = '../sistemaInventario/reporte'; //TODO: RECARGA LA PAGINA
 
         this.authService.guardarToken(response.access_token);
         this.authService.guardarUsuario(response.user);
