@@ -23,6 +23,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { ReporteComponent } from './pages/reporte/reporte.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { CargaComponent } from './components/carga/carga.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
     ReporteComponent,
     BarChartComponent,
     LineChartComponent,
+    CargaComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { Users } from 'src/app/interfaces/users';
 
 @Component({
   selector: 'app-user',
@@ -7,9 +8,16 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent {
+  usuarios: any = [];
+  cargando: boolean = false;
+
   constructor(private userService: UserService) {
-    this.userService.getAllUsers().subscribe((data) => {
-      console.log(data);
+    this.userService.getAllUsers().subscribe((data1) => {
+      // console.log(data1);
+      this.cargando = true;
+      let data = data1;
+      this.usuarios = data;
     });
+    this.cargando = false;
   }
 }

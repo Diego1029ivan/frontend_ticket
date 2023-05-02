@@ -8,7 +8,7 @@ export class UserService {
   private baseUrl: string = environment.baseUrl;
   constructor(private http: HttpClient) {}
   getAllUsers() {
-    const url = `${this.baseUrl}usersAll`;
+    const url = `${this.baseUrl}/usersAll`;
     return this.http.get(url);
   }
 }
