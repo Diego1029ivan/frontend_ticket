@@ -39,7 +39,7 @@ export class InventarioService {
   //cargar un nuevo pdf con post
   postpaqueteCodigo(codigo: ItemsSelect): Observable<Blob> {
     return this.http.post<Blob>(
-      `${this.baseUrl}imprimir`,
+      `${this.baseUrl1}/imprimir`,
       codigo,
       this.httpOptions
     );

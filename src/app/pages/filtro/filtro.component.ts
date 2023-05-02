@@ -88,7 +88,7 @@ export class FiltroComponent implements OnInit {
     this.itemParcial = this.tablaFiltro;
     this.itemParcial != null ? this.refreshBien() : console.log('buscando');
     //this.refreshInventario()
-    console.log(this.busqueda, this.tablaFiltro);
+    //console.log(this.busqueda, this.tablaFiltro);
   }
 
   /*=========CheckBox=============*/
@@ -146,11 +146,13 @@ export class FiltroComponent implements OnInit {
       eval('this.jsonSelect.item' + i + '= this.arregloSelect[' + i + ']');
     }
 
-    // this.inventarioService
-    //   .postpaqueteCodigo(this.jsonSelect)
-    //   .subscribe((pdf: Blob) => {
-    //     const fileUrl = URL.createObjectURL(pdf);
-    //     window.open(fileUrl);
-    //   });
+    this.inventarioService
+      .postpaqueteCodigo(this.jsonSelect)
+      .subscribe((pdf: Blob) => {
+        const blob = new Blob([pdf], { type: 'application/pdf' });
+        const fileUrl = URL.createObjectURL(blob);
+        window.open(fileUrl);
+        
+      });
   }
 }
