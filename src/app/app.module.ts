@@ -26,6 +26,7 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
 import { CargaComponent } from './components/carga/carga.component';
 import { CambiarContraComponent } from './pages/cambiar-contra/cambiar-contra.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
+import { DonachartComponent } from './components/donachart/donachart.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
     CargaComponent,
     CambiarContraComponent,
     PerfilComponent,
+    DonachartComponent,
   ],
   imports: [
     BrowserModule,
