@@ -6,34 +6,21 @@
           <img src="../../../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
         </div>
         <div class="info">
-          <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-            <span>
+          <a data-toggle="collapse" routerLink="./perfil" aria-expanded="true">
+            <!-- <span>
               {{perfil().name}}
               <span class="user-level">Administrator</span>
               <span class="caret"></span>
+            </span> -->
+            <span *ngIf=" userLogado != null">
+              {{userLogado.data[0].name}}
+              <span class="user-level">{{userLogado.data[0].rol_name}}</span>
+
             </span>
           </a>
-          <div class="clearfix"></div>
 
-          <div class="collapse in" id="collapseExample">
-            <ul class="nav">
-              <li>
-                <a routerLink="./perfil">
-                  <span class="link-collapse">Mi perfil</span>
-                </a>
-              </li>
-              <li>
-                <a routerLink="./perfil">
-                  <span class="link-collapse">Editar Perfil</span>
-                </a>
-              </li>
-              <li>
-                <a routerLink="./perfil">
-                  <span class="link-collapse">Ajustes</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+
+
         </div>
       </div>
       <ul class="nav nav-primary">
