@@ -23,6 +23,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { ReporteComponent } from './pages/reporte/reporte.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { CargaComponent } from './components/carga/carga.component';
+import { CambiarContraComponent } from './pages/cambiar-contra/cambiar-contra.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 
 @NgModule({
@@ -40,6 +43,9 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
     ReporteComponent,
     BarChartComponent,
     LineChartComponent,
+    CargaComponent,
+    CambiarContraComponent,
+    PerfilComponent,
   ],
   imports: [
     BrowserModule,

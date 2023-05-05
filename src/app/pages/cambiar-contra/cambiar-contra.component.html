@@ -11,12 +11,8 @@
     <div class="card">
       <div class="card-header">
         <div class="d-flex align-items-center">
-          <h4 class="card-title"> Listado de usuarios</h4>
-          <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal"
-            (click)="agregarUsuario()">
-            <i class="fa fa-plus"></i>
-            agregar
-          </button>
+          <h4 class="card-title">Resetiar Password</h4>
+
         </div>
 
       </div>
@@ -29,7 +25,7 @@
                 <div class="modal-header ">
                   <h5 class="modal-title">
                     <span class="fw-mediumbold">
-                      {{edit ? 'AGREGAR USUARIO': 'EDITAR USUARIO'}}</span>
+                      Resetiar Password</span>
 
                   </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -40,39 +36,30 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <div class="form-group form-group-default">
-                        <label for="name">Username</label>
-                        <input id="name" type="text" class="form-control" placeholder="Agregar su usuario" required
-                          formControlName="name">
+                        <label for="password">Contraseña Nueva</label>
+                        <input id="password" type="password" class="form-control"
+                          placeholder="Ingresar Contraseña nueva" required formControlName="password">
                       </div>
+                      <p class="small errors" *ngIf="this.usuarioSub.get('password')?.errors?.['minlength']">
+                        La contraseña debe tener al menos 6 caracteres</p>
                     </div>
                     <div class="col-md-12">
                       <input type="hidden" formControlName="id">
                       <div class="form-group form-group-default">
-                        <label for="email">correo</label>
-                        <input id="email" type="text" class="form-control" placeholder="Agregar su correo" required
-                          formControlName="email">
+                        <label for="password_confirmation">Repetir Contraseña</label>
+                        <input id="password_confirmation" type="password" class="form-control"
+                          placeholder="Agregar contraseña Nueva" required formControlName="password_confirmation">
                       </div>
-                      <p class="small errors" *ngIf="this.usuarioSub.get('email')?.errors?.['email']">correo no valido
-                      </p>
+                      <p class="small errors" *ngIf="usuarioSub.hasError('mismatch') ">
+                        Las contraseñas no coinciden</p>
                     </div>
-                    <div class="col-md-12">
-                      <div class="form-group form-group-default ">
-                        <label for="rol_id" class="placeholder">Rol Usuario</label>
-                        <select class="form-control" id="rol_id" required formControlName="rol_id">
-                          <option value="">Seleccione un Rol</option>
-                          <option value="1">Administrador</option>
-                          <option value="2">Usuario</option>
-                        </select>
 
-                      </div>
-                    </div>
                   </div>
 
                 </div>
                 <div class="modal-footer ">
-                  <button [disabled]="usuarioSub.invalid" type="submit" id="addRowButton" class="btn btn-primary">{{edit
-                    ?
-                    'Add': 'Update'}}</button>
+                  <button [disabled]="usuarioSub.invalid" type="submit" id="addRowButton"
+                    class="btn btn-primary">SAVE</button>
                   <button type="button" class="btn btn-danger" #closebutton data-dismiss="modal">Close</button>
                 </div>
 
@@ -109,14 +96,8 @@
                   <div class="form-button-action">
                     <button type="button" tabindex="0" data-toggle="tooltip" title="Edit usuario"
                       class="btn btn-link btn-primary btn-lg" data-original-title="Edit usuario" data-toggle="modal"
-                      data-target="#addRowModal" (click)="editarUsuario(usuario.id,usuario)">
+                      data-target="#addRowModal" (click)="editarUsuario(usuario.id)">
                       <i class="fa fa-edit"></i>
-                    </button>
-
-                    <button *ngIf="usuario.rol_id != 1" (click)="eliminarUsuario(usuario)" type="button"
-                      data-toggle="tooltip" title="Remove" class="btn btn-link btn-danger "
-                      data-original-title="Remove">
-                      <i class="fa fa-times"></i>
                     </button>
 
                   </div>

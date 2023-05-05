@@ -9,8 +9,8 @@ import { ItemsSelect } from '../interfaces/itemsSelect';
   providedIn: 'root',
 })
 export class InventarioService {
-  private baseUrl: string = environment.baseUrl + '/backend_ticket/';
-  private baseUrl1: string = environment.baseUrl;
+  private baseUrl: string = environment.baseUrl;
+
   constructor(private http: HttpClient) {}
 
   private apiUrl = 'http://example.com/api/downloadpdf';
@@ -23,23 +23,23 @@ export class InventarioService {
   };
 
   getticketPDF(codigo: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}ticketPDFExcel/${codigo}`);
+    return this.http.get<any>(`${this.baseUrl}/ticketPDFExcel/${codigo}`);
   }
 
   getBienes(): Observable<Bien> {
-    return this.http.get<Bien>(`${this.baseUrl1}/inventaryAll`);
+    return this.http.get<Bien>(`${this.baseUrl}/inventaryAll`);
   }
   getCodigo(codigo: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/biencodigo/${codigo}`);
   }
   postLista(data: Bien): Observable<any> {
-    return this.http.post<Bien>(`${this.baseUrl1}/inventary`, data);
+    return this.http.post<Bien>(`${this.baseUrl}/inventary`, data);
   }
 
   //cargar un nuevo pdf con post
   postpaqueteCodigo(codigo: ItemsSelect): Observable<Blob> {
     return this.http.post<Blob>(
-      `${this.baseUrl1}/imprimir`,
+      `${this.baseUrl}/imprimir`,
       codigo,
       this.httpOptions
     );
