@@ -24,6 +24,7 @@ import { ReporteComponent } from './pages/reporte/reporte.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +48,7 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
     NgbModule,
     NgBoostrapModule,
     ReactiveFormsModule,
+    
   ],
   providers: [
     {
