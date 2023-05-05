@@ -27,6 +27,7 @@ import { CargaComponent } from './components/carga/carga.component';
 import { CambiarContraComponent } from './pages/cambiar-contra/cambiar-contra.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +54,7 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
     NgbModule,
     NgBoostrapModule,
     ReactiveFormsModule,
+    
   ],
   providers: [
     {
