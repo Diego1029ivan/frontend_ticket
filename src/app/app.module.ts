@@ -24,6 +24,8 @@ import { ReporteComponent } from './pages/reporte/reporte.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { CargaComponent } from './components/carga/carga.component';
+import { CambiarContraComponent } from './pages/cambiar-contra/cambiar-contra.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { CargaComponent } from './components/carga/carga.component';
     BarChartComponent,
     LineChartComponent,
     CargaComponent,
+    CambiarContraComponent,
+    PerfilComponent,
   ],
   imports: [
     BrowserModule,
