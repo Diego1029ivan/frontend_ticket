@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { InventarioService } from 'src/app/services/inventario.service';
 import { environment } from 'src/environments/environment';
 import * as XLSX from 'xlsx';
@@ -10,13 +10,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
+
+
+
+
 @Component({
   selector: 'app-inventario-offline',
   templateUrl: './inventario-offline.component.html',
   styleUrls: ['./inventario-offline.component.css'],
   providers: [FiltroPipe],
 })
-export class InventarioOfflineComponent {
+export class InventarioOfflineComponent implements OnInit,AfterViewInit {
   public urlCodigoBarra: string = environment.baseUrl;
   page: number = 1;
   pageSize: number = 10;
@@ -36,6 +40,16 @@ export class InventarioOfflineComponent {
     private router: Router,
     private filtro: FiltroPipe
   ) {}
+  ngAfterViewInit(): void {
+    
+    
+    
+  }
+  ngOnInit(): void {
+    
+   
+    
+  }
 
   onFileChange(ev: any) {
     let workBook: any = null;
@@ -106,21 +120,7 @@ export class InventarioOfflineComponent {
       //console.log(this.tablaParcial[i]['NOM_EST_BIEN'])
       this.tablaParcial[i]['CONDICION'] =
         this.tablaParcial[i]['CONDICION'].charAt(0);
-      //console.log(this.tablaParcial[i]['CONDICION'])
-
-      // this.inventarioService
-      //   .getCodigo(String(this.tablaParcial[i]['CODIGO_PATRIMONIAL']))
-      //   .pipe(
-      //     catchError((error: HttpErrorResponse) => {
-      //       return throwError(error);
-      //     })
-      //   )
-      //   .subscribe({
-      //     next: (data) => {
-      //       console.log('ya existe en la base de datos');
-      //     },
-      //   });
-
+ 
       this.inventarioService
         .postLista(this.tablaParcial[i])
         .pipe(

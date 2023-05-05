@@ -15,6 +15,7 @@
           <button type="submit" class="btn btn-primary " (click)="enviarBienes()">Guardar</button>
 
         </form>
+        
         <div class="container overflow-auto tabla-excel" *ngIf="data.length > 0">
 
 
@@ -58,12 +59,13 @@
           <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" [maxSize]="5"
             [rotate]="true" [boundaryLinks]="true" (pageChange)="refreshInventario()">
           </ngb-pagination>
-
-          <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshInventario()">
-            <option [ngValue]="10">10 items per pag</option>
-            <option [ngValue]="50">50 items per page</option>
-            <option [ngValue]="100">100 items per page</option>
-          </select>
+          
+            <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshInventario()">
+              <option [ngValue]="10">10 items per pag</option>
+              <option [ngValue]="50">50 items per page</option>
+              <option [ngValue]="100">100 items per page</option>
+            </select>
+          
         </div>
       </div>
 
