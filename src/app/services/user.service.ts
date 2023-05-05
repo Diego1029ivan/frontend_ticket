@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Users } from '../interfaces/users';
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,10 @@ export class UserService {
     const url = `${this.baseUrl}/usersAll`;
     return this.http.get(url);
   }
+  getUser(id: number) {
+    const url = `${this.baseUrl}/users/${id}`;
+    return this.http.get(url);
+  }
   addUser(user: any) {
     const url = `${this.baseUrl}/registerUser/${user.rol_id}`;
     return this.http.post(url, user);
@@ -20,6 +25,9 @@ export class UserService {
   updateUser(user: Users) {
     const url = `${this.baseUrl}/users/${user.id}`;
     return this.http.put(url, user);
+  }
+  updatePerfil(user: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/updateProfile`, user);
   }
   deleteUser(id: number) {
     const url = `${this.baseUrl}/users/${id}`;
