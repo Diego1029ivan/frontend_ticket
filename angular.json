@@ -27,6 +27,9 @@
               "src/styles.css"
             ],
             "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/datatables.net/js/jquery.dataTables.min.js",
               "src/assets/js/core/jquery.3.2.1.min.js",
               "src/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js",
               "src/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js",
@@ -55,8 +58,11 @@
               "src/assets/js/core/popper.min.js",
               "src/assets/js/core/bootstrap.min.js",
               "src/assets/js/atlantis.min.js",
+              "src/assets/js/atlantis2.min.js",
               "src/assets/js/setting-demo.js",
-              "src/assets/js/demo.js"
+              "src/assets/js/setting-demo2.js",
+              "src/assets/js/demo.js",
+              "src/assets/js/demo2.js"
             ]
           },
           "configurations": {

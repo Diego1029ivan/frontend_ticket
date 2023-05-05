@@ -53,7 +53,7 @@ export class FiltroComponent implements OnInit {
   }
 
   public refreshBien() {
-    this.items = this.filteredItems
+    this.items.data = this.filteredItems
       .map((country: any, i: any) => ({ id: i + 1, ...country }))
       .slice(
         (this.page - 1) * this.pageSize,
