@@ -13,6 +13,7 @@ export class UserComponent implements OnInit {
   usuarioagrear: Users = new Users();
   usuarioSub!: FormGroup;
   usuarios: any = [];
+  correoActual: any = null;
   cargando: boolean = false;
   edit: boolean = false;
   constructor(private fb: FormBuilder, private userService: UserService) {
@@ -42,6 +43,7 @@ export class UserComponent implements OnInit {
   }
   editarUsuario(id1: number, users: any) {
     this.edit = false;
+    this.correoActual = users.email;
     this.usuarioSub.reset({
       name: users.name,
       email: users.email,
@@ -108,6 +110,11 @@ export class UserComponent implements OnInit {
         this.usuarioSub.reset();
       } else {
         //editar usuario
+
+        if (this.usuarioSub.value.email == this.correoActual) {
+          this.usuarioSub.value.email = '';
+        }
+        console.log(this.usuarioSub.value);
         this.userService.updateUser(this.usuarioSub.value).subscribe(
           (data) => {
             swal.fire(
@@ -121,11 +128,12 @@ export class UserComponent implements OnInit {
             if (error.error.email[0] == 'The email has already been taken.') {
               swal.fire(
                 'Error',
-                `El Correo ${this.usuarioagrear.email} ya existe`,
+                `El Correo ${this.usuarioSub.value.email} ya existe`,
                 'error'
               );
             } else if (error.ok == false) {
-              swal.fire('Error', `Algo salio mal, intente de nuevo `, 'error');
+              // swal.fire('Error', `Algo salio mal, intente de nuevo `, 'error');
+              console.log(error);
             }
           }
         );
