@@ -40,8 +40,24 @@
                         <input id="password" type="password" class="form-control"
                           placeholder="Ingresar Contraseña nueva" required formControlName="password">
                       </div>
-                      <p class="small errors" *ngIf="this.usuarioSub.get('password')?.errors?.['minlength']">
-                        La contraseña debe tener al menos 6 caracteres</p>
+                      <div
+                        *ngIf="usuarioSub.get('password')?.invalid && (usuarioSub.get('password')?.dirty || usuarioSub.get('password')?.touched)">
+                        <div class="small errors" *ngIf="usuarioSub.get('password')?.errors?.['minlength']">
+                          La contraseña debe tener al menos {{
+                          usuarioSub.get('password')?.errors?.['minlength'].requiredLength }} caracteres.
+                        </div>
+                        <div class="small errors" *ngIf="usuarioSub.get('password')?.errors?.['maxlength']">
+                          La contraseña no debe tener más de {{
+                          usuarioSub.get('password')?.errors?.['maxlength'].requiredLength }} caracteres.
+                        </div>
+                        <div class="small errors"
+                          *ngIf="usuarioSub.get('password')?.errors?.['customPasswordValidator']">
+                          La contraseña debe contener caracteres especiales, minúsculas, mayúsculas y números.
+                        </div>
+                      </div>
+
+                      <!-- <p class="small errors" *ngIf="this.usuarioSub.get('password')?.errors?.['minlength']">
+                        La contraseña debe tener al menos 6 caracteres</p> -->
                     </div>
                     <div class="col-md-12">
                       <input type="hidden" formControlName="id">

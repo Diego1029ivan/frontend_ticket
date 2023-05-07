@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import swal from 'sweetalert2';
 @Component({
@@ -27,13 +32,40 @@ export class CambiarContraComponent implements OnInit {
     this.usuarioSub = this.fb.group(
       {
         id: [''],
-        password: ['', [Validators.required, Validators.minLength(6)]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(20),
+            this.customPasswordValidator,
+          ],
+        ],
         password_confirmation: ['', [Validators.required]],
       },
       {
         validators: this.passwordMatchValidator,
       }
     );
+  }
+
+  customPasswordValidator(
+    control: AbstractControl
+  ): { [key: string]: boolean } | null {
+    const specialChars = /[ !@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
+    const lowerCaseChars = /[a-z]/;
+    const upperCaseChars = /[A-Z]/;
+    const numberChars = /[0-9]/;
+
+    if (
+      !specialChars.test(control.value) ||
+      !lowerCaseChars.test(control.value) ||
+      !upperCaseChars.test(control.value) ||
+      !numberChars.test(control.value)
+    ) {
+      return { customPasswordValidator: true };
+    }
+    return null;
   }
   // validar que las contraseñas sean iguales
   passwordMatchValidator(g: FormGroup) {
@@ -55,12 +87,15 @@ export class CambiarContraComponent implements OnInit {
     }
     this.userService.updateUser(this.usuarioSub.value).subscribe(
       (data: any) => {
-        this.closebutton.nativeElement.click();
         swal.fire({
           title: 'Contraseña Actualizada',
           text: 'La contraseña se actualizo correctamente',
           icon: 'success',
         });
+
+        this.closebutton.nativeElement.click();
+        this.cargarUsuarios();
+        this.usuarioSub.reset();
       },
       (err: any) => {
         swal.fire({
