@@ -21,6 +21,7 @@ export class FiltroComponent implements OnInit {
   pageSize: number = 10;
   collectionSize: number = 0;
   searchTerm = '';
+  cargando: number=2 ;
 
   tablaFiltro: any = [];
 
@@ -35,8 +36,10 @@ export class FiltroComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.cargando=0
     this.inventarioService.getBienes().subscribe((respo) => {
       this.items = respo;
+      this.cargando=1
       this.cargaTabla();
     });
   }

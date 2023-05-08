@@ -46,59 +46,61 @@
         </div>
       </div>
 
-
+      <app-carga *ngIf=" cargando == 0"></app-carga>
       <div class="table-responsive overflow-auto tabla-excel">
-          <table id="basic-datatables" class="display table table-striped table-hover" >
+            <div class="row" *ngIf=" cargando == 1">
+              <table id="basic-datatables" class="display table table-striped table-hover" >
 
-            <thead>
-              <tr>
-                <th scope="col">Seleccionar</th>
-                <th scope="col">Imprimir</th> 
-                <th scope="col">{{ header[0] }}</th>
-                <th scope="col">{{ header[2] }}</th> <!--Código patrimonial -->
-                <th scope="col">{{ header[3] }}</th>
-                <th scope="col">{{ header[6] }}</th>
-                <th scope="col">{{ header[10] }}</th>
-                <th scope="col">{{ header[7] }}</th>
-                <th scope="col">{{ header[9] }}</th>
-                <th scope="col">{{ header[11] }}</th>
-              </tr>
-            </thead>
+                <thead>
+                  <tr>
+                    <th scope="col">Seleccionar</th>
+                    <th scope="col">Imprimir</th> 
+                    <th scope="col">{{ header[0] }}</th>
+                    <th scope="col">{{ header[2] }}</th> <!--Código patrimonial -->
+                    <th scope="col">{{ header[3] }}</th>
+                    <th scope="col">{{ header[6] }}</th>
+                    <th scope="col">{{ header[10] }}</th>
+                    <th scope="col">{{ header[7] }}</th>
+                    <th scope="col">{{ header[9] }}</th>
+                    <th scope="col">{{ header[11] }}</th>
+                  </tr>
+                </thead>
 
 
 
-            <tbody *ngIf="filteredItems">
+                <tbody *ngIf="filteredItems">
 
-              <tr *ngFor="let row of filteredItems">
-                <td>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="checkbox" value="{{ row.codigo_patrimonial}}" id="flexCheckDefault"
-                      (change)="disableCheckboxes()" (click)="getSelectedCount()">
-                      <span class="form-check-sign">Check</span>
-                    </label>
-                  </div>
-                  <!-- <div class="form-check">
-                    
-                    <input class="form-check-input" type="checkbox" value="{{ row.codigo_patrimonial}}" id="flexCheckDefault"
-                      (change)="disableCheckboxes()" (click)="getSelectedCount()">
+                  <tr *ngFor="let row of filteredItems">
+                    <td>
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input class="form-check-input" type="checkbox" value="{{ row.codigo_patrimonial}}" id="flexCheckDefault"
+                          (change)="disableCheckboxes()" (click)="getSelectedCount()">
+                          <span class="form-check-sign">Check</span>
+                        </label>
+                      </div>
+                      <!-- <div class="form-check">
+                        
+                        <input class="form-check-input" type="checkbox" value="{{ row.codigo_patrimonial}}" id="flexCheckDefault"
+                          (change)="disableCheckboxes()" (click)="getSelectedCount()">
 
-                  </div> -->
-                </td> 
-                <td class=" text-center celda-icono"><a
-                    href="http://127.0.0.1:8000/inventaryPDF/{{row.codigo_patrimonial}}/{{row.fecha_adquisicion}}/{{row.denominacion_bien}}"
-                    target="_blank"><i class="fa fa-print icono-cursor"></i></a></td>
-                <td>{{ row.id}}</td>
-                <td>{{ row.codigo_patrimonial}}</td>
-                <td>{{ row.denominacion_bien}}</td>
-                <td>{{ row.fecha_adquisicion}}</td>
-                <td>{{ row.nro_cuenta_contable}}</td>
-                <td>{{ row.valor_adquisicion}}</td>
-                <td>{{ row.estado_bien}}</td>
-                <td>{{ row.cta_con_seguro}}</td>
-              </tr>
-            </tbody>
-          </table>
+                      </div> -->
+                    </td> 
+                    <td class=" text-center celda-icono"><a
+                        href="http://127.0.0.1:8000/inventaryPDF/{{row.codigo_patrimonial}}/{{row.fecha_adquisicion}}/{{row.denominacion_bien}}"
+                        target="_blank"><i class="fa fa-print icono-cursor"></i></a></td>
+                    <td>{{ row.id}}</td>
+                    <td>{{ row.codigo_patrimonial}}</td>
+                    <td>{{ row.denominacion_bien}}</td>
+                    <td>{{ row.fecha_adquisicion}}</td>
+                    <td>{{ row.nro_cuenta_contable}}</td>
+                    <td>{{ row.valor_adquisicion}}</td>
+                    <td>{{ row.estado_bien}}</td>
+                    <td>{{ row.cta_con_seguro}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
         </div>
     </div>
     <div class="d-flex justify-content-between p-2 container">
