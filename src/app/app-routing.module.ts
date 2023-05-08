@@ -9,6 +9,7 @@ import { UserComponent } from './pages/user/user.component';
 import { ReporteComponent } from './pages/reporte/reporte.component';
 import { CambiarContraComponent } from './pages/cambiar-contra/cambiar-contra.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
+import { EstadosComponent } from './pages/estados/estados.component';
 const routes: Routes = [
   {
     path: 'auth',
@@ -48,6 +49,11 @@ const routes: Routes = [
       {
         path: 'reporte',
         component: ReporteComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'cambioQR',
+        component: EstadosComponent,
         canActivate: [AuthGuard],
       },
       {

@@ -27,6 +27,7 @@ import { CargaComponent } from './components/carga/carga.component';
 import { CambiarContraComponent } from './pages/cambiar-contra/cambiar-contra.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { DonachartComponent } from './components/donachart/donachart.component';
+import { EstadosComponent } from './pages/estados/estados.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { DonachartComponent } from './components/donachart/donachart.component';
     CambiarContraComponent,
     PerfilComponent,
     DonachartComponent,
+    EstadosComponent,
   ],
   imports: [
     BrowserModule,

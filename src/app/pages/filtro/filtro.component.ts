@@ -22,7 +22,7 @@ export class FiltroComponent implements OnInit {
   collectionSize: number = 0;
   searchTerm = '';
   cargando: number=2 ;
-
+  total:number=0;
   tablaFiltro: any = [];
 
   busqueda: string = '';
@@ -47,6 +47,7 @@ export class FiltroComponent implements OnInit {
   public cargaTabla() {
     this.header = Object.keys(this.items.data[0]);
     this.collectionSize = this.items.data.length;
+    this.total=this.collectionSize;
     this.itemParcial = this.items.data;
     this.itemParcial2 = this.items.data;
     this.refreshBien();
@@ -59,6 +60,7 @@ export class FiltroComponent implements OnInit {
         (this.page - 1) * this.pageSize,
         (this.page - 1) * this.pageSize + this.pageSize
       );
+      
   }
 
   search() {
@@ -72,12 +74,14 @@ export class FiltroComponent implements OnInit {
           .includes(this.searchTerm.toLowerCase())
     );
     this.page = 1;
+    
   }
 
   // Función para obtener los datos de la tabla paginados y filtrados
   get filteredItems() {
     const startIndex = (this.page - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
+    //this.collectionSize = this.itemParcial?.slice(startIndex, endIndex).length;
     return this.itemParcial?.slice(startIndex, endIndex);
   }
 
@@ -87,6 +91,8 @@ export class FiltroComponent implements OnInit {
     this.tablaFiltro = this.filtro.transform(this.itemParcial2, this.busqueda);
     this.itemParcial = this.tablaFiltro;
     this.itemParcial != null ? this.refreshBien() : console.log('buscando');
+    this.collectionSize = this.itemParcial.length;
+    this.total=this.itemParcial.length;
   }
 
   /*=========CheckBox=============*/
@@ -151,4 +157,5 @@ export class FiltroComponent implements OnInit {
         window.open(fileUrl);
       });
   }
+  
 }

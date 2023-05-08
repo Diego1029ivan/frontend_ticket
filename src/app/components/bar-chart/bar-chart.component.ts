@@ -12,13 +12,17 @@ Chart.register(BarController, BarElement,CategoryScale,LinearScale );
   styleUrls: ['./bar-chart.component.css']
 })
 export class BarChartComponent {
+  
+
+
   @ViewChild('barChart', { static: true })
   pieChart!: ElementRef<HTMLCanvasElement>;
-
+  
   constructor(private inventarioService:InventarioService) {}
   ngOnInit(): void {
+    
     this.inventarioService.getCondicion().subscribe((condi)=>{
-
+        
         //console.log(condi)
           const ctx = this.pieChart.nativeElement.getContext('2d');
           if (!ctx) {

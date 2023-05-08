@@ -28,7 +28,6 @@
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/jquery/dist/jquery.min.js",
               "node_modules/datatables.net/js/jquery.dataTables.min.js",
               "src/assets/js/core/jquery.3.2.1.min.js",
               "src/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js",

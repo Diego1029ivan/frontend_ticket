@@ -11,9 +11,10 @@
       </div>
       <div class="card-body">
         <form>
-          <input type="file" class="form-control " (change)="onFileChange($event)" accept=".xlsx">
-          <button type="submit" class="btn btn-primary " (click)="enviarBienes()">Guardar</button>
-
+          <div class="row justify-content-around">
+            <input type="file" class="form-control col-4" (change)="onFileChange($event)" accept=".xlsx">
+            <button type="submit" class="btn btn-primary col-2" (click)="enviarBienes()">Guardar</button>
+          </div>
         </form>
         <!--poner un texto de cargando-->
         <app-carga *ngIf=" cargando == 0"></app-carga>
