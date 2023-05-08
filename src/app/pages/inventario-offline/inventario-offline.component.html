@@ -15,45 +15,49 @@
           <button type="submit" class="btn btn-primary " (click)="enviarBienes()">Guardar</button>
 
         </form>
-        
+        <!--poner un texto de cargando-->
+        <app-carga *ngIf=" cargando == 0"></app-carga>
         <div class="container overflow-auto tabla-excel" *ngIf="data.length > 0">
+          
 
+          <div class="row" *ngIf=" cargando == 1">
 
-          <table class="table table-striped mt-5">
+                <table class="table table-striped mt-5">
 
-            <thead>
-              <tr>
+                  <thead>
+                    <tr>
 
-                <!-- <th scope="col">Imprimir</th> -->
-                <th scope="col">{{ header[0] }}</th>
-                <th scope="col">{{ header[1] }}</th>
-                <th scope="col">{{ header[2] }}</th>
-                <th scope="col">{{ header[6] }}</th>
-                <th scope="col">{{ header[3] }}</th>
-                <th scope="col">{{ header[7] }}</th>
-                <th scope="col">{{ header[9] }}</th>
-                <th scope="col">{{ header[10] }}</th>
-              </tr>
-            </thead>
-            <tbody>
+                      <!-- <th scope="col">Imprimir</th> -->
+                      <th scope="col">{{ header[0] }}</th>
+                      <th scope="col">{{ header[1] }}</th>
+                      <th scope="col">{{ header[2] }}</th>
+                      <th scope="col">{{ header[6] }}</th>
+                      <th scope="col">{{ header[3] }}</th>
+                      <th scope="col">{{ header[7] }}</th>
+                      <th scope="col">{{ header[9] }}</th>
+                      <th scope="col">{{ header[10] }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
 
-              <tr *ngFor="let row of data | filtro:busqueda">
-                <!--
-                <td class=" text-center celda-icono"><a
-                    href="{{urlCodigoBarra}}/backend_ticket/impresionExcel/{{row.CODIGO_PATRIMONIAL}}/{{row.FECHA_DOCUMENTO_ADQUIS}}/{{row.DENOMINACION_BIEN}}"
-                    target="_blank"><i class="fa-solid fa-print icono-cursor"></i></a></td> -->
-                <td>{{ row.NRO}}</td>
-                <td>{{ row.CODIGO_PATRIMONIAL}}</td>
-                <td>{{ row.DENOMINACION_BIEN}}</td>
-                <td>{{ row.FECHA_DOCUMENTO_ADQUIS}}</td>
-                <td>{{ row.NRO_CTA_CONTABLE}}</td>
-                <td>{{ row.VALOR_ADQUIS}}</td>
-                <td>{{ row.NOM_EST_BIEN}}</td>
-                <td>{{ row.OPC_ASEGURADO}}</td>
-              </tr>
-            </tbody>
-          </table>
+                    <tr *ngFor="let row of data | filtro:busqueda">
+                      <!--
+                      <td class=" text-center celda-icono"><a
+                          href="{{urlCodigoBarra}}/backend_ticket/impresionExcel/{{row.CODIGO_PATRIMONIAL}}/{{row.FECHA_DOCUMENTO_ADQUIS}}/{{row.DENOMINACION_BIEN}}"
+                          target="_blank"><i class="fa-solid fa-print icono-cursor"></i></a></td> -->
+                      <td>{{ row.NRO}}</td>
+                      <td>{{ row.CODIGO_PATRIMONIAL}}</td>
+                      <td>{{ row.DENOMINACION_BIEN}}</td>
+                      <td>{{ row.FECHA_DOCUMENTO_ADQUIS}}</td>
+                      <td>{{ row.NRO_CTA_CONTABLE}}</td>
+                      <td>{{ row.VALOR_ADQUIS}}</td>
+                      <td>{{ row.NOM_EST_BIEN}}</td>
+                      <td>{{ row.OPC_ASEGURADO}}</td>
+                    </tr>
+                  </tbody>
+                </table>
         </div>
+    </div>
         <div class="d-flex justify-content-between p-2 container" *ngIf="data.length > 0">
 
           <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" [maxSize]="5"

@@ -27,6 +27,7 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
   collectionSize: number = 0;
   data: Bien[] = [];
   valor: Boolean = false;
+  cargando: number=2 ;
 
   tablaParcial: any = [];
   tablaParcial2: any = [];
@@ -39,7 +40,9 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
     private authService: AuthService,
     private router: Router,
     private filtro: FiltroPipe
-  ) {}
+  ) {
+    
+  }
   ngAfterViewInit(): void {
     
     
@@ -52,6 +55,7 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
   }
 
   onFileChange(ev: any) {
+    this.cargando=0;
     let workBook: any = null;
     let jsonData: any = null;
     const reader = new FileReader();
@@ -68,6 +72,7 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
     }
 
     reader.onload = (event) => {
+      
       const data = reader.result;
       workBook = XLSX.read(data, { type: 'binary' });
       jsonData = workBook.SheetNames.reduce((initial: any, name: any) => {
@@ -84,6 +89,7 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
       this.tablaParcial2 = this.data;
       console.log(this.data);
       this.refreshInventario();
+      this.cargando=1;
     };
     reader.readAsBinaryString(file);
   }
