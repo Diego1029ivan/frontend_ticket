@@ -19,7 +19,4 @@ export class NavbarComponent {
     );
   }
   username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
-  perfil() {
-    return this.username;
-  }
 }
