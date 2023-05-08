@@ -44,4 +44,13 @@ export class InventarioService {
       this.httpOptions
     );
   }
+
+  //generar conficiones de los bienes
+  getEstado(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/estados`);
+  }
+
+  getCondicion(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/condiciones`);
+  }
 }
