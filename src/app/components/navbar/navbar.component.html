@@ -77,9 +77,27 @@
               </li>
               <li>
                 <a routerLink="./ResetiarPassword">
-                  <span class="sub-item">ResetiarPassword</span>
+                  <span class="sub-item">Reset Password</span>
                 </a>
               </li>
+
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a data-toggle="collapse" href="#sidebarEstados">
+            <i class="fas fa-bookmark"></i>
+            <p>Estado</p>
+            <span class="caret"></span>
+          </a>
+          <div class="collapse" id="sidebarEstados">
+            <ul class="nav nav-collapse">
+              <li>
+                <a routerLink="./cambioQR">
+                  <span class="sub-item">Cambio QR</span>
+                </a>
+              </li>
+              
 
             </ul>
           </div>

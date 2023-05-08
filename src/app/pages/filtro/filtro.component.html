@@ -24,15 +24,17 @@
 <div class="card">
   <div class="card-body">
     <div class="input-group buscar container mt-3">
-
-
-      <input type="text" [(ngModel)]="busqueda" class="form-control " (keyup)="actualizarBusqueda($event)"
-        placeholder="Buscar...">
-      <span class="input-group-text">
-        <i class="fas fa-search"></i>
-      </span>
-
-
+      
+      
+        <input type="text" [(ngModel)]="busqueda" class="form-control" (keyup)="actualizarBusqueda($event)"
+          placeholder="Buscar...">
+        <span class="input-group-text">
+          <i class="fas fa-search"></i>
+        </span>
+      
+      <div class="mx-3">
+        <h3>Total de bienes {{total}}</h3>
+      </div>
     </div>
 
     <div class="container overflow-auto mt-3 text-center">
