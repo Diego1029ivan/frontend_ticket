@@ -1,10 +1,9 @@
 <div class="page-header">
   <h4 class="page-title"> GESTIÓN INVENTARIO UNSM</h4>
 </div>
-<!--poner un texto de cargando-->
-<app-carga *ngIf=" cargando == false"></app-carga>
 
-<div class="row" *ngIf=" cargando == true">
+
+<div class="row">
 
   <div class="col-md-12">
 
@@ -17,6 +16,8 @@
 
       </div>
       <div class="card-body">
+        <!--poner un texto de cargando-->
+        <app-carga *ngIf="cargando == false"></app-carga>
         <!-- Modal -->
         <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -84,13 +85,13 @@
           </div>
         </div>
         <!-- Modal end-->
-        <div class="alert alert-danger" role="alert" *ngIf="usuarios.data?.length == 0">
+        <div class="alert alert-danger" role="alert" *ngIf="usuarios.data?.length == 0 && cargando == true">
           no hay usuarios
         </div>
 
-        <div class="container overflow-auto tabla-excel" *ngIf="usuarios.data?.length != 0">
+        <div class="container overflow-auto tabla-excel" *ngIf="usuarios.data?.length != 0 && cargando == true">
 
-          <table class="table table-striped mt-5 table-hover">
+          <table class="table table-striped mt-2 table-hover">
 
             <thead>
               <tr>

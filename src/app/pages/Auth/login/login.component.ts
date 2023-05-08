@@ -48,7 +48,11 @@ export class LoginComponent implements OnInit {
         this.authService.guardarUsuario(response.user);
       },
       (err) => {
-        console.log(err);
+        if (err.ok == false) {
+          swal.fire('Error', `Algo salio mal, intente de nuevo `, 'error');
+        } else {
+          console.log(err);
+        }
       }
     );
   }
