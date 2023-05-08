@@ -21,7 +21,7 @@
             <a href="#" class="float-right  textnone">Olvidaste tu Password ?</a>
             <div class="position-relative">
               <input id="password" name="password" type="password" class="form-control" required
-                formControlName="password">
+                formControlName="password" placeholder="Agregar contraseña">
               <span *ngIf="this.loginForm.get('password')?.errors?.['minlength']?.requiredLength" class="errors">
                 minimo 6 caracteres
               </span>

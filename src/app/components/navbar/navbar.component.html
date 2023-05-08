@@ -7,20 +7,13 @@
         </div>
         <div class="info">
           <a data-toggle="collapse" routerLink="./perfil" aria-expanded="true">
-            <!-- <span>
-              {{perfil().name}}
-              <span class="user-level">Administrator</span>
-              <span class="caret"></span>
-            </span> -->
+
             <span *ngIf=" userLogado != null">
               {{userLogado.data[0].name}}
               <span class="user-level">{{userLogado.data[0].rol_name}}</span>
 
             </span>
           </a>
-
-
-
         </div>
       </div>
       <ul class="nav nav-primary">
