@@ -52,7 +52,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'cambioQR',
+        path: 'cambioQR/:codigo',
         component: EstadosComponent,
         canActivate: [AuthGuard],
       },
