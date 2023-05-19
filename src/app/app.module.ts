@@ -15,7 +15,6 @@ import { FiltroPipe } from './pipes/filtro.pipe';
 import { FiltroComponent } from './pages/filtro/filtro.component';
 import { UserComponent } from './pages/user/user.component';
 import { LoginComponent } from './pages/Auth/login/login.component';
-import { RegisterComponent } from './pages/Auth/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -28,8 +27,8 @@ import { CambiarContraComponent } from './pages/cambiar-contra/cambiar-contra.co
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { DonachartComponent } from './components/donachart/donachart.component';
 import { EstadosComponent } from './pages/estados/estados.component';
+import { ResetPasswordComponent } from './pages/Auth/reset-password/reset-password.component';
 import { LectorBarrasComponent } from './pages/lector-barras/lector-barras.component';
-
 
 @NgModule({
   declarations: [
@@ -39,7 +38,6 @@ import { LectorBarrasComponent } from './pages/lector-barras/lector-barras.compo
     FiltroComponent,
     UserComponent,
     LoginComponent,
-    RegisterComponent,
     HomeComponent,
     NavbarComponent,
     HeaderComponent,
@@ -51,6 +49,7 @@ import { LectorBarrasComponent } from './pages/lector-barras/lector-barras.compo
     PerfilComponent,
     DonachartComponent,
     EstadosComponent,
+    ResetPasswordComponent,
     LectorBarrasComponent,
   ],
   imports: [
@@ -60,7 +59,6 @@ import { LectorBarrasComponent } from './pages/lector-barras/lector-barras.compo
     NgbModule,
     NgBoostrapModule,
     ReactiveFormsModule,
-    
   ],
   providers: [
     {

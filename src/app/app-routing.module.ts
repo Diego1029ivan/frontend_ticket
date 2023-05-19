@@ -3,7 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { InventarioOfflineComponent } from './pages/inventario-offline/inventario-offline.component';
 import { FiltroComponent } from './pages/filtro/filtro.component';
 import { LoginComponent } from './pages/Auth/login/login.component';
+import { ResetPasswordComponent } from './pages/Auth/reset-password/reset-password.component';
+
 import { HomeComponent } from './pages/home/home.component';
+
 import { AuthGuard } from './guards/auth.guard';
 import { UserComponent } from './pages/user/user.component';
 import { ReporteComponent } from './pages/reporte/reporte.component';
@@ -15,6 +18,10 @@ const routes: Routes = [
   {
     path: 'auth',
     component: LoginComponent,
+  },
+  {
+    path: 'restablecerPassword',
+    component: ResetPasswordComponent,
   },
   {
     path: 'sistemaInventario',
