@@ -136,7 +136,7 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
         )
         .subscribe({
           next: (data) => {
-            console.log(data);
+            //console.log(data);
           },
           error: (error) => {
             try {

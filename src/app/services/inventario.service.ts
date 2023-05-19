@@ -53,4 +53,8 @@ export class InventarioService {
   getCondicion(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/condiciones`);
   }
+  //actualizar el bien
+  updateInventario(codigo: string,inventario:any): Observable<any>{
+    return this.http.put<any>(`${this.baseUrl}/inventario/${codigo}`,inventario);
+  }
 }
