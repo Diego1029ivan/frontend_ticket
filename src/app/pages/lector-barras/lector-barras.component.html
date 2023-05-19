@@ -1,5 +1,124 @@
-<p>lector-barras works!</p>
-<div>
-    <video id="scanner" width="100%"></video>
-    <p *ngIf="barcodeData">Código de barras escaneado: {{ barcodeData }}</p>
+
+
+
+<div class="page-header">
+  <h4 class="page-title">Lectora de Barras</h4>
+  <ul class="breadcrumbs">
+    <li class="nav-home">
+      <a href="#">
+        <i class="flaticon-home"></i>
+      </a>
+    </li>
+    <li class="separator">
+      <i class="flaticon-right-arrow"></i>
+    </li>
+    <li class="nav-item">
+      <a href="#">Lectora</a>
+    </li>
+    <li class="separator">
+      <i class="flaticon-right-arrow"></i>
+    </li>
+    <li class="nav-item">
+      <a href="#">Barras</a>
+    </li>
+  </ul>
+</div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+              <div class="card-title">Validación de datos</div>
+              <div class="card-category">Descripción del bien</div>
+              <input type="text" 
+              class="form-control" 
+              [(ngModel)]="inputValue" 
+              (ngModelChange)="cargarBien()">
+          </div>
+              <app-carga *ngIf=" cargando == 0"></app-carga>
+                <form id="exampleValidation"*ngIf=" cargando == 1" >
+                  <div class="card-body">
+                    <div class="form-group form-show-validation row">
+                      <label  class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nombre</label>
+                      <div class="col-lg-8 col-md-9 col-sm-8 centrar">
+                        <input class="form-control" value={{descripcion.denominacion_bien}} 
+                         disabled>
+                        
+                      </div>
+                    </div>
+                    <div class="form-group form-show-validation row">
+                      <label  class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Código</label>
+                      <div class="col-lg-8 col-md-9 col-sm-8 centrar">
+                        <input class="form-control" value={{descripcion.codigo_patrimonial}} 
+                        
+                        id="codigo_patrimonial" name="codigo_patrimonial" disabled>
+                        
+                        
+                      </div>
+                    </div>
+                    <div class="form-group form-show-validation row">
+                      <label  class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Fecha Adq.</label>
+                      <div class="col-lg-8 col-md-9 col-sm-8 centrar">
+                        <input class="form-control" value={{descripcion.fecha_adquisicion}} disabled>
+                        
+                      </div>
+                    </div>
+                    <div class="form-group form-show-validation row">
+                      <label  class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Estado Actual</label>
+                      <div class="col-lg-3 col-md-9 col-sm-8 centrar">
+                        <input class="form-control" 
+                        value={{descripcion.estado_bien}} 
+                        
+                        id="estado_bien1" name="estado_bien1"disabled>
+                        
+                      </div>
+                      
+                     
+                    </div>
+                    
+                    <div class="form-group form-show-validation row">
+                      <label  class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Condición</label>
+                      <div class="col-lg-3 col-md-9 col-sm-8 centrar">
+                        <input class="form-control" 
+                        value={{descripcion.condicion}} 
+                        
+                        id="condicion1" name="condicion1"disabled>
+                        
+                      </div>
+                      
+                      
+                    </div>
+                    
+                  </div>
+                  
+                </form>
+            
+          
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Seleccionar (Estado y Condición)</h4>
+          </div>
+          <div class="card-body">
+            <table id="basic-datatables" class="display table table-striped table-hover" >
+
+              <thead>
+                <tr>
+                  <th scope="col">Código</th>
+                  <th scope="col">hora Actual</th> <!--Código patrimonial -->
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let bien of listaBienes">
+                  <td>{{ bien.codigo_patrimonial}}</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
   </div>
