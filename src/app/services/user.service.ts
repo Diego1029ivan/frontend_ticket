@@ -33,4 +33,8 @@ export class UserService {
     const url = `${this.baseUrl}/users/${id}`;
     return this.http.delete(url);
   }
+
+  resetPassword(user: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/forget-password`, user);
+  }
 }
