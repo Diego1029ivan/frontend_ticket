@@ -10,6 +10,7 @@ import { ReporteComponent } from './pages/reporte/reporte.component';
 import { CambiarContraComponent } from './pages/cambiar-contra/cambiar-contra.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { EstadosComponent } from './pages/estados/estados.component';
+import { LectorBarrasComponent } from './pages/lector-barras/lector-barras.component';
 const routes: Routes = [
   {
     path: 'auth',
@@ -54,6 +55,11 @@ const routes: Routes = [
       {
         path: 'cambioQR/:codigo',
         component: EstadosComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'codigo-barras',
+        component: LectorBarrasComponent,
         canActivate: [AuthGuard],
       },
       {

@@ -28,6 +28,7 @@ import { CambiarContraComponent } from './pages/cambiar-contra/cambiar-contra.co
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { DonachartComponent } from './components/donachart/donachart.component';
 import { EstadosComponent } from './pages/estados/estados.component';
+import { LectorBarrasComponent } from './pages/lector-barras/lector-barras.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { EstadosComponent } from './pages/estados/estados.component';
     PerfilComponent,
     DonachartComponent,
     EstadosComponent,
+    LectorBarrasComponent,
   ],
   imports: [
     BrowserModule,
