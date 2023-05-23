@@ -17,6 +17,8 @@ export class EstadosComponent {
   inputValue: string='';
   selectedOptionC: string | null = null;
   inputValueC: string='';
+  inputFecha: string='';
+  selectedFecha: string | null = null;
 
   descripcion:Inventario={
     codigo_patrimonial:"123",
@@ -27,7 +29,8 @@ export class EstadosComponent {
     nro_cuenta_contable: "1503.020102",
     cta_con_seguro: "NO",
     estado_bien: "R",
-    condicion: "A"
+    condicion: "A",
+    fecha_inventario:new Date("2023-04-23")
 
   }
   /*=======FORMULARIO==========*/
@@ -36,19 +39,31 @@ export class EstadosComponent {
     estado_bien1: '',
     estado_bien2: '',
     condicion1:'',
-    condicion2: ''
+    condicion2: '',
+    fecha1:'',
+    fecha2:''
 
   };
-
+  currentDateTime= '';
+  hoy=new Date()
   enviarData={
     codigo_patrimonial: '',
     estado_bien: '',
     condicion: '',
+    fecha_inventario: ''
   }
   descBien:any[]=[]
   constructor(private router:Router,
     private activatedRoute: ActivatedRoute,
     private inventarioService: InventarioService){
+      
+        this.hoy = new Date();
+        const year = this.hoy.getFullYear();
+        const month = (this.hoy.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses en JavaScript son base 0
+        const day = this.hoy.getDate().toString().padStart(2, '0');
+        this.currentDateTime = `${year}-${month}-${day}`;
+        console.log(this.currentDateTime )
+       // Actualizar cada segundo (1000 ms)
     
   }
   ngOnInit(): void {
@@ -59,6 +74,7 @@ export class EstadosComponent {
       
     });
     this.cargarBien(this.codigo)
+    this.formulario.fecha1 = this.descripcion.fecha_inventario.toDateString();
   }
 
   cargarBien(codigo:string){
@@ -68,7 +84,11 @@ export class EstadosComponent {
       this.formulario.codigo_patrimonial=this.descripcion.codigo_patrimonial
       this.formulario.estado_bien1=this.descripcion.estado_bien
       this.formulario.condicion1=this.descripcion.condicion
-      console.log(this.descripcion)
+      // if(this.descripcion.fecha_inventario){
+      //   this.formulario.fecha1=this.descripcion.fecha_inventario.toDateString()
+      // }
+
+     
     })
   }
   onSelectOption(event: any) {
@@ -82,7 +102,7 @@ export class EstadosComponent {
     // Por ejemplo:
     if (this.selectedOption === 'N') {
       this.inputValue = this.selectedOption.valueOf();
-      
+      this.formulario.estado_bien2=this.selectedOption.valueOf();
     } else if (this.selectedOption === 'B') {
       this.inputValue = this.selectedOption.valueOf();
       this.formulario.estado_bien2=this.selectedOption.valueOf();
@@ -120,12 +140,25 @@ export class EstadosComponent {
     console.log(this.inputValueC)
   }
   
+  /*========actualizar FECHA===========*/
+
+  onFecha(event: any) {
+    this.selectedFecha = event.target['value'];
+    this.updateFecha(); // Llama a la función para actualizar el valor del input
+  }
+
+  updateFecha() {
+    this.inputFecha=this.currentDateTime
+    this.formulario.fecha2=this.currentDateTime
+    console.log(this.currentDateTime)
+  }
 
   enviarFormulario() {
     console.log(this.formulario)
     this.formulario.estado_bien2?this.enviarData.estado_bien=this.formulario.estado_bien2:this.enviarData.estado_bien=this.formulario.estado_bien1
     this.formulario.condicion2?this.enviarData.condicion=this.formulario.condicion2:this.enviarData.condicion=this.formulario.condicion1
-    
+    this.formulario.fecha2?this.enviarData.fecha_inventario=this.formulario.fecha2:this.enviarData.fecha_inventario=this.formulario.fecha1
+
     this.enviarData.codigo_patrimonial=this.formulario.codigo_patrimonial
     console.log(this.enviarData);
     swal
@@ -158,8 +191,6 @@ export class EstadosComponent {
     
   }
 
-  actualizar_inventario(){
-
-  }
+  
 }
 
