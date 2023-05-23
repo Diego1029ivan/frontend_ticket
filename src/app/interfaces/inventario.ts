@@ -16,4 +16,5 @@ export interface Inventario {
     user_id?:                             number;
     created_at?:                           Date;
     updated_at?:                           Date;
+    fecha_inventario:                      Date;
 }
