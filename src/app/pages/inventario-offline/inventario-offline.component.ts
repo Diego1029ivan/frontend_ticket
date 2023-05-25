@@ -113,13 +113,13 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
   /*====== POST ========*/
   enviarBienes(): void {
     for (let i = 0; i < this.tablaParcial.length; i++) {
-      //console.log(this.tablaParcial[i])
+      console.log(this.tablaParcial[i])
 
       this.tablaParcial[i]['FECHA_DOCUMENTO_ADQUIS'] = moment(
         this.tablaParcial[i]['FECHA_DOCUMENTO_ADQUIS'],
         'DD/MM/YYYY'
       ).format('YYYY-MM-DD');
-      //console.log(this.tablaParcial[i]['FECHA_DOCUMENTO_ADQUIS'])
+      console.log(this.tablaParcial[i]['FECHA_DOCUMENTO_ADQUIS'])
 
       this.tablaParcial[i]['NOM_EST_BIEN'] =
         this.tablaParcial[i]['NOM_EST_BIEN'].charAt(0);
@@ -136,7 +136,7 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
         )
         .subscribe({
           next: (data) => {
-            //console.log(data);
+            console.log(data);
           },
           error: (error) => {
             try {

@@ -214,7 +214,11 @@ export class LectorBarrasComponent {
           'Actualizando',
           `El inventario ${this.formulario.codigo_patrimonial} ha sido actualizado`,
           'success'
+          
         );
+        this.inputValue=''
+        this.inputFecha=''
+        this.inputValueC=''
       })
         
         
