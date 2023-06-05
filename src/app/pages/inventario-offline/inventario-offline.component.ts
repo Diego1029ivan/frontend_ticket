@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 import * as moment from 'moment';
 import { Bien } from 'src/app/interfaces/bien';
 import { FiltroPipe } from 'src/app/pipes/filtro.pipe';
-import { catchError, of, throwError } from 'rxjs';
+import { catchError, delay, of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -81,13 +81,29 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
         return initial;
       }, {});
       this.data = jsonData[Object.keys(jsonData)[0]];
-
+      
       this.header = Object.keys(this.data[0]);
+
+      // Convertir números de fecha a objetos Date
+      this.data.forEach((item: any) => {
+        // Reemplaza "numeroFecha" con el nombre de la propiedad que contiene el número de fecha en tu objeto de datos
+        item.FECHA_DOCUMENTO_ADQUIS = new Date(item.FECHA_DOCUMENTO_ADQUIS);
+        // Obtener los componentes de la fecha
+        const year = item.FECHA_DOCUMENTO_ADQUIS.getFullYear();
+        const month = ("0" + (item.FECHA_DOCUMENTO_ADQUIS.getMonth() + 1)).slice(-2);
+        const day = ("0" + item.FECHA_DOCUMENTO_ADQUIS.getDate()).slice(-2);
+
+        // Crear la cadena de fecha en formato MySQL
+        item.FECHA_DOCUMENTO_ADQUIS = `${year}-${month}-${day}`;
+        item.NOM_EST_BIEN=item.NOM_EST_BIEN.charAt(0);
+        item.CONDICION=item.CONDICION.charAt(0);
+      });
+      //console.log(this.header)
       this.collectionSize = this.data.length;
 
       this.tablaParcial = this.data;
       this.tablaParcial2 = this.data;
-      console.log(this.data);
+      //console.log(this.data);
       this.refreshInventario();
       this.cargando=1;
     };
@@ -111,22 +127,25 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
   }
 
   /*====== POST ========*/
+  dimensionPaquete=50;
+  delayTime = 2000; 
   enviarBienes(): void {
+    // for (let i = 0; i < this.tablaParcial.length; i += this.dimensionPaquete) {
+    //   const paquete = this.tablaParcial.slice(i, i + this.dimensionPaquete);
+    //   for (let j = 0; j < paquete.length; j++) {
+    //   this.inventarioService.postLista(paquete[j])
+    //     .subscribe(
+    //       (response) => {
+    //         console.log(response);
+    //       },
+    //       (error) => {
+    //         // Manejar cualquier error en la solicitud
+    //       }
+    //     );
+    //   }
+    // }
     for (let i = 0; i < this.tablaParcial.length; i++) {
-      console.log(this.tablaParcial[i])
-
-      this.tablaParcial[i]['FECHA_DOCUMENTO_ADQUIS'] = moment(
-        this.tablaParcial[i]['FECHA_DOCUMENTO_ADQUIS'],
-        'DD/MM/YYYY'
-      ).format('YYYY-MM-DD');
-      console.log(this.tablaParcial[i]['FECHA_DOCUMENTO_ADQUIS'])
-
-      this.tablaParcial[i]['NOM_EST_BIEN'] =
-        this.tablaParcial[i]['NOM_EST_BIEN'].charAt(0);
-      //console.log(this.tablaParcial[i]['NOM_EST_BIEN'])
-      this.tablaParcial[i]['CONDICION'] =
-        this.tablaParcial[i]['CONDICION'].charAt(0);
- 
+      
       this.inventarioService
         .postLista(this.tablaParcial[i])
         .pipe(

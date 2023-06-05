@@ -39,8 +39,11 @@ export class FiltroComponent implements OnInit {
     this.cargando=0
     this.inventarioService.getBienes().subscribe((respo) => {
       this.items = respo;
+      //console.log(this.items)
       this.cargando=1
+      if(this.items.data!=0){
       this.cargaTabla();
+      }
     });
   }
 

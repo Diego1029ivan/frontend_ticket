@@ -13,7 +13,13 @@ export class Bien {
     CTA_CON_SEGURO:string= '';
     NOM_EST_BIEN:string= '';
     CONDICION:string= '';
-  
-  
+    VALOR_ADQUIS:string= '';
+    VALOR_NETO:string= '';
+    DESC_AREA:string= '';
+    MARCA:string= '';
+    MODELO:string= '';
+    DIMENSION:string= '';
+    SERIE:string= '';
+    COLOR:string= '';
   }
   

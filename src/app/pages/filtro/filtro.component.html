@@ -23,7 +23,7 @@
 </div>
 <div class="card">
   <div class="card-body">
-    <div class="input-group buscar container mt-3">
+    <div class="input-group buscar container ">
       
       
         <input type="text" [(ngModel)]="busqueda" class="form-control" (keyup)="actualizarBusqueda($event)"
@@ -49,8 +49,11 @@
       </div>
 
       <app-carga *ngIf=" cargando == 0"></app-carga>
-      <div class="table-responsive overflow-auto tabla-excel">
-            <div class="row" *ngIf=" cargando == 1">
+      <div class="alert alert-danger mt-3" role="alert" *ngIf="items?.data.length == 0">
+        no hay bienes en la base de datos
+      </div>
+      <div class="table-responsive overflow-auto tabla-excel" *ngIf="items?.data.length != 0">
+            <div class="row" *ngIf=" cargando == 1" >
               <table id="basic-datatables" class="display table table-striped table-hover" >
 
                 <thead>
