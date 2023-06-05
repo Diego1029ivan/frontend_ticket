@@ -18,7 +18,7 @@ export class Bien {
     DESC_AREA:string= '';
     MARCA:string= '';
     MODELO:string= '';
-    DIMENSION:string= '';
+    DIMENSION?:string= '';
     SERIE:string= '';
     COLOR:string= '';
   }

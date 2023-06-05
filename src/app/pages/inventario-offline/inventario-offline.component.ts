@@ -144,33 +144,20 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
     //     );
     //   }
     // }
-    for (let i = 0; i < this.tablaParcial.length; i++) {
-      
+    //for (let i = 0; i < this.tablaParcial.length; i++) {
+      console.log(this.tablaParcial)
       this.inventarioService
-        .postLista(this.tablaParcial[i])
+        .postLista(this.tablaParcial)
         .pipe(
           catchError((error: HttpErrorResponse) => {
             return throwError(error);
           })
         )
-        .subscribe({
-          next: (data) => {
-            console.log(data);
-          },
-          error: (error) => {
-            try {
-              // intentar manejar el error
-              if (error.status === 500) {
-                console.log(error);
-              } else {
-                // hacer algo para otros errores
-                console.log(error);
-              }
-            } catch (e) {
-              console.log(e);
-            }
-          },
-        });
-    }
+        .subscribe((respo)=>{
+          console.log(respo)
+        }
+          
+        );
+    //}
   }
 }

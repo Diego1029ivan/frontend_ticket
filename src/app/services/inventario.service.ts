@@ -32,8 +32,8 @@ export class InventarioService {
   getCodigo(codigo: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/biencodigo/${codigo}`);
   }
-  postLista(data: Bien): Observable<any> {
-    return this.http.post<Bien>(`${this.baseUrl}/inventary`, data);
+  postLista(data: Bien[]): Observable<any> {
+    return this.http.post<Bien[]>(`${this.baseUrl}/inventary`, data);
   }
 
   //cargar un nuevo pdf con post
