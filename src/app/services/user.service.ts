@@ -37,4 +37,7 @@ export class UserService {
   resetPassword(user: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/forget-password`, user);
   }
+  getPermisourlLogeado(name: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/rolpermisol/${name}`);
+  }
 }

@@ -26,6 +26,7 @@
               formControlName="email"
               placeholder="Agregar su correo"
               required
+              autocomplete="off"
             />
             <span
               class="small errors"
@@ -47,6 +48,7 @@
                 required
                 formControlName="password"
                 placeholder="Agregar contraseña"
+                autocomplete="off"
               />
               <span
                 *ngIf="this.loginForm.get('password')?.errors?.['minlength']?.requiredLength"

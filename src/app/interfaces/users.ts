@@ -5,4 +5,5 @@ export class Users {
   password: string = '';
   password_confirmation?: string = '';
   rol_id?: number = 0;
+  rol?: string = '';
 }
