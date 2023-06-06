@@ -22,6 +22,11 @@ export class LectorBarrasComponent {
   inputValueC: string='';
   inputFecha: string='';
   selectedFecha: string | null = null;
+  inputArea: string='';
+  
+  selectedArea: string | null = null;
+
+
   descripcion:Inventario={
     codigo_patrimonial:"123",
     denominacion_bien:"prueba bien",
@@ -32,7 +37,9 @@ export class LectorBarrasComponent {
     cta_con_seguro: "NO",
     estado_bien: "R",
     condicion: "A",
-    fecha_inventario:new Date("2010-05-03")
+    fecha_inventario:new Date("2010-05-03"),
+    desc_area:"UNSM",
+    valor_neto:"1000"
 
   }
   descripcion2:Inventario={
@@ -45,7 +52,9 @@ export class LectorBarrasComponent {
     cta_con_seguro: "NO",
     estado_bien: "R",
     condicion: "A",
-    fecha_inventario:new Date("2010-05-03")
+    fecha_inventario:new Date("2010-05-03"),
+    desc_area:"UNSM",
+    valor_neto:"1000"
 
   }
   formulario = {
@@ -55,16 +64,20 @@ export class LectorBarrasComponent {
     condicion2:'',
     condicion3: '',
     fecha1:'',
-    fecha2:''
+    fecha2:'',
+    area1:'',
+    area2:''
 
   };
   enviarData={
     codigo_patrimonial: '',
     estado_bien: '',
     condicion: '',
-    fecha_inventario: ''
+    fecha_inventario: '',
+    desc_area:''
   }
   currentDateTime= '';
+  currentDateTime1= '';
   hoy=new Date()
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -122,7 +135,18 @@ export class LectorBarrasComponent {
       this.formulario.codigo_patrimonial=this.descripcion.codigo_patrimonial
       this.formulario.estado_bien2=this.descripcion2.estado_bien
       this.formulario.condicion2=this.descripcion2.condicion     
-      this.formulario.fecha1 = this.descripcion.fecha_inventario.toDateString(); 
+      //this.formulario.fecha1 = this.descripcion.fecha_inventario.toDateString(); 
+
+      this.hoy = new Date(this.descripcion.fecha_inventario);
+      this.hoy.setDate(this.hoy.getDate()); // Agregar 1 día
+        const year = this.hoy.getFullYear();
+        const month = (this.hoy.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses en JavaScript son base 0
+        const day = this.hoy.getDate().toString().padStart(2, '0');
+        this.currentDateTime1 = `${year}-${month}-${day}`;
+
+      this.formulario.fecha1 = this.currentDateTime1;
+      this.formulario.area1=this.descripcion.desc_area;
+      this.cargarArea()
     })
     
   }
@@ -188,15 +212,34 @@ export class LectorBarrasComponent {
     this.formulario.fecha2=this.currentDateTime
     console.log(this.currentDateTime)
   }
+/*========actualizar AREA===========*/
 
+onArea(event: any) {
+  this.selectedArea = event.target['value'];
+  this.updateArea(); // Llama a la función para actualizar el valor del input
+}
+
+updateArea() {
+  if (this.selectedArea) {
+    this.inputArea = this.selectedArea.valueOf();
+    this.formulario.area2=this.selectedArea.valueOf();
+  } else {
+    // Manejar el caso en el que this.selectedArea es null
+    // Por ejemplo, puedes asignar un valor predeterminado a this.inputArea
+    this.inputArea = ''; // Valor predeterminado vacío
+  }
+  
+  console.log(this.formulario.area2)
+}
   enviarFormulario() {
     console.log(this.formulario)
     this.formulario.estado_bien3?this.enviarData.estado_bien=this.formulario.estado_bien3:this.enviarData.estado_bien=this.formulario.estado_bien2
     this.formulario.condicion3?this.enviarData.condicion=this.formulario.condicion3:this.enviarData.condicion=this.formulario.condicion2
     this.formulario.fecha2?this.enviarData.fecha_inventario=this.formulario.fecha2:this.enviarData.fecha_inventario=this.formulario.fecha1
+    this.formulario.area2?this.enviarData.desc_area=this.formulario.area2:this.enviarData.desc_area=this.formulario.area1
 
     this.enviarData.codigo_patrimonial=this.formulario.codigo_patrimonial
-    console.log(this.enviarData);
+    //console.log(this.enviarData);
     swal
     .fire({
       title: '¿Estas seguro?',
@@ -216,9 +259,12 @@ export class LectorBarrasComponent {
           'success'
           
         );
+        console.log(respo)
+       
         this.inputValue=''
         this.inputFecha=''
         this.inputValueC=''
+        this.inputArea=''
       })
         
         
@@ -230,7 +276,14 @@ export class LectorBarrasComponent {
     //   })
     
   }
+  /*=========ÁREA===========*/
+area:any
+cargarArea(){
   
+  this.inventarioService.getArea().subscribe((respo)=>{
+    this.area=respo;
+  })
+}
 
   
 }

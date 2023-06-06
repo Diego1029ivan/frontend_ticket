@@ -13,7 +13,8 @@
         <form>
           <div class="row justify-content-around">
             <input type="file" class="form-control col-4" (change)="onFileChange($event)" accept=".xlsx">
-            <button type="submit" class="btn btn-primary col-2" (click)="enviarBienes()">Guardar</button>
+            <button type="submit" class="btn btn-primary col-2" (click)="enviarBienes()"
+            [disabled]="subir">Guardar</button>
           </div>
         </form>
         <!--poner un texto de cargando-->

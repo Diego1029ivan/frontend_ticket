@@ -57,4 +57,9 @@ export class InventarioService {
   updateInventario(codigo: string,inventario:any): Observable<any>{
     return this.http.put<any>(`${this.baseUrl}/inventario/${codigo}`,inventario);
   }
+
+  //Vista de area
+  getArea(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/area`);
+  }
 }
