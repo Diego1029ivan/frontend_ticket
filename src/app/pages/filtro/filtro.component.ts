@@ -49,6 +49,7 @@ export class FiltroComponent implements OnInit {
 
   public cargaTabla() {
     this.header = Object.keys(this.items.data[0]);
+    //console.log(this.header)
     this.collectionSize = this.items.data.length;
     this.total=this.collectionSize;
     this.itemParcial = this.items.data;

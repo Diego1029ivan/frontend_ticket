@@ -126,25 +126,10 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
     return this.tablaParcial?.slice(startIndex, endIndex);
   }
 
-  /*====== POST ========*/
-  dimensionPaquete=50;
-  delayTime = 2000; 
+  /*====== POST EXCEL========*/
+  subir:boolean=false
   enviarBienes(): void {
-    // for (let i = 0; i < this.tablaParcial.length; i += this.dimensionPaquete) {
-    //   const paquete = this.tablaParcial.slice(i, i + this.dimensionPaquete);
-    //   for (let j = 0; j < paquete.length; j++) {
-    //   this.inventarioService.postLista(paquete[j])
-    //     .subscribe(
-    //       (response) => {
-    //         console.log(response);
-    //       },
-    //       (error) => {
-    //         // Manejar cualquier error en la solicitud
-    //       }
-    //     );
-    //   }
-    // }
-    //for (let i = 0; i < this.tablaParcial.length; i++) {
+      this.subir==true;
       console.log(this.tablaParcial)
       this.inventarioService
         .postLista(this.tablaParcial)
@@ -155,6 +140,7 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
         )
         .subscribe((respo)=>{
           console.log(respo)
+          this.subir==false;
         }
           
         );

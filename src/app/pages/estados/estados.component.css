@@ -1,6 +1,10 @@
-.centrar{
-    align-items: center;
-}
+
 .icon{
     color: red;
+}
+.texto{
+    width: 100%;
+    overflow: hidden; /* Ocultar cualquier texto que exceda el ancho */
+    white-space: nowrap; /* Evitar que el texto se desborde en varias líneas */
+    text-overflow: ellipsis; 
 }
