@@ -14,6 +14,7 @@ import { CambiarContraComponent } from './pages/cambiar-contra/cambiar-contra.co
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { EstadosComponent } from './pages/estados/estados.component';
 import { LectorBarrasComponent } from './pages/lector-barras/lector-barras.component';
+import { ControllerUserComponent } from './pages/controller-user/controller-user.component';
 const routes: Routes = [
   {
     path: 'auth',
@@ -51,6 +52,11 @@ const routes: Routes = [
       {
         path: 'ResetiarPassword',
         component: CambiarContraComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'ControllerUsuario',
+        component: ControllerUserComponent,
         canActivate: [AuthGuard],
       },
 

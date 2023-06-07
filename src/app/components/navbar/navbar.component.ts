@@ -14,6 +14,7 @@ export class NavbarComponent {
   username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
   ngOnInit(): void {
     this.navlinkConPermiso();
+    this.cargando = false;
     this.userservice.getUser(this.username.id).subscribe(
       (data) => {
         this.userLogado = data;

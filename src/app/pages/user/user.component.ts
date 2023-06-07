@@ -15,8 +15,15 @@ export class UserComponent implements OnInit {
   usuarios: any = [];
   correoActual: any = null;
   cargando: boolean = false;
+  cargando2: boolean = false;
   edit: boolean = false;
+
+  permidoscrud: any = {};
+
+  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
   constructor(private fb: FormBuilder, private userService: UserService) {
+    this.permisosporusuario();
+    this.cargando2 = false;
     this.cargarUsuarios();
     this.cargando = false;
   }
@@ -27,7 +34,20 @@ export class UserComponent implements OnInit {
       this.cargando = true;
     });
   }
-
+  permisosporusuario() {
+    this.userService.getPermisourlLogeado(this.username.rol).subscribe(
+      (data1) => {
+        this.permidoscrud = data1.data;
+        this.permidoscrud = this.permidoscrud.filter(
+          (permiso: any) => permiso.route === './usarios'
+        );
+        this.cargando2 = true;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
   ngOnInit() {
     this.usuarioSub = this.fb.group({
       id: [''],

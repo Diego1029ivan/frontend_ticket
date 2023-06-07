@@ -29,6 +29,7 @@ import { DonachartComponent } from './components/donachart/donachart.component';
 import { EstadosComponent } from './pages/estados/estados.component';
 import { ResetPasswordComponent } from './pages/Auth/reset-password/reset-password.component';
 import { LectorBarrasComponent } from './pages/lector-barras/lector-barras.component';
+import { ControllerUserComponent } from './pages/controller-user/controller-user.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { LectorBarrasComponent } from './pages/lector-barras/lector-barras.compo
     EstadosComponent,
     ResetPasswordComponent,
     LectorBarrasComponent,
+    ControllerUserComponent,
   ],
   imports: [
     BrowserModule,

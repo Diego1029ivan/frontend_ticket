@@ -17,18 +17,24 @@ export class CambiarContraComponent implements OnInit {
   usuarioSub!: FormGroup;
   usuarios: any = [];
   cargando: boolean = false;
-  constructor(private fb: FormBuilder, private userService: UserService) {
-    this.cargarUsuarios();
-    this.cargando = false;
-  }
+  cargando2: boolean = false;
+  permidoscrud: any = {};
+  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+
+  constructor(private fb: FormBuilder, private userService: UserService) {}
 
   cargarUsuarios() {
     this.userService.getAllUsers().subscribe((data1) => {
       this.usuarios = data1;
-      this.cargando = true;
+      this.cargando2 = true;
     });
   }
   ngOnInit() {
+    this.permisosporusuario();
+    this.cargando = false;
+    this.cargarUsuarios();
+    this.cargando2 = false;
+
     this.usuarioSub = this.fb.group(
       {
         id: [''],
@@ -48,7 +54,20 @@ export class CambiarContraComponent implements OnInit {
       }
     );
   }
-
+  permisosporusuario() {
+    this.userService.getPermisourlLogeado(this.username.rol).subscribe(
+      (data1) => {
+        this.permidoscrud = data1.data;
+        this.permidoscrud = this.permidoscrud.filter(
+          (permiso: any) => permiso.route === './ResetiarPassword'
+        );
+        this.cargando = true;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
   customPasswordValidator(
     control: AbstractControl
   ): { [key: string]: boolean } | null {

@@ -1,0 +1,954 @@
+<div class="page-header">
+  <h4 class="page-title">Control de Usuarios</h4>
+  <ul class="breadcrumbs">
+    <li class="nav-home">
+      <a href="#">
+        <i class="flaticon-home"></i>
+      </a>
+    </li>
+    <li class="separator">
+      <i class="flaticon-right-arrow"></i>
+    </li>
+    <li class="nav-item">
+      <a href="#">Roles</a>
+    </li>
+    <li class="separator">
+      <i class="flaticon-right-arrow"></i>
+    </li>
+    <li class="nav-item">
+      <a href="#">Modulos</a>
+    </li>
+    <li class="separator">
+      <i class="flaticon-right-arrow"></i>
+    </li>
+    <li class="nav-item">
+      <a href="#">Submodulos</a>
+    </li>
+    <li class="separator">
+      <i class="flaticon-right-arrow"></i>
+    </li>
+    <li class="nav-item">
+      <a href="#">Permisos</a>
+    </li>
+  </ul>
+</div>
+<div class="page-inner">
+  <!-- <h4 class="page-title">FAQS</h4> -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-space">
+        <div class="card-header">
+          <!-- <h4 class="card-title">FAQ Example</h4> -->
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <div
+                class="nav flex-column nav-pills nav-secondary nav-pills-no-bd nav-pills-icons"
+                id="v-pills-tab"
+                role="tablist"
+                aria-orientation="vertical"
+              >
+                <a
+                  class="nav-link active show"
+                  id="v-pills-home-tab-icons"
+                  data-toggle="pill"
+                  href="#v-pills-home-icons"
+                  role="tab"
+                  aria-controls="v-pills-home-icons"
+                  aria-selected="true"
+                >
+                  <i class="flaticon-user-4"></i>
+
+                  Roles
+                </a>
+                <a
+                  class="nav-link"
+                  id="v-pills-profile-tab-icons"
+                  data-toggle="pill"
+                  href="#v-pills-profile-icons"
+                  role="tab"
+                  aria-controls="v-pills-profile-icons"
+                  aria-selected="false"
+                >
+                  <i class="icon-grid"></i>
+                  Modulos
+                </a>
+                <a
+                  class="nav-link"
+                  id="v-pills-buy-tab-icons"
+                  data-toggle="pill"
+                  href="#v-pills-buy-icons"
+                  role="tab"
+                  aria-controls="v-pills-buy-icons"
+                  aria-selected="false"
+                >
+                  <i class="icon-notebook"></i>
+                  Submodulos
+                </a>
+                <a
+                  class="nav-link"
+                  id="v-pills-quality-tab-icons"
+                  data-toggle="pill"
+                  href="#v-pills-quality-icons"
+                  role="tab"
+                  aria-controls="v-pills-quality-icons"
+                  aria-selected="false"
+                >
+                  <i class="icon-user-following"></i>
+                  Permisos
+                </a>
+              </div>
+            </div>
+            <div class="col-12 col-md-9">
+              <div class="tab-content" id="v-pills-tabContent">
+                <!--Roles-->
+                <div
+                  class="tab-pane fade active show"
+                  id="v-pills-home-icons"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-home-tab-icons"
+                >
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex align-items-center">
+                          <h4 class="card-title">Lista de Roles</h4>
+                          <button
+                            class="btn btn-primary btn-round ml-auto"
+                            data-toggle="modal"
+                            data-target="#addRowModalRoles"
+                            (click)="agregarRol()"
+                          >
+                            <i class="fa fa-plus"></i>
+                            Agregar
+                          </button>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <!-- Modal -->
+                        <div
+                          class="modal fade"
+                          id="addRowModalRoles"
+                          tabindex="-1"
+                          role="dialog"
+                          aria-hidden="true"
+                        >
+                          <div
+                            class="modal-dialog modal-dialog-centered"
+                            role="document"
+                          >
+                            <div class="modal-content">
+                              <form
+                                [formGroup]="rolContr"
+                                (ngSubmit)="submitRol()"
+                              >
+                                <div class="modal-header">
+                                  <h5 class="modal-title">
+                                    <span class="fw-mediumbold">
+                                      {{
+                                        editRol ? "AGREGAR ROL" : "EDITAR ROL"
+                                      }}</span
+                                    >
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <div class="col-sm-12">
+                                      <input
+                                        type="hidden"
+                                        formControlName="idrol"
+                                      />
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label for="name">Rol</label>
+                                        <input
+                                          id="name"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Nombre del Rol"
+                                          required
+                                          formControlName="name"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button
+                                    type="submit"
+                                    [disabled]="rolContr.invalid"
+                                    id="addRowButton"
+                                    class="btn btn-primary"
+                                  >
+                                    {{ editRol ? "Agregar" : "Actualizar" }}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    #closebuttonRol
+                                    data-dismiss="modal"
+                                  >
+                                    Cerrar
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Fin Modal -->
+                        <!--poner un texto de cargando-->
+                        <app-carga *ngIf="cargando == false"></app-carga>
+                        <div
+                          class="alert alert-danger"
+                          role="alert"
+                          *ngIf="rolData.data?.length == 0 && cargando == true"
+                        >
+                          no hay Rol
+                        </div>
+                        <div
+                          class="table-responsive"
+                          *ngIf="rolData.data?.length != 0 && cargando == true"
+                        >
+                          <table
+                            id="add-row"
+                            class="display table table-striped table-hover"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Nombre Rol</th>
+                                <th style="width: 10%">Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let rol of rolData.data">
+                                <td>{{ rol.name }}</td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-original-title="Editar Rol"
+                                      data-toggle="modal"
+                                      data-target="#addRowModalRoles"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      (click)="editarRol(rol)"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Borrar Rol"
+                                      (click)="eliminarRol(rol)"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--Fin Roles-->
+                <!--Modulos-->
+                <div
+                  class="tab-pane fade"
+                  id="v-pills-profile-icons"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-profile-tab-icons"
+                >
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex align-items-center">
+                          <h4 class="card-title">Lista de Modulos</h4>
+                          <button
+                            class="btn btn-primary btn-round ml-auto"
+                            data-toggle="modal"
+                            data-target="#addRowModalModulo"
+                            (click)="agregarModulo()"
+                          >
+                            <i class="fa fa-plus"></i>
+                            Agregar
+                          </button>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <!-- Modal -->
+                        <div
+                          class="modal fade"
+                          id="addRowModalModulo"
+                          tabindex="-1"
+                          role="dialog"
+                          aria-hidden="true"
+                        >
+                          <div
+                            class="modal-dialog modal-dialog-centered"
+                            role="document"
+                          >
+                            <div class="modal-content">
+                              <form
+                                [formGroup]="moduloContr"
+                                (ngSubmit)="submitModulo()"
+                              >
+                                <div class="modal-header">
+                                  <h5 class="modal-title">
+                                    <span class="fw-mediumbold">
+                                      {{
+                                        editModulo
+                                          ? "AGREGAR MODULO"
+                                          : "EDITAR MODULO"
+                                      }}</span
+                                    >
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <input
+                                      type="hidden"
+                                      formControlName="idmodulo"
+                                    />
+                                    <div class="col-sm-6">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label for="name">Modulo</label>
+                                        <input
+                                          id="name"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Nombre del Modulo"
+                                          required
+                                          formControlName="name"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label for="icon">Icon nombre</label>
+                                        <input
+                                          id="icon"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Nombre del Icono"
+                                          required
+                                          formControlName="icon"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button
+                                    type="submit"
+                                    [disabled]="moduloContr.invalid"
+                                    id="addRowButton"
+                                    class="btn btn-primary"
+                                  >
+                                    {{ editModulo ? "Agregar" : "Actualizar" }}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    #closebuttonModulo
+                                    data-dismiss="modal"
+                                  >
+                                    Cerrar
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Fin Modal -->
+
+                        <div
+                          class="alert alert-danger"
+                          role="alert"
+                          *ngIf="moduloData.data?.length == 0"
+                        >
+                          no hay Rol
+                        </div>
+                        <div
+                          class="table-responsive"
+                          *ngIf="moduloData.data?.length != 0"
+                        >
+                          <table
+                            id="add-row"
+                            class="display table table-striped table-hover"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Nombre Modulo</th>
+                                <th>Nombre Icon</th>
+                                <th style="width: 10%">Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let modulo of moduloData.data">
+                                <td>{{ modulo.name }}</td>
+                                <td>{{ modulo.icon }}</td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      data-original-title="Editar Modulo"
+                                      data-toggle="modal"
+                                      data-target="#addRowModalModulo"
+                                      (click)="editarModulo(modulo)"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Borrar Modulo"
+                                      (click)="eliminarModulo(modulo)"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--Fin Modulos-->
+                <!--Submodulos-->
+                <div
+                  class="tab-pane fade"
+                  id="v-pills-buy-icons"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-buy-tab-icons"
+                >
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex align-items-center">
+                          <h4 class="card-title">Lista de Submodulos</h4>
+                          <button
+                            class="btn btn-primary btn-round ml-auto"
+                            data-toggle="modal"
+                            data-target="#addRowModalSubmodulo"
+                          >
+                            <i class="fa fa-plus"></i>
+                            Agregar
+                          </button>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <!-- Modal -->
+                        <div
+                          class="modal fade"
+                          id="addRowModalSubmodulo"
+                          tabindex="-1"
+                          role="dialog"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header no-bd">
+                                <h5 class="modal-title">
+                                  <span class="fw-mediumbold"> New</span>
+                                  <span class="fw-light"> Row </span>
+                                </h5>
+                                <button
+                                  type="button"
+                                  class="close"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <p class="small">
+                                  Create a new row using this form, make sure
+                                  you fill them all
+                                </p>
+                                <form>
+                                  <div class="row">
+                                    <div class="col-sm-12">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label>Name</label>
+                                        <input
+                                          id="addName"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="fill name"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 pr-0">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label>Position</label>
+                                        <input
+                                          id="addPosition"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="fill position"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label>Office</label>
+                                        <input
+                                          id="addOffice"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="fill office"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                              <div class="modal-footer no-bd">
+                                <button
+                                  type="button"
+                                  id="addRowButton"
+                                  class="btn btn-primary"
+                                >
+                                  Add
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-danger"
+                                  data-dismiss="modal"
+                                >
+                                  Close
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Fin Modal -->
+                        <div class="table-responsive">
+                          <table
+                            id="add-row"
+                            class="display table table-striped table-hover"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Nombre Rol</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th style="width: 10%">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      data-original-title="Edit Task"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Remove"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+
+                              <tr>
+                                <td>Sonya Frost</td>
+                                <td>Software Engineer</td>
+                                <td>Edinburgh</td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      data-original-title="Edit Task"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Remove"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>Sonya Frost</td>
+                                <td>Software Engineer</td>
+                                <td>Edinburgh</td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      data-original-title="Edit Task"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Remove"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>Sonya Frost</td>
+                                <td>Software Engineer</td>
+                                <td>Edinburgh</td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      data-original-title="Edit Task"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Remove"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--Fin Submodulos-->
+                <!--Permisos-->
+                <div
+                  class="tab-pane fade"
+                  id="v-pills-quality-icons"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-quality-tab-icons"
+                >
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex align-items-center">
+                          <h4 class="card-title">Lista de Permisos</h4>
+                          <button
+                            class="btn btn-primary btn-round ml-auto"
+                            data-toggle="modal"
+                            data-target="#addRowModalPermiso"
+                          >
+                            <i class="fa fa-plus"></i>
+                            Agregar
+                          </button>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <!-- Modal -->
+                        <div
+                          class="modal fade"
+                          id="addRowModalPermiso"
+                          tabindex="-1"
+                          role="dialog"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header no-bd">
+                                <h5 class="modal-title">
+                                  <span class="fw-mediumbold"> New</span>
+                                  <span class="fw-light"> Row </span>
+                                </h5>
+                                <button
+                                  type="button"
+                                  class="close"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <p class="small">
+                                  Create a new row using this form, make sure
+                                  you fill them all
+                                </p>
+                                <form>
+                                  <div class="row">
+                                    <div class="col-sm-12">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label>Name</label>
+                                        <input
+                                          id="addName"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="fill name"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 pr-0">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label>Position</label>
+                                        <input
+                                          id="addPosition"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="fill position"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label>Office</label>
+                                        <input
+                                          id="addOffice"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="fill office"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                              <div class="modal-footer no-bd">
+                                <button
+                                  type="button"
+                                  id="addRowButton"
+                                  class="btn btn-primary"
+                                >
+                                  Add
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-danger"
+                                  data-dismiss="modal"
+                                >
+                                  Close
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Fin Modal -->
+                        <div class="table-responsive">
+                          <table
+                            id="add-row"
+                            class="display table table-striped table-hover"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Nombre Rol</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th style="width: 10%">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      data-original-title="Edit Task"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Remove"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+
+                              <tr>
+                                <td>Sonya Frost</td>
+                                <td>Software Engineer</td>
+                                <td>Edinburgh</td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      data-original-title="Edit Task"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Remove"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>Sonya Frost</td>
+                                <td>Software Engineer</td>
+                                <td>Edinburgh</td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      data-original-title="Edit Task"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Remove"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>Sonya Frost</td>
+                                <td>Software Engineer</td>
+                                <td>Edinburgh</td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      data-original-title="Edit Task"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Remove"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--Fin Permisos-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer"></div>
+      </div>
+    </div>
+  </div>
+</div>

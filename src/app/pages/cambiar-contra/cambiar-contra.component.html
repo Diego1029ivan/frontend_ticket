@@ -1,35 +1,43 @@
-<div class="page-header">
-  <h4 class="page-title"> GESTIÓN INVENTARIO UNSM</h4>
+<!--poner un texto de cargando-->
+<app-carga *ngIf="cargando == false"></app-carga>
+
+<div
+  class="page-header"
+  *ngIf="this.permidoscrud[0]?.read === 1 && cargando == true"
+>
+  <h4 class="page-title">GESTIÓN INVENTARIO UNSM</h4>
 </div>
 
-
-<div class="row">
-
+<div class="row" *ngIf="this.permidoscrud[0]?.read === 1 && cargando == true">
   <div class="col-md-12">
-
     <div class="card">
       <div class="card-header">
         <div class="d-flex align-items-center">
           <h4 class="card-title">Resetiar Password</h4>
-
         </div>
-
       </div>
       <div class="card-body">
-        <!--poner un texto de cargando-->
-        <app-carga *ngIf="cargando == false"></app-carga>
         <!-- Modal -->
-        <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div
+          class="modal fade"
+          id="addRowModal"
+          tabindex="-1"
+          role="dialog"
+          aria-hidden="true"
+        >
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <form [formGroup]="usuarioSub" (ngSubmit)="submit()">
-                <div class="modal-header ">
+                <div class="modal-header">
                   <h5 class="modal-title">
-                    <span class="fw-mediumbold">
-                      Resetiar Password</span>
-
+                    <span class="fw-mediumbold"> Resetiar Password</span>
                   </h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -38,22 +46,46 @@
                     <div class="col-sm-12">
                       <div class="form-group form-group-default">
                         <label for="password">Contraseña Nueva</label>
-                        <input id="password" type="password" class="form-control"
-                          placeholder="Ingresar Contraseña nueva" required formControlName="password">
+                        <input
+                          id="password"
+                          type="password"
+                          class="form-control"
+                          placeholder="Ingresar Contraseña nueva"
+                          required
+                          formControlName="password"
+                        />
                       </div>
                       <div
-                        *ngIf="usuarioSub.get('password')?.invalid && (usuarioSub.get('password')?.dirty || usuarioSub.get('password')?.touched)">
-                        <div class="small errors" *ngIf="usuarioSub.get('password')?.errors?.['minlength']">
-                          La contraseña debe tener al menos {{
-                          usuarioSub.get('password')?.errors?.['minlength'].requiredLength }} caracteres.
+                        *ngIf="
+                          usuarioSub.get('password')?.invalid &&
+                          (usuarioSub.get('password')?.dirty ||
+                            usuarioSub.get('password')?.touched)
+                        "
+                      >
+                        <div
+                          class="small errors"
+                          *ngIf="usuarioSub.get('password')?.errors?.['minlength']"
+                        >
+                          La contraseña debe tener al menos
+                          {{
+                          usuarioSub.get('password')?.errors?.['minlength'].requiredLength }}
+                          caracteres.
                         </div>
-                        <div class="small errors" *ngIf="usuarioSub.get('password')?.errors?.['maxlength']">
-                          La contraseña no debe tener más de {{
-                          usuarioSub.get('password')?.errors?.['maxlength'].requiredLength }} caracteres.
+                        <div
+                          class="small errors"
+                          *ngIf="usuarioSub.get('password')?.errors?.['maxlength']"
+                        >
+                          La contraseña no debe tener más de
+                          {{
+                          usuarioSub.get('password')?.errors?.['maxlength'].requiredLength }}
+                          caracteres.
                         </div>
-                        <div class="small errors"
-                          *ngIf="usuarioSub.get('password')?.errors?.['customPasswordValidator']">
-                          La contraseña debe contener caracteres especiales, minúsculas, mayúsculas y números.
+                        <div
+                          class="small errors"
+                          *ngIf="usuarioSub.get('password')?.errors?.['customPasswordValidator']"
+                        >
+                          La contraseña debe contener caracteres especiales,
+                          minúsculas, mayúsculas y números.
                         </div>
                       </div>
 
@@ -61,41 +93,69 @@
                         La contraseña debe tener al menos 6 caracteres</p> -->
                     </div>
                     <div class="col-md-12">
-                      <input type="hidden" formControlName="id">
+                      <input type="hidden" formControlName="id" />
                       <div class="form-group form-group-default">
-                        <label for="password_confirmation">Repetir Contraseña</label>
-                        <input id="password_confirmation" type="password" class="form-control"
-                          placeholder="Agregar contraseña Nueva" required formControlName="password_confirmation">
+                        <label for="password_confirmation"
+                          >Repetir Contraseña</label
+                        >
+                        <input
+                          id="password_confirmation"
+                          type="password"
+                          class="form-control"
+                          placeholder="Agregar contraseña Nueva"
+                          required
+                          formControlName="password_confirmation"
+                        />
                       </div>
-                      <p class="small errors" *ngIf="usuarioSub.hasError('mismatch') ">
-                        Las contraseñas no coinciden</p>
+                      <p
+                        class="small errors"
+                        *ngIf="usuarioSub.hasError('mismatch')"
+                      >
+                        Las contraseñas no coinciden
+                      </p>
                     </div>
-
                   </div>
-
                 </div>
-                <div class="modal-footer ">
-                  <button [disabled]="usuarioSub.invalid" type="submit" id="addRowButton"
-                    class="btn btn-primary">SAVE</button>
-                  <button type="button" class="btn btn-danger" #closebutton data-dismiss="modal">Close</button>
+                <div class="modal-footer">
+                  <button
+                    [disabled]="usuarioSub.invalid"
+                    type="submit"
+                    id="addRowButton"
+                    class="btn btn-primary"
+                  >
+                    SAVE
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    #closebutton
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
                 </div>
-
               </form>
             </div>
           </div>
         </div>
         <!-- Modal end-->
-        <div class="alert alert-danger" role="alert" *ngIf="usuarios.data?.length == 0 && cargando == true">
+        <!--poner un texto de cargando-->
+        <app-carga *ngIf="cargando2 == false"></app-carga>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="usuarios.data?.length == 0 && cargando2 == true"
+        >
           no hay usuarios
         </div>
 
-        <div class="container overflow-auto tabla-excel" *ngIf="usuarios.data?.length != 0 && cargando == true">
-
+        <div
+          class="container overflow-auto tabla-excel"
+          *ngIf="usuarios.data?.length != 0 && cargando2 == true"
+        >
           <table class="table table-striped mt-2 table-hover">
-
             <thead>
               <tr>
-
                 <th scope="col">Usuario</th>
                 <th scope="col">Correo</th>
                 <th scope="col">Rol</th>
@@ -103,30 +163,33 @@
               </tr>
             </thead>
             <tbody>
-
-              <tr *ngFor="let usuario of usuarios?.data ">
-
-                <td>{{ usuario.name}}</td>
-                <td>{{ usuario.email}}</td>
-                <td>{{ usuario.rol_name}}</td>
+              <tr *ngFor="let usuario of usuarios?.data">
+                <td>{{ usuario.name }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>{{ usuario.rol_name }}</td>
                 <td>
                   <div class="form-button-action">
-                    <button type="button" tabindex="0" data-toggle="tooltip" title="Edit usuario"
-                      class="btn btn-link btn-primary btn-lg" data-original-title="Edit usuario" data-toggle="modal"
-                      data-target="#addRowModal" (click)="editarUsuario(usuario.id)">
+                    <button
+                      type="button"
+                      tabindex="0"
+                      data-toggle="tooltip"
+                      title="Edit usuario"
+                      class="btn btn-link btn-primary btn-lg"
+                      data-original-title="Edit usuario"
+                      data-toggle="modal"
+                      data-target="#addRowModal"
+                      *ngIf="this.permidoscrud[0]?.update === 1"
+                      (click)="editarUsuario(usuario.id)"
+                    >
                       <i class="fa fa-edit"></i>
                     </button>
-
                   </div>
                 </td>
-
               </tr>
             </tbody>
           </table>
         </div>
-
       </div>
     </div>
-
   </div>
 </div>
