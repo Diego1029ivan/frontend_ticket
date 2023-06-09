@@ -542,8 +542,8 @@
                                         />
                                       </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                      <div class="form-group">
+                                    <div class="col-sm-6 ajus">
+                                      <div class="form-group ajus">
                                         <label for="module_id">Modulo</label>
                                         <select
                                           class="form-control"
@@ -564,9 +564,9 @@
                                         </select>
                                       </div>
                                     </div>
-                                    <div class="col-sm-3 container-ajuste">
+                                    <div class="col-sm-6 container-ajuste">
                                       <div class="row">
-                                        <div>
+                                        <div class="col-sm-6">
                                           <span>Leer</span>
                                           <div>
                                             <input
@@ -577,17 +577,43 @@
                                             <label for="1"></label>
                                           </div>
                                         </div>
+                                        <div class="col-sm-6">
+                                          <span>Crear</span>
+                                          <div>
+                                            <input
+                                              [id]="2"
+                                              type="checkbox"
+                                              formControlName="create"
+                                            />
+                                            <label for="2"></label>
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
-                                    <div class="col-sm-3 container-ajuste">
-                                      <span>Crear</span>
-                                      <div>
-                                        <input
-                                          [id]="2"
-                                          type="checkbox"
-                                          formControlName="create"
-                                        />
-                                        <label for="2"></label>
+                                    <div class="col-sm-6">
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <span>Modificar</span>
+                                          <div>
+                                            <input
+                                              [id]="3"
+                                              type="checkbox"
+                                              formControlName="update"
+                                            />
+                                            <label for="3"></label>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <span>Eliminar</span>
+                                          <div>
+                                            <input
+                                              [id]="4"
+                                              type="checkbox"
+                                              formControlName="delete"
+                                            />
+                                            <label for="4"></label>
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>

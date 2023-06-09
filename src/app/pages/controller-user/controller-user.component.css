@@ -52,3 +52,11 @@ input[type="checkbox"]:checked + label::after {
   margin-top: 1rem;
   padding-top: 0.4rem;
 }
+.form-group {
+  padding-right: 0;
+  margin-right: 0;
+}
+.ajus {
+  margin-left: -0.4rem;
+  margin-right: 0.4rem;
+}
