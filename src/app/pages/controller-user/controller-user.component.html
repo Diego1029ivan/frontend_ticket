@@ -465,6 +465,7 @@
                             class="btn btn-primary btn-round ml-auto"
                             data-toggle="modal"
                             data-target="#addRowModalSubmodulo"
+                            (click)="agregarSubmodulo()"
                           >
                             <i class="fa fa-plus"></i>
                             Agregar
@@ -482,189 +483,241 @@
                         >
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                              <div class="modal-header no-bd">
-                                <h5 class="modal-title">
-                                  <span class="fw-mediumbold"> New</span>
-                                  <span class="fw-light"> Row </span>
-                                </h5>
-                                <button
-                                  type="button"
-                                  class="close"
-                                  data-dismiss="modal"
-                                  aria-label="Close"
-                                >
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <p class="small">
-                                  Create a new row using this form, make sure
-                                  you fill them all
-                                </p>
-                                <form>
+                              <form
+                                [formGroup]="submoduloContr"
+                                (ngSubmit)="submitSubmodulo()"
+                              >
+                                <div class="modal-header no-bd">
+                                  <h5 class="modal-title">
+                                    <span class="fw-mediumbold">
+                                      {{
+                                        editSubmodulo
+                                          ? "AGREGAR USUARIO"
+                                          : "EDITAR USUARIO"
+                                      }}</span
+                                    >
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
                                   <div class="row">
-                                    <div class="col-sm-12">
+                                    <input
+                                      type="hidden"
+                                      formControlName="idsubmodulo"
+                                    />
+                                    <div class="col-sm-6">
                                       <div
                                         class="form-group form-group-default"
                                       >
-                                        <label>Name</label>
+                                        <label for="name">SubModulo</label>
                                         <input
-                                          id="addName"
+                                          id="name"
                                           type="text"
                                           class="form-control"
-                                          placeholder="fill name"
+                                          placeholder="Nombre del SubModulo"
+                                          required
+                                          formControlName="name"
                                         />
                                       </div>
                                     </div>
-                                    <div class="col-md-6 pr-0">
+                                    <div class="col-sm-6">
                                       <div
                                         class="form-group form-group-default"
                                       >
-                                        <label>Position</label>
+                                        <label for="route">Url</label>
                                         <input
-                                          id="addPosition"
+                                          id="route"
                                           type="text"
                                           class="form-control"
-                                          placeholder="fill position"
+                                          placeholder="Url del SubModulo"
+                                          required
+                                          formControlName="route"
                                         />
                                       </div>
                                     </div>
-                                    <div class="col-md-6">
-                                      <div
-                                        class="form-group form-group-default"
-                                      >
-                                        <label>Office</label>
-                                        <input
-                                          id="addOffice"
-                                          type="text"
+                                    <div class="col-sm-6">
+                                      <div class="form-group">
+                                        <label for="module_id">Modulo</label>
+                                        <select
                                           class="form-control"
-                                          placeholder="fill office"
+                                          id="module_id"
+                                          formControlName="module_id"
+                                        >
+                                          <option value="">
+                                            Seleccione un Modulo
+                                          </option>
+                                          <option
+                                            *ngFor="
+                                              let modulo of moduloData?.data
+                                            "
+                                            value="{{ modulo.id }}"
+                                          >
+                                            {{ modulo.name }}
+                                          </option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-3 container-ajuste">
+                                      <div class="row">
+                                        <div>
+                                          <span>Leer</span>
+                                          <div>
+                                            <input
+                                              [id]="1"
+                                              type="checkbox"
+                                              formControlName="read"
+                                            />
+                                            <label for="1"></label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-3 container-ajuste">
+                                      <span>Crear</span>
+                                      <div>
+                                        <input
+                                          [id]="2"
+                                          type="checkbox"
+                                          formControlName="create"
                                         />
+                                        <label for="2"></label>
                                       </div>
                                     </div>
                                   </div>
-                                </form>
-                              </div>
-                              <div class="modal-footer no-bd">
-                                <button
-                                  type="button"
-                                  id="addRowButton"
-                                  class="btn btn-primary"
-                                >
-                                  Add
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-danger"
-                                  data-dismiss="modal"
-                                >
-                                  Close
-                                </button>
-                              </div>
+                                </div>
+                                <div class="modal-footer no-bd">
+                                  <button
+                                    type="button"
+                                    id="addRowModalSubmodulo"
+                                    class="btn btn-primary"
+                                  >
+                                    {{
+                                      editSubmodulo ? "Agregar" : "Actualizar"
+                                    }}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    data-dismiss="modal"
+                                  >
+                                    Cerrar
+                                  </button>
+                                </div>
+                              </form>
                             </div>
                           </div>
                         </div>
+
+                        <div
+                          class="alert alert-danger"
+                          role="alert"
+                          *ngIf="submoduloData.data?.length == 0"
+                        >
+                          no hay subModulos
+                        </div>
+
                         <!-- Fin Modal -->
-                        <div class="table-responsive">
+                        <div
+                          class="table-responsive"
+                          *ngIf="submoduloData.data?.length != 0"
+                        >
                           <table
                             id="add-row"
                             class="display table table-striped table-hover"
                           >
                             <thead>
                               <tr>
-                                <th>Nombre Rol</th>
-                                <th>Position</th>
-                                <th>Office</th>
+                                <th>Modulo</th>
+                                <th>Nombre submodulo</th>
+                                <th>Ruta</th>
+                                <th>Crear</th>
+                                <th>Leer</th>
+                                <th>Actualizar</th>
+                                <th>Eliminar</th>
                                 <th style="width: 10%">Action</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>
-                                  <div class="form-button-action">
-                                    <button
-                                      type="button"
-                                      data-toggle="tooltip"
-                                      title=""
-                                      class="btn btn-link btn-primary btn-lg"
-                                      data-original-title="Edit Task"
-                                    >
-                                      <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button
-                                      type="button"
-                                      data-toggle="tooltip"
-                                      title=""
-                                      class="btn btn-link btn-danger"
-                                      data-original-title="Remove"
-                                    >
-                                      <i class="fa fa-times"></i>
-                                    </button>
-                                  </div>
+                              <tr *ngFor="let submodulo of submoduloData.data">
+                                <td>{{ submodulo.module_name }}</td>
+                                <td>{{ submodulo.name }}</td>
+                                <td>{{ submodulo.route }}</td>
+                                <td *ngIf="submodulo.create == 1">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    checked
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
                                 </td>
-                              </tr>
+                                <td *ngIf="submodulo.create == 0">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
 
-                              <tr>
-                                <td>Sonya Frost</td>
-                                <td>Software Engineer</td>
-                                <td>Edinburgh</td>
-                                <td>
-                                  <div class="form-button-action">
-                                    <button
-                                      type="button"
-                                      data-toggle="tooltip"
-                                      title=""
-                                      class="btn btn-link btn-primary btn-lg"
-                                      data-original-title="Edit Task"
-                                    >
-                                      <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button
-                                      type="button"
-                                      data-toggle="tooltip"
-                                      title=""
-                                      class="btn btn-link btn-danger"
-                                      data-original-title="Remove"
-                                    >
-                                      <i class="fa fa-times"></i>
-                                    </button>
-                                  </div>
+                                <td *ngIf="submodulo.read == 1">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    checked
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
                                 </td>
-                              </tr>
-                              <tr>
-                                <td>Sonya Frost</td>
-                                <td>Software Engineer</td>
-                                <td>Edinburgh</td>
-                                <td>
-                                  <div class="form-button-action">
-                                    <button
-                                      type="button"
-                                      data-toggle="tooltip"
-                                      title=""
-                                      class="btn btn-link btn-primary btn-lg"
-                                      data-original-title="Edit Task"
-                                    >
-                                      <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button
-                                      type="button"
-                                      data-toggle="tooltip"
-                                      title=""
-                                      class="btn btn-link btn-danger"
-                                      data-original-title="Remove"
-                                    >
-                                      <i class="fa fa-times"></i>
-                                    </button>
-                                  </div>
+                                <td *ngIf="submodulo.read == 0">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
                                 </td>
-                              </tr>
-                              <tr>
-                                <td>Sonya Frost</td>
-                                <td>Software Engineer</td>
-                                <td>Edinburgh</td>
+                                <td *ngIf="submodulo.update == 1">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    checked
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
+                                <td *ngIf="submodulo.update == 0">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
+                                <td *ngIf="submodulo.delete == 1">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    checked
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
+                                <td *ngIf="submodulo.delete == 0">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
                                 <td>
                                   <div class="form-button-action">
                                     <button
@@ -673,6 +726,9 @@
                                       title=""
                                       class="btn btn-link btn-primary btn-lg"
                                       data-original-title="Edit Task"
+                                      data-toggle="modal"
+                                      data-target="#addRowModalSubmodulo"
+                                      (click)="editarSubmodulo(submodulo)"
                                     >
                                       <i class="fa fa-edit"></i>
                                     </button>
@@ -682,6 +738,7 @@
                                       title=""
                                       class="btn btn-link btn-danger"
                                       data-original-title="Remove"
+                                      (click)="eliminarSubmodulo(submodulo)"
                                     >
                                       <i class="fa fa-times"></i>
                                     </button>

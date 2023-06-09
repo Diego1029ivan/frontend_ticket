@@ -44,4 +44,20 @@ export class ControUserService {
     return this.http.delete(url);
   }
   //Submodulo
+  getAllSubmodulo() {
+    const url = `${this.baseUrl}/submodule`;
+    return this.http.get(url);
+  }
+  addSubmodulo(submodulo: any) {
+    const url = `${this.baseUrl}/submodule`;
+    return this.http.post(url, submodulo);
+  }
+  updateSubmodulo(submodulo: any) {
+    const url = `${this.baseUrl}/submodule/${submodulo.idsubmodulo}`;
+    return this.http.put(url, submodulo);
+  }
+  deleteSubmodulo(id: number) {
+    const url = `${this.baseUrl}/submodule/${id}`;
+    return this.http.delete(url);
+  }
 }

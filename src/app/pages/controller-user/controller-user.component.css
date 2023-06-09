@@ -1,3 +1,54 @@
 .tabla-excel {
   overflow-x: auto;
 }
+.table-responsive {
+  max-height: 19.2rem;
+  overflow-y: scroll;
+}
+input[type="checkbox"] {
+  display: none; /* Ocultar el checkbox predeterminado */
+}
+
+input[type="checkbox"] + label {
+  position: relative;
+  padding-left: 35px; /* Ajusta el tamaño del marcador */
+  cursor: pointer;
+}
+
+input[type="checkbox"] + label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px; /* Ajusta el tamaño del marcador */
+  height: 20px; /* Ajusta el tamaño del marcador */
+  border-radius: 20px; /* Ajusta el radio de las esquinas para dar forma a la casilla */
+  background-color: #dddddd; /* Reemplaza con el color deseado para el estado apagado */
+  transition: background-color 0.3s ease; /* Agrega una transición suave */
+}
+
+input[type="checkbox"]:checked + label::before {
+  background-color: #6861ce; /* Reemplaza con el color deseado para el estado encendido */
+}
+
+input[type="checkbox"] + label::after {
+  content: "";
+  position: absolute;
+  left: 2px; /* Ajusta la posición horizontal del indicador */
+  top: 2px; /* Ajusta la posición vertical del indicador */
+  width: 16px; /* Ajusta el tamaño del indicador */
+  height: 16px; /* Ajusta el tamaño del indicador */
+  border-radius: 50%; /* Dar forma circular al indicador */
+  background-color: #ffffff; /* Reemplaza con el color deseado para el indicador */
+  transition: transform 0.3s ease; /* Agrega una transición suave */
+}
+
+input[type="checkbox"]:checked + label::after {
+  transform: translateX(
+    20px
+  ); /* Mueve el indicador hacia la posición de encendido */
+}
+.container-ajuste {
+  margin-top: 1rem;
+  padding-top: 0.4rem;
+}

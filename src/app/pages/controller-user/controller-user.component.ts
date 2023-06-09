@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,13 +13,21 @@ import swal from 'sweetalert2';
   templateUrl: './controller-user.component.html',
   styleUrls: ['./controller-user.component.css'],
 })
-export class ControllerUserComponent {
+export class ControllerUserComponent implements AfterViewInit {
   @ViewChild('closebuttonRol') closebutton: any;
   @ViewChild('closebuttonModulo') closebutton2: any;
   @ViewChild('closebuttonSubmodulo') closebutton3: any;
-
+  @ViewChild('toggleCheckbox', { static: false }) toggleCheckboxRef:
+    | ElementRef
+    | undefined;
   username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  ngAfterViewInit() {
+    const toggleCheckbox = this.toggleCheckboxRef
+      ?.nativeElement as HTMLInputElement;
 
+    // Inicializa el complemento "bootstrap-toggle" en el elemento del checkbox
+    // $(toggleCheckbox).bootstrapToggle();
+  }
   cargando: boolean = false;
 
   rolData: any = [];
@@ -43,7 +51,9 @@ export class ControllerUserComponent {
     private submoduloForm: FormBuilder,
     private permisoForm: FormBuilder,
     private controUser: ControUserService
-  ) {}
+  ) {
+    toggleCheckboxRef: ElementRef;
+  }
 
   ngOnInit(): void {
     this.rolContr = this.rolForm.group({
@@ -55,9 +65,20 @@ export class ControllerUserComponent {
       name: ['', [Validators.required]],
       icon: ['', [Validators.required]],
     });
+    this.submoduloContr = this.submoduloForm.group({
+      idsubmodulo: [''],
+      name: ['', [Validators.required]],
+      route: ['', [Validators.required]],
+      read: ['', ''],
+      create: ['', ''],
+      update: ['', ''],
+      delete: ['', ''],
+      module_id: ['', [Validators.required]],
+    });
     this.motrarRol();
     this.cargando = false;
     this.mostrarModulo();
+    this.mostrarSubmodulo();
   }
 
   //rol
@@ -254,4 +275,17 @@ export class ControllerUserComponent {
   }
 
   //submodulo
+  mostrarSubmodulo() {
+    this.controUser.getAllSubmodulo().subscribe((data) => {
+      this.submoduloData = data;
+    });
+  }
+  editarSubmodulo(submodulo: any) {
+    this.editSubmodulo = false;
+  }
+  eliminarSubmodulo(submodulo: any) {}
+  agregarSubmodulo() {
+    this.editSubmodulo = true;
+  }
+  submitSubmodulo() {}
 }
