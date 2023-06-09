@@ -34,6 +34,24 @@
             </ul>
           </div>
         </li>
+        <li class="nav-item " routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a data-toggle="collapse" href="#contabilidad" class="collapsed" aria-expanded="false">
+            <i class="
+            fas fa-money-bill"></i>
+            <p>Contabilidad</p>
+            <span class="caret"></span>
+          </a>
+          <div class="collapse" id="contabilidad">
+            <ul class="nav nav-collapse">
+              <li>
+                <a routerLink="./reporteContable">
+                  <span class="sub-item">Reporte Contable</span>
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </li>
         <li class="nav-section">
           <span class="sidebar-mini-icon">
             <i class="fa fa-ellipsis-h"></i>

@@ -1,0 +1,15 @@
+<div class="card-header">
+    <div class="card-title">Estado del valor Neto</div>
+</div>
+<div class="card-body">
+    <div class="chart-container">
+        <canvas #pieChart class="bar-conta"></canvas>
+    </div>
+    <div class="card-title">Leyenda de Valor Neto</div>
+    <div *ngFor="let nombre of nombres2; let i = index;">
+        
+        <div class="card-category">
+            Número:{{id2[i]}}-{{nombre}}
+        </div>
+    </div>  
+</div>

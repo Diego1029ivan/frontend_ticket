@@ -1,0 +1,18 @@
+<div class="card-header">
+    <div class="card-title">Cantidad de bienes por área</div>
+</div>
+<div class="card-body">
+    
+    <div class="chart-container ">
+       
+            <canvas  #barChart class="bar-conta"></canvas>
+    
+    </div>
+    <div class="card-title">Leyenda de Áreas</div>
+    <div *ngFor="let nombre of nombres; let i = index;">
+        
+        <div class="card-category">
+            Número:{{id[i]}}-{{nombre}}
+        </div>
+    </div>   
+</div>
