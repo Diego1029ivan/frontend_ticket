@@ -60,4 +60,21 @@ export class ControUserService {
     const url = `${this.baseUrl}/submodule/${id}`;
     return this.http.delete(url);
   }
+  //Permiso
+  getAllPermisos() {
+    const url = `${this.baseUrl}/rolpermiso`;
+    return this.http.get(url);
+  }
+  addPermiso(permiso: any) {
+    const url = `${this.baseUrl}/rolpermiso`;
+    return this.http.post(url, permiso);
+  }
+  updatePermiso(permiso: any) {
+    const url = `${this.baseUrl}/rolpermiso/${permiso.idpermiso}`;
+    return this.http.put(url, permiso);
+  }
+  deletePermiso(id: number) {
+    const url = `${this.baseUrl}/rolpermiso/${id}`;
+    return this.http.delete(url);
+  }
 }

@@ -1,11 +1,7 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ControUserService } from 'src/app/services/contro-user.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 import swal from 'sweetalert2';
 @Component({
@@ -13,27 +9,22 @@ import swal from 'sweetalert2';
   templateUrl: './controller-user.component.html',
   styleUrls: ['./controller-user.component.css'],
 })
-export class ControllerUserComponent implements AfterViewInit {
+export class ControllerUserComponent {
   @ViewChild('closebuttonRol') closebutton: any;
   @ViewChild('closebuttonModulo') closebutton2: any;
   @ViewChild('closebuttonSubmodulo') closebutton3: any;
-  @ViewChild('toggleCheckbox', { static: false }) toggleCheckboxRef:
-    | ElementRef
-    | undefined;
-  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
-  ngAfterViewInit() {
-    const toggleCheckbox = this.toggleCheckboxRef
-      ?.nativeElement as HTMLInputElement;
+  @ViewChild('closebuttonPermiso') closebutton4: any;
 
-    // Inicializa el complemento "bootstrap-toggle" en el elemento del checkbox
-    // $(toggleCheckbox).bootstrapToggle();
-  }
+  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+
   cargando: boolean = false;
+  cargando2: boolean = false;
 
   rolData: any = [];
   moduloData: any = [];
   submoduloData: any = [];
   permisoData: any = [];
+  permidoscrud: any = {};
 
   rolContr!: FormGroup;
   moduloContr!: FormGroup;
@@ -50,10 +41,9 @@ export class ControllerUserComponent implements AfterViewInit {
     private moduloForm: FormBuilder,
     private submoduloForm: FormBuilder,
     private permisoForm: FormBuilder,
+    private userService: UserService,
     private controUser: ControUserService
-  ) {
-    toggleCheckboxRef: ElementRef;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.rolContr = this.rolForm.group({
@@ -69,18 +59,47 @@ export class ControllerUserComponent implements AfterViewInit {
       idsubmodulo: [''],
       name: ['', [Validators.required]],
       route: ['', [Validators.required]],
-      read: ['', ''],
-      create: ['', ''],
-      update: ['', ''],
-      delete: ['', ''],
+      read: [''],
+      create: [''],
+      update: [''],
+      delete: [''],
       module_id: ['', [Validators.required]],
     });
+    this.permisoContr = this.permisoForm.group({
+      idpermiso: [''],
+      namepermido: ['', [Validators.required]],
+      submodules_id: ['', [Validators.required]],
+      rols_id: ['', [Validators.required]],
+      read: [''],
+      create: [''],
+      update: [''],
+      delete: [''],
+    });
+    this.permisosporusuario();
+    this.cargando2 = false;
     this.motrarRol();
     this.cargando = false;
     this.mostrarModulo();
-    this.mostrarSubmodulo();
-  }
 
+    this.mostrarSubmodulo();
+    this.mostrarPermisos();
+  }
+  //permisos por usuario logeado de la url
+  permisosporusuario() {
+    this.userService.getPermisourlLogeado(this.username.rol).subscribe(
+      (data1) => {
+        this.permidoscrud = data1.data;
+        this.permidoscrud = this.permidoscrud.filter(
+          (permiso: any) => permiso.route === './ControllerUsuario'
+        );
+        this.cargando2 = true;
+        console.log(this.permidoscrud);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
   //rol
   motrarRol() {
     this.controUser.getAllRol().subscribe((data) => {
@@ -282,10 +301,289 @@ export class ControllerUserComponent implements AfterViewInit {
   }
   editarSubmodulo(submodulo: any) {
     this.editSubmodulo = false;
+    this.submoduloContr.setValue({
+      idsubmodulo: submodulo.id,
+      name: submodulo.name,
+      route: submodulo.route,
+      read: submodulo.read,
+      create: submodulo.create,
+      update: submodulo.update,
+      delete: submodulo.delete,
+      module_id: submodulo.module_id,
+    });
+    console.log(submodulo);
   }
-  eliminarSubmodulo(submodulo: any) {}
+  eliminarSubmodulo(submodulo: any) {
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: `¿Estas seguro que desea eliminar el submodulo ${submodulo.name}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'No, cancelar',
+    }).then((result) => {
+      if (result.value) {
+        this.controUser.deleteSubmodulo(submodulo.id).subscribe(
+          (data) => {
+            swal.fire({
+              title: 'Submodulo eliminado',
+              text: 'Submodulo eliminado correctamente',
+              icon: 'success',
+            });
+            this.mostrarSubmodulo();
+          },
+          (err) => {
+            swal.fire({
+              title: 'Error',
+              text: 'Error al eliminar el submodulo',
+              icon: 'error',
+            });
+          }
+        );
+      }
+    });
+  }
   agregarSubmodulo() {
     this.editSubmodulo = true;
+    this.submoduloContr.reset();
+    this.submoduloContr.setValue({
+      idsubmodulo: '',
+      name: '',
+      route: '',
+      read: 0,
+      create: 0,
+      update: 0,
+      delete: 0,
+      module_id: '',
+    });
   }
-  submitSubmodulo() {}
+  submitSubmodulo() {
+    if (this.submoduloContr.valid) {
+      if (this.editSubmodulo) {
+        //agregar  submodulo
+
+        this.submoduloContr.value.read = this.submoduloContr.value.read ? 1 : 0;
+        this.submoduloContr.value.create = this.submoduloContr.value.create
+          ? 1
+          : 0;
+        this.submoduloContr.value.update = this.submoduloContr.value.update
+          ? 1
+          : 0;
+        this.submoduloContr.value.delete = this.submoduloContr.value.delete
+          ? 1
+          : 0;
+
+        this.controUser.addSubmodulo(this.submoduloContr.value).subscribe(
+          (data) => {
+            swal.fire({
+              title: 'Submodulo agregado',
+              text: 'Submodulo agregado correctamente',
+              icon: 'success',
+            });
+            this.mostrarSubmodulo();
+            this.submoduloContr.reset();
+            this.submoduloContr.setValue({
+              idsubmodulo: '',
+              name: '',
+              route: '',
+              read: 0,
+              create: 0,
+              update: 0,
+              delete: 0,
+              module_id: '',
+            });
+          },
+          (err) => {
+            swal.fire({
+              title: 'Error',
+              text: 'Error al agregar el submodulo',
+              icon: 'error',
+            });
+          }
+        );
+        this.closebutton3.nativeElement.click();
+      } else {
+        //editar submodulo
+        this.submoduloContr.value.read = this.submoduloContr.value.read ? 1 : 0;
+        this.submoduloContr.value.create = this.submoduloContr.value.create
+          ? 1
+          : 0;
+        this.submoduloContr.value.update = this.submoduloContr.value.update
+          ? 1
+          : 0;
+        this.submoduloContr.value.delete = this.submoduloContr.value.delete
+          ? 1
+          : 0;
+        this.controUser.updateSubmodulo(this.submoduloContr.value).subscribe(
+          (data) => {
+            swal.fire({
+              title: 'Submodulo editado',
+              text: 'Submodulo editado correctamente',
+              icon: 'success',
+            });
+            this.mostrarSubmodulo();
+            this.submoduloContr.reset();
+            this.submoduloContr.setValue({
+              idsubmodulo: '',
+              name: '',
+              route: '',
+              read: 0,
+              create: 0,
+              update: 0,
+              delete: 0,
+              module_id: '',
+            });
+          },
+          (err) => {
+            swal.fire({
+              title: 'Error',
+              text: 'Error al editar el submodulo',
+              icon: 'error',
+            });
+          }
+        );
+        this.closebutton3.nativeElement.click();
+      }
+    }
+  }
+
+  //permisos
+  mostrarPermisos() {
+    this.controUser.getAllPermisos().subscribe((data) => {
+      this.permisoData = data;
+    });
+  }
+  editarPermiso(permiso: any) {
+    this.editPermiso = false;
+    this.permisoContr.setValue({
+      idpermiso: permiso.id,
+      namepermido: permiso.namepermido,
+      submodules_id: permiso.submoduloid,
+      rols_id: permiso.rols_id,
+      read: permiso.read,
+      create: permiso.create,
+      update: permiso.update,
+      delete: permiso.delete,
+    });
+  }
+  eliminarPermiso(permiso: any) {
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: `¿Estas seguro que desea eliminar el permiso ${permiso.submodulonombre}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'No, cancelar',
+    }).then((result) => {
+      if (result.value) {
+        this.controUser.deletePermiso(permiso.id).subscribe(
+          (data) => {
+            swal.fire({
+              title: 'Permiso eliminado',
+              text: 'Permiso eliminado correctamente',
+              icon: 'success',
+            });
+            this.mostrarPermisos();
+          },
+          (err) => {
+            swal.fire({
+              title: 'Error',
+              text: 'Error al eliminar el permiso',
+              icon: 'error',
+            });
+          }
+        );
+      }
+    });
+  }
+  agregarPermiso() {
+    this.editPermiso = true;
+    this.permisoContr.reset();
+    this.permisoContr.setValue({
+      idpermiso: '',
+      namepermido: '',
+      submodules_id: '',
+      rols_id: '',
+      read: 0,
+      create: 0,
+      update: 0,
+      delete: 0,
+    });
+  }
+  submitPermiso() {
+    if (this.permisoContr.valid) {
+      if (this.editPermiso) {
+        // agregar permiso
+        this.permisoContr.value.read = this.permisoContr.value.read ? 1 : 0;
+        this.permisoContr.value.create = this.permisoContr.value.create ? 1 : 0;
+        this.permisoContr.value.update = this.permisoContr.value.update ? 1 : 0;
+        this.permisoContr.value.delete = this.permisoContr.value.delete ? 1 : 0;
+
+        this.controUser.addPermiso(this.permisoContr.value).subscribe(
+          (data) => {
+            swal.fire({
+              title: 'Permiso agregado',
+              text: 'Permiso agregado correctamente',
+              icon: 'success',
+            });
+            this.mostrarPermisos();
+            this.permisoContr.reset();
+            this.permisoContr.setValue({
+              idpermiso: '',
+              namepermido: '',
+              submodules_id: '',
+              rols_id: '',
+              read: 0,
+              create: 0,
+              update: 0,
+              delete: 0,
+            });
+          },
+          (err) => {
+            swal.fire({
+              title: 'Error',
+              text: 'Error al agregar el permiso',
+              icon: 'error',
+            });
+          }
+        );
+        this.closebutton4.nativeElement.click();
+      } else {
+        //editar permiso
+        this.permisoContr.value.read = this.permisoContr.value.read ? 1 : 0;
+        this.permisoContr.value.create = this.permisoContr.value.create ? 1 : 0;
+        this.permisoContr.value.update = this.permisoContr.value.update ? 1 : 0;
+        this.permisoContr.value.delete = this.permisoContr.value.delete ? 1 : 0;
+        this.controUser.updatePermiso(this.permisoContr.value).subscribe(
+          (data) => {
+            swal.fire({
+              title: 'Permiso editado',
+              text: 'Permiso editado correctamente',
+              icon: 'success',
+            });
+            this.mostrarPermisos();
+            this.permisoContr.reset();
+            this.permisoContr.setValue({
+              idpermiso: '',
+              namepermido: '',
+              submodules_id: '',
+              rols_id: '',
+              read: 0,
+              create: 0,
+              update: 0,
+              delete: 0,
+            });
+          },
+          (err) => {
+            swal.fire({
+              title: 'Error',
+              text: 'Error al editar el permiso',
+              icon: 'error',
+            });
+          }
+        );
+        this.closebutton4.nativeElement.click();
+      }
+    }
+  }
 }
