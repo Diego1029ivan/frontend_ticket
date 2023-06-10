@@ -1,0 +1,1147 @@
+<!--poner un texto de cargando-->
+<app-carga *ngIf="cargando2 == false"></app-carga>
+
+<div
+  class="page-header"
+  *ngIf="this.permidoscrud[0]?.read === 1 && cargando2 == true"
+>
+  <h4 class="page-title">Control de Usuarios</h4>
+  <ul class="breadcrumbs">
+    <li class="nav-home">
+      <a href="#">
+        <i class="flaticon-home"></i>
+      </a>
+    </li>
+    <li class="separator">
+      <i class="flaticon-right-arrow"></i>
+    </li>
+    <li class="nav-item">
+      <a href="#">Roles</a>
+    </li>
+    <li class="separator">
+      <i class="flaticon-right-arrow"></i>
+    </li>
+    <li class="nav-item">
+      <a href="#">Modulos</a>
+    </li>
+    <li class="separator">
+      <i class="flaticon-right-arrow"></i>
+    </li>
+    <li class="nav-item">
+      <a href="#">Submodulos</a>
+    </li>
+    <li class="separator">
+      <i class="flaticon-right-arrow"></i>
+    </li>
+    <li class="nav-item">
+      <a href="#">Permisos</a>
+    </li>
+  </ul>
+</div>
+<div
+  class="page-inner"
+  *ngIf="this.permidoscrud[0]?.read === 1 && cargando2 == true"
+>
+  <!-- <h4 class="page-title">FAQS</h4> -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-space">
+        <div class="card-header">
+          <!-- <h4 class="card-title">FAQ Example</h4> -->
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <div
+                class="nav flex-column nav-pills nav-secondary nav-pills-no-bd nav-pills-icons"
+                id="v-pills-tab"
+                role="tablist"
+                aria-orientation="vertical"
+              >
+                <a
+                  class="nav-link active show"
+                  id="v-pills-home-tab-icons"
+                  data-toggle="pill"
+                  href="#v-pills-home-icons"
+                  role="tab"
+                  aria-controls="v-pills-home-icons"
+                  aria-selected="true"
+                >
+                  <i class="flaticon-user-4"></i>
+
+                  Roles
+                </a>
+                <a
+                  class="nav-link"
+                  id="v-pills-profile-tab-icons"
+                  data-toggle="pill"
+                  href="#v-pills-profile-icons"
+                  role="tab"
+                  aria-controls="v-pills-profile-icons"
+                  aria-selected="false"
+                >
+                  <i class="icon-grid"></i>
+                  Modulos
+                </a>
+                <a
+                  class="nav-link"
+                  id="v-pills-buy-tab-icons"
+                  data-toggle="pill"
+                  href="#v-pills-buy-icons"
+                  role="tab"
+                  aria-controls="v-pills-buy-icons"
+                  aria-selected="false"
+                >
+                  <i class="icon-notebook"></i>
+                  Submodulos
+                </a>
+                <a
+                  class="nav-link"
+                  id="v-pills-quality-tab-icons"
+                  data-toggle="pill"
+                  href="#v-pills-quality-icons"
+                  role="tab"
+                  aria-controls="v-pills-quality-icons"
+                  aria-selected="false"
+                >
+                  <i class="icon-user-following"></i>
+                  Permisos
+                </a>
+              </div>
+            </div>
+            <div class="col-12 col-md-9">
+              <div class="tab-content" id="v-pills-tabContent">
+                <!--Roles-->
+                <div
+                  class="tab-pane fade active show"
+                  id="v-pills-home-icons"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-home-tab-icons"
+                >
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex align-items-center">
+                          <h4 class="card-title">Lista de Roles</h4>
+                          <button
+                            *ngIf="this.permidoscrud[0]?.create === 1"
+                            class="btn btn-primary btn-round ml-auto"
+                            data-toggle="modal"
+                            data-target="#addRowModalRoles"
+                            (click)="agregarRol()"
+                          >
+                            <i class="fa fa-plus"></i>
+                            Agregar
+                          </button>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <!-- Modal -->
+                        <div
+                          class="modal fade"
+                          id="addRowModalRoles"
+                          tabindex="-1"
+                          role="dialog"
+                          aria-hidden="true"
+                        >
+                          <div
+                            class="modal-dialog modal-dialog-centered"
+                            role="document"
+                          >
+                            <div class="modal-content">
+                              <form
+                                [formGroup]="rolContr"
+                                (ngSubmit)="submitRol()"
+                              >
+                                <div class="modal-header">
+                                  <h5 class="modal-title">
+                                    <span class="fw-mediumbold">
+                                      {{
+                                        editRol ? "AGREGAR ROL" : "EDITAR ROL"
+                                      }}</span
+                                    >
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <div class="col-sm-12">
+                                      <input
+                                        type="hidden"
+                                        formControlName="idrol"
+                                      />
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label for="name">Rol</label>
+                                        <input
+                                          id="name"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Nombre del Rol"
+                                          required
+                                          formControlName="name"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button
+                                    type="submit"
+                                    [disabled]="rolContr.invalid"
+                                    id="addRowButton"
+                                    class="btn btn-primary"
+                                  >
+                                    {{ editRol ? "Agregar" : "Actualizar" }}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    #closebuttonRol
+                                    data-dismiss="modal"
+                                  >
+                                    Cerrar
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Fin Modal -->
+                        <!--poner un texto de cargando-->
+                        <app-carga *ngIf="cargando == false"></app-carga>
+                        <div
+                          class="alert alert-danger"
+                          role="alert"
+                          *ngIf="rolData.data?.length == 0 && cargando == true"
+                        >
+                          no hay Rol
+                        </div>
+                        <div
+                          class="table-responsive"
+                          *ngIf="rolData.data?.length != 0 && cargando == true"
+                        >
+                          <table
+                            id="add-row"
+                            class="display table table-striped table-hover"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Nombre Rol</th>
+                                <th style="width: 10%">Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let rol of rolData.data">
+                                <td>{{ rol.name }}</td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-original-title="Editar Rol"
+                                      data-toggle="modal"
+                                      data-target="#addRowModalRoles"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      *ngIf="this.permidoscrud[0]?.update === 1"
+                                      (click)="editarRol(rol)"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Borrar Rol"
+                                      *ngIf="this.permidoscrud[0]?.delete === 1"
+                                      (click)="eliminarRol(rol)"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--Fin Roles-->
+                <!--Modulos-->
+                <div
+                  class="tab-pane fade"
+                  id="v-pills-profile-icons"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-profile-tab-icons"
+                >
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex align-items-center">
+                          <h4 class="card-title">Lista de Modulos</h4>
+                          <button
+                            class="btn btn-primary btn-round ml-auto"
+                            data-toggle="modal"
+                            data-target="#addRowModalModulo"
+                            (click)="agregarModulo()"
+                          >
+                            <i class="fa fa-plus"></i>
+                            Agregar
+                          </button>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <!-- Modal -->
+                        <div
+                          class="modal fade"
+                          id="addRowModalModulo"
+                          tabindex="-1"
+                          role="dialog"
+                          aria-hidden="true"
+                        >
+                          <div
+                            class="modal-dialog modal-dialog-centered"
+                            role="document"
+                          >
+                            <div class="modal-content">
+                              <form
+                                [formGroup]="moduloContr"
+                                (ngSubmit)="submitModulo()"
+                              >
+                                <div class="modal-header">
+                                  <h5 class="modal-title">
+                                    <span class="fw-mediumbold">
+                                      {{
+                                        editModulo
+                                          ? "AGREGAR MODULO"
+                                          : "EDITAR MODULO"
+                                      }}</span
+                                    >
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <input
+                                      type="hidden"
+                                      formControlName="idmodulo"
+                                    />
+                                    <div class="col-sm-6">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label for="name">Modulo</label>
+                                        <input
+                                          id="name"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Nombre del Modulo"
+                                          required
+                                          formControlName="name"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label for="icon">Icon nombre</label>
+                                        <input
+                                          id="icon"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Nombre del Icono"
+                                          required
+                                          formControlName="icon"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button
+                                    type="submit"
+                                    [disabled]="moduloContr.invalid"
+                                    id="addRowButton"
+                                    class="btn btn-primary"
+                                  >
+                                    {{ editModulo ? "Agregar" : "Actualizar" }}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    #closebuttonModulo
+                                    data-dismiss="modal"
+                                  >
+                                    Cerrar
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Fin Modal -->
+
+                        <div
+                          class="alert alert-danger"
+                          role="alert"
+                          *ngIf="moduloData.data?.length == 0"
+                        >
+                          no hay Rol
+                        </div>
+                        <div
+                          class="table-responsive"
+                          *ngIf="moduloData.data?.length != 0"
+                        >
+                          <table
+                            id="add-row"
+                            class="display table table-striped table-hover"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Nombre Modulo</th>
+                                <th>Nombre Icon</th>
+                                <th style="width: 10%">Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let modulo of moduloData.data">
+                                <td>{{ modulo.name }}</td>
+                                <td>{{ modulo.icon }}</td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      data-original-title="Editar Modulo"
+                                      data-toggle="modal"
+                                      data-target="#addRowModalModulo"
+                                      (click)="editarModulo(modulo)"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Borrar Modulo"
+                                      (click)="eliminarModulo(modulo)"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--Fin Modulos-->
+                <!--Submodulos-->
+                <div
+                  class="tab-pane fade"
+                  id="v-pills-buy-icons"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-buy-tab-icons"
+                >
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex align-items-center">
+                          <h4 class="card-title">Lista de Submodulos</h4>
+                          <button
+                            class="btn btn-primary btn-round ml-auto"
+                            data-toggle="modal"
+                            data-target="#addRowModalSubmodulo"
+                            (click)="agregarSubmodulo()"
+                          >
+                            <i class="fa fa-plus"></i>
+                            Agregar
+                          </button>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <!-- Modal -->
+                        <div
+                          class="modal fade"
+                          id="addRowModalSubmodulo"
+                          tabindex="-1"
+                          role="dialog"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <form
+                                [formGroup]="submoduloContr"
+                                (ngSubmit)="submitSubmodulo()"
+                              >
+                                <div class="modal-header no-bd">
+                                  <h5 class="modal-title">
+                                    <span class="fw-mediumbold">
+                                      {{
+                                        editSubmodulo
+                                          ? "AGREGAR USUARIO"
+                                          : "EDITAR USUARIO"
+                                      }}</span
+                                    >
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <input
+                                      type="hidden"
+                                      formControlName="idsubmodulo"
+                                    />
+                                    <div class="col-sm-6">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label for="name">SubModulo</label>
+                                        <input
+                                          id="name"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Nombre del SubModulo"
+                                          required
+                                          formControlName="name"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label for="route">Url</label>
+                                        <input
+                                          id="route"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Url del SubModulo"
+                                          required
+                                          formControlName="route"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6 ajus">
+                                      <div class="form-group ajus">
+                                        <label for="module_id">Modulo</label>
+                                        <select
+                                          class="form-control"
+                                          id="module_id"
+                                          formControlName="module_id"
+                                        >
+                                          <option value="" selected>
+                                            Seleccione un Modulo
+                                          </option>
+                                          <option
+                                            *ngFor="
+                                              let modulo of moduloData?.data
+                                            "
+                                            value="{{ modulo.id }}"
+                                          >
+                                            {{ modulo.name }}
+                                          </option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6 container-ajuste">
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <span>Leer</span>
+                                          <div>
+                                            <input
+                                              [id]="1"
+                                              type="checkbox"
+                                              formControlName="read"
+                                            />
+                                            <label for="{{ 1 }}"></label>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <span>Crear</span>
+                                          <div>
+                                            <input
+                                              [id]="2"
+                                              type="checkbox"
+                                              formControlName="create"
+                                            />
+                                            <label for="{{ 2 }}"></label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <span>Actualizar</span>
+                                          <div>
+                                            <input
+                                              [id]="3"
+                                              type="checkbox"
+                                              formControlName="update"
+                                            />
+                                            <label for="3"></label>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <span>Eliminar</span>
+                                          <div>
+                                            <input
+                                              [id]="4"
+                                              type="checkbox"
+                                              default="false"
+                                              value="false"
+                                              formControlName="delete"
+                                            />
+                                            <label for="4"></label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer no-bd">
+                                  <button
+                                    type="submit"
+                                    [disabled]="submoduloContr.invalid"
+                                    id="addRowModalSubmodulo"
+                                    class="btn btn-primary"
+                                  >
+                                    {{
+                                      editSubmodulo ? "Agregar" : "Actualizar"
+                                    }}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    data-dismiss="modal"
+                                    #closebuttonSubmodulo
+                                  >
+                                    Cerrar
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="alert alert-danger"
+                          role="alert"
+                          *ngIf="submoduloData.data?.length == 0"
+                        >
+                          no hay subModulos
+                        </div>
+
+                        <!-- Fin Modal -->
+                        <div
+                          class="table-responsive"
+                          *ngIf="submoduloData.data?.length != 0"
+                        >
+                          <table
+                            id="add-row"
+                            class="display table table-striped table-hover"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Modulo</th>
+                                <th>Nombre submodulo</th>
+                                <th>Ruta</th>
+                                <th>Crear</th>
+                                <th>Leer</th>
+                                <th>Actualizar</th>
+                                <th>Eliminar</th>
+                                <th style="width: 10%">Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let submodulo of submoduloData.data">
+                                <td>{{ submodulo.module_name }}</td>
+                                <td>{{ submodulo.name }}</td>
+                                <td>{{ submodulo.route }}</td>
+                                <td *ngIf="submodulo.create == 1">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    checked
+                                    value="true"
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
+                                <td *ngIf="submodulo.create == 0">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
+
+                                <td *ngIf="submodulo.read == 1">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    checked
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
+                                <td *ngIf="submodulo.read == 0">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
+                                <td *ngIf="submodulo.update == 1">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    checked
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
+                                <td *ngIf="submodulo.update == 0">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
+                                <td *ngIf="submodulo.delete == 1">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    checked
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
+                                <td *ngIf="submodulo.delete == 0">
+                                  <input
+                                    type="checkbox"
+                                    [id]="submodulo.id"
+                                    disabled
+                                  />
+                                  <label for="{{ submodulo.id }}"></label>
+                                </td>
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      data-original-title="Edit Task"
+                                      data-toggle="modal"
+                                      data-target="#addRowModalSubmodulo"
+                                      (click)="editarSubmodulo(submodulo)"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Remove"
+                                      (click)="eliminarSubmodulo(submodulo)"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--Fin Submodulos-->
+                <!--Permisos-->
+                <div
+                  class="tab-pane fade"
+                  id="v-pills-quality-icons"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-quality-tab-icons"
+                >
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex align-items-center">
+                          <h4 class="card-title">Lista de Permisos</h4>
+                          <button
+                            class="btn btn-primary btn-round ml-auto"
+                            data-toggle="modal"
+                            data-target="#addRowModalPermiso"
+                            (click)="agregarPermiso()"
+                          >
+                            <i class="fa fa-plus"></i>
+                            Agregar
+                          </button>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <!-- Modal -->
+                        <div
+                          class="modal fade"
+                          id="addRowModalPermiso"
+                          tabindex="-1"
+                          role="dialog"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <form
+                                [formGroup]="permisoContr"
+                                (ngSubmit)="submitPermiso()"
+                              >
+                                <div class="modal-header no-bd">
+                                  <h5 class="modal-title">
+                                    <span class="fw-mediumbold">
+                                      {{
+                                        editPermiso
+                                          ? "AGREGAR PERMISO"
+                                          : "EDITAR PERMISO"
+                                      }}</span
+                                    >
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <input
+                                      type="hidden"
+                                      formControlName="idpermiso"
+                                    />
+                                    <div class="col-sm-6">
+                                      <div
+                                        class="form-group form-group-default"
+                                      >
+                                        <label for="namepermido">Nombre</label>
+                                        <input
+                                          id="namepermido"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Nombre del Permiso"
+                                          required
+                                          formControlName="namepermido"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6 ajus">
+                                      <div class="form-group ajus">
+                                        <label for="submodules_id"
+                                          >Submodule</label
+                                        >
+                                        <select
+                                          class="form-control"
+                                          id="submodules_id"
+                                          formControlName="submodules_id"
+                                        >
+                                          <option value="" selected>
+                                            Seleccione un Submodule
+                                          </option>
+                                          <option
+                                            *ngFor="
+                                              let submodule of submoduloData?.data
+                                            "
+                                            value="{{ submodule.id }}"
+                                          >
+                                            {{ submodule.name }}
+                                          </option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6 ajus">
+                                      <div class="form-group ajus">
+                                        <label for="rols_id">Rol</label>
+                                        <select
+                                          class="form-control"
+                                          id="rols_id"
+                                          formControlName="rols_id"
+                                        >
+                                          <option value="" selected>
+                                            Seleccione un Rol
+                                          </option>
+                                          <option
+                                            *ngFor="let rol of rolData?.data"
+                                            value="{{ rol.id }}"
+                                          >
+                                            {{ rol.name }}
+                                          </option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6 container-ajuste">
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <span>Leer</span>
+                                          <div>
+                                            <input
+                                              [id]="1000"
+                                              type="checkbox"
+                                              formControlName="read"
+                                            />
+                                            <label for="{{ 1000 }}"></label>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <span>Crear</span>
+                                          <div>
+                                            <input
+                                              [id]="10001"
+                                              type="checkbox"
+                                              formControlName="create"
+                                            />
+                                            <label for="{{ 10001 }}"></label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <span>Actualizar</span>
+                                          <div>
+                                            <input
+                                              [id]="10002"
+                                              type="checkbox"
+                                              formControlName="update"
+                                            />
+                                            <label for="{{ 10002 }}"></label>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <span>Eliminar</span>
+                                          <div>
+                                            <input
+                                              [id]="10004"
+                                              type="checkbox"
+                                              default="false"
+                                              value="false"
+                                              formControlName="delete"
+                                            />
+                                            <label for="{{ 10004 }}"></label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer no-bd">
+                                  <button
+                                    type="submit"
+                                    [disabled]="permisoContr.invalid"
+                                    id="addRowModalPermiso"
+                                    class="btn btn-primary"
+                                  >
+                                    {{ editPermiso ? "Agregar" : "Actualizar" }}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    data-dismiss="modal"
+                                    #closebuttonPermiso
+                                  >
+                                    Cerrar
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="alert alert-danger"
+                          role="alert"
+                          *ngIf="permisoData?.data?.length == 0"
+                        >
+                          No hay lista de Permisos
+                        </div>
+                        <!-- Fin Modal -->
+                        <div
+                          *ngIf="permisoData.data?.length != 0"
+                          class="table-responsive"
+                        >
+                          <table
+                            id="add-row"
+                            class="display table table-striped table-hover"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Rol</th>
+                                <th>Modulo</th>
+                                <th>Submodulo</th>
+                                <th>Nombre permiso</th>
+                                <th>Crear</th>
+                                <th>Leer</th>
+                                <th>Actualizar</th>
+                                <th>Eliminar</th>
+                                <th style="width: 10%">Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let permiso of permisoData.data">
+                                <td>{{ permiso.rolusuario }}</td>
+                                <td>{{ permiso.nombremodule }}</td>
+                                <td>{{ permiso.submodulonombre }}</td>
+                                <td>{{ permiso.namepermido }}</td>
+                                <td *ngIf="permiso.create == 1">
+                                  <input
+                                    type="checkbox"
+                                    [id]="permiso.id"
+                                    checked
+                                    disabled
+                                  />
+                                  <label for="{{ permiso.id }}"></label>
+                                </td>
+                                <td *ngIf="permiso.create == 0">
+                                  <input
+                                    type="checkbox"
+                                    [id]="permiso.id"
+                                    disabled
+                                  />
+                                  <label for="{{ permiso.id }}"></label>
+                                </td>
+                                <td *ngIf="permiso.read == 1">
+                                  <input
+                                    type="checkbox"
+                                    [id]="permiso.id"
+                                    checked
+                                    disabled
+                                  />
+                                  <label for="{{ permiso.id }}"></label>
+                                </td>
+                                <td *ngIf="permiso.read == 0">
+                                  <input
+                                    type="checkbox"
+                                    [id]="permiso.id"
+                                    disabled
+                                  />
+                                  <label for="{{ permiso.id }}"></label>
+                                </td>
+                                <td *ngIf="permiso.update == 1">
+                                  <input
+                                    type="checkbox"
+                                    [id]="permiso.id"
+                                    checked
+                                    disabled
+                                  />
+                                  <label for="{{ permiso.id }}"></label>
+                                </td>
+                                <td *ngIf="permiso.update == 0">
+                                  <input
+                                    type="checkbox"
+                                    [id]="permiso.id"
+                                    disabled
+                                  />
+                                  <label for="{{ permiso.id }}"></label>
+                                </td>
+                                <td *ngIf="permiso.delete == 1">
+                                  <input
+                                    type="checkbox"
+                                    [id]="permiso.id"
+                                    checked
+                                    disabled
+                                  />
+                                  <label for="{{ permiso.id }}"></label>
+                                </td>
+                                <td *ngIf="permiso.delete == 0">
+                                  <input
+                                    type="checkbox"
+                                    [id]="permiso.id"
+                                    disabled
+                                  />
+                                  <label for="{{ permiso.id }}"></label>
+                                </td>
+
+                                <td>
+                                  <div class="form-button-action">
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-primary btn-lg"
+                                      data-toggle="modal"
+                                      data-target="#addRowModalPermiso"
+                                      data-original-title="Editar Permiso"
+                                      (click)="editarPermiso(permiso)"
+                                    >
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      class="btn btn-link btn-danger"
+                                      data-original-title="Eliminar Permiso"
+                                      (click)="eliminarPermiso(permiso)"
+                                    >
+                                      <i class="fa fa-times"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--Fin Permisos-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer"></div>
+      </div>
+    </div>
+  </div>
+</div>

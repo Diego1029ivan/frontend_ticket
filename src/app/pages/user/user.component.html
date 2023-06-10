@@ -1,40 +1,56 @@
-<div class="page-header">
-  <h4 class="page-title"> GESTIÓN INVENTARIO UNSM</h4>
+<!--poner un texto de cargando-->
+<app-carga *ngIf="cargando2 == false"></app-carga>
+
+<div
+  class="page-header"
+  *ngIf="this.permidoscrud[0]?.read === 1 && cargando2 == true"
+>
+  <h4 class="page-title">GESTIÓN INVENTARIO UNSM</h4>
 </div>
 
-
-<div class="row">
-
+<div class="row" *ngIf="this.permidoscrud[0]?.read === 1 && cargando2 == true">
   <div class="col-md-12">
-
     <div class="card">
       <div class="card-header">
         <div class="d-flex align-items-center">
-          <h4 class="card-title"> Listado de usuarios</h4>
-          <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal"
-            (click)="agregarUsuario()">
+          <h4 class="card-title">Listado de usuarios</h4>
+          <button
+            *ngIf="this.permidoscrud[0]?.create === 1"
+            class="btn btn-primary btn-round ml-auto"
+            data-toggle="modal"
+            data-target="#addRowModal"
+            (click)="agregarUsuario()"
+          >
             <i class="fa fa-plus"></i>
-            agregar
+            Agregar
           </button>
         </div>
-
       </div>
 
       <div class="card-body">
-        <!--poner un texto de cargando-->
-        <app-carga *ngIf=" cargando == false"></app-carga>
         <!-- Modal -->
-        <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div
+          class="modal fade"
+          id="addRowModal"
+          tabindex="-1"
+          role="dialog"
+          aria-hidden="true"
+        >
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <form [formGroup]="usuarioSub" (ngSubmit)="submit()">
-                <div class="modal-header ">
+                <div class="modal-header">
                   <h5 class="modal-title">
                     <span class="fw-mediumbold">
-                      {{edit ? 'AGREGAR USUARIO': 'EDITAR USUARIO'}}</span>
-
+                      {{ edit ? "AGREGAR USUARIO" : "EDITAR USUARIO" }}</span
+                    >
                   </h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -43,57 +59,100 @@
                     <div class="col-sm-12">
                       <div class="form-group form-group-default">
                         <label for="name">Username</label>
-                        <input id="name" type="text" class="form-control" placeholder="Agregar su usuario" required
-                          formControlName="name">
+                        <input
+                          id="name"
+                          type="text"
+                          class="form-control"
+                          placeholder="Agregar su usuario"
+                          required
+                          formControlName="name"
+                        />
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <input type="hidden" formControlName="id">
+                      <input type="hidden" formControlName="id" />
                       <div class="form-group form-group-default">
                         <label for="email">correo</label>
-                        <input id="email" type="text" class="form-control" placeholder="Agregar su correo" required
-                          formControlName="email">
+                        <input
+                          id="email"
+                          type="text"
+                          class="form-control"
+                          placeholder="Agregar su correo"
+                          required
+                          formControlName="email"
+                        />
                       </div>
-                      <p class="small errors" *ngIf="this.usuarioSub.get('email')?.errors?.['email']">correo no valido
+                      <p
+                        class="small errors"
+                        *ngIf="this.usuarioSub.get('email')?.errors?.['email']"
+                      >
+                        correo no valido
                       </p>
                     </div>
                     <div class="col-md-12">
-                      <div class="form-group form-group-default ">
-                        <label for="rol_id" class="placeholder">Rol Usuario</label>
-                        <select class="form-control" id="rol_id" required formControlName="rol_id">
+                      <div class="form-group form-group-default">
+                        <label for="rol_id" class="placeholder"
+                          >Rol Usuario</label
+                        >
+                        <select
+                          class="form-control"
+                          id="rol_id"
+                          required
+                          formControlName="rol_id"
+                        >
                           <option value="">Seleccione un Rol</option>
-                          <option value="1">Administrador</option>
-                          <option value="2">Usuario</option>
+                          <option
+                            *ngFor="let rol of rolData?.data"
+                            value="{{ rol.id }}"
+                          >
+                            {{ rol.name }}
+                          </option>
                         </select>
-
                       </div>
                     </div>
                   </div>
-
                 </div>
-                <div class="modal-footer ">
-                  <button [disabled]="usuarioSub.invalid" type="submit" id="addRowButton" class="btn btn-primary">{{edit
-                    ?
-                    'Add': 'Update'}}</button>
-                  <button type="button" class="btn btn-danger" #closebutton data-dismiss="modal">Close</button>
+                <div class="modal-footer">
+                  <button
+                    [disabled]="usuarioSub.invalid"
+                    type="submit"
+                    id="addRowButton"
+                    class="btn btn-primary"
+                  >
+                    {{ edit ? "Agregar" : "Actualizar" }}
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    #closebutton
+                    data-dismiss="modal"
+                  >
+                    Cerrar
+                  </button>
                 </div>
-
               </form>
             </div>
           </div>
         </div>
         <!-- Modal end-->
-        <div class="alert alert-danger" role="alert" *ngIf="usuarios.data?.length == 0 && cargando == true">
+        <!--poner un texto de cargando-->
+        <app-carga *ngIf="cargando == false"></app-carga>
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="usuarios.data?.length == 0 && cargando == true"
+        >
           no hay usuarios
         </div>
 
-        <div class="container overflow-auto tabla-excel" *ngIf="usuarios.data?.length != 0 && cargando == true">
-
+        <div
+          class="container overflow-auto tabla-excel"
+          *ngIf="usuarios.data?.length != 0 && cargando == true"
+        >
           <table class="table table-striped mt-2 table-hover">
-
             <thead>
               <tr>
-
                 <th scope="col">Usuario</th>
                 <th scope="col">Correo</th>
                 <th scope="col">Rol</th>
@@ -101,36 +160,48 @@
               </tr>
             </thead>
             <tbody>
-
-              <tr *ngFor="let usuario of usuarios?.data ">
-
-                <td>{{ usuario.name}}</td>
-                <td>{{ usuario.email}}</td>
-                <td>{{ usuario.rol_name}}</td>
+              <tr *ngFor="let usuario of usuarios?.data">
+                <td>{{ usuario.name }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>{{ usuario.rol_name }}</td>
                 <td>
                   <div class="form-button-action">
-                    <button type="button" tabindex="0" data-toggle="tooltip" title="Edit usuario"
-                      class="btn btn-link btn-primary btn-lg" data-original-title="Edit usuario" data-toggle="modal"
-                      data-target="#addRowModal" (click)="editarUsuario(usuario.id,usuario)">
+                    <button
+                      type="button"
+                      tabindex="0"
+                      data-toggle="tooltip"
+                      title="Edit usuario"
+                      class="btn btn-link btn-primary btn-lg"
+                      data-original-title="Edit usuario"
+                      data-toggle="modal"
+                      data-target="#addRowModal"
+                      *ngIf="this.permidoscrud[0]?.update === 1"
+                      (click)="editarUsuario(usuario.id, usuario)"
+                    >
                       <i class="fa fa-edit"></i>
                     </button>
 
-                    <button *ngIf="usuario.rol_id != 1" (click)="eliminarUsuario(usuario)" type="button"
-                      data-toggle="tooltip" title="Remove" class="btn btn-link btn-danger "
-                      data-original-title="Remove">
+                    <button
+                      *ngIf="
+                        usuario.rol_id != 1 &&
+                        this.permidoscrud[0]?.delete === 1
+                      "
+                      (click)="eliminarUsuario(usuario)"
+                      type="button"
+                      data-toggle="tooltip"
+                      title="Remove"
+                      class="btn btn-link btn-danger"
+                      data-original-title="Remove"
+                    >
                       <i class="fa fa-times"></i>
                     </button>
-
                   </div>
                 </td>
-
               </tr>
             </tbody>
           </table>
         </div>
-
       </div>
     </div>
-
   </div>
 </div>

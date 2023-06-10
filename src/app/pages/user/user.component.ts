@@ -3,6 +3,7 @@ import { UserService } from '../../services/user.service';
 import { Users } from 'src/app/interfaces/users';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import swal from 'sweetalert2';
+import { ControUserService } from 'src/app/services/contro-user.service';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -15,10 +16,22 @@ export class UserComponent implements OnInit {
   usuarios: any = [];
   correoActual: any = null;
   cargando: boolean = false;
+  cargando2: boolean = false;
   edit: boolean = false;
-  constructor(private fb: FormBuilder, private userService: UserService) {
+  rolData: any = [];
+  permidoscrud: any = {};
+
+  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private controUser: ControUserService
+  ) {
+    this.permisosporusuario();
+    this.cargando2 = false;
     this.cargarUsuarios();
     this.cargando = false;
+    this.motrarRol();
   }
 
   cargarUsuarios() {
@@ -27,7 +40,27 @@ export class UserComponent implements OnInit {
       this.cargando = true;
     });
   }
+  //rol
+  motrarRol() {
+    this.controUser.getAllRol().subscribe((data) => {
+      this.rolData = data;
+    });
+  }
 
+  permisosporusuario() {
+    this.userService.getPermisourlLogeado(this.username.rol).subscribe(
+      (data1) => {
+        this.permidoscrud = data1.data;
+        this.permidoscrud = this.permidoscrud.filter(
+          (permiso: any) => permiso.route === './usarios'
+        );
+        this.cargando2 = true;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
   ngOnInit() {
     this.usuarioSub = this.fb.group({
       id: [''],
@@ -40,6 +73,12 @@ export class UserComponent implements OnInit {
   agregarUsuario() {
     this.edit = true;
     this.usuarioSub.reset();
+    this.usuarioSub.setValue({
+      id: '',
+      name: '',
+      email: '',
+      rol_id: '',
+    });
   }
   editarUsuario(id1: number, users: any) {
     this.edit = false;
@@ -59,19 +98,30 @@ export class UserComponent implements OnInit {
         text: `¿Seguro que desea eliminar el Usuario ${usuario.name}?`,
         icon: 'warning',
         showCancelButton: true,
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'No, cancelar',
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
       })
       .then((result) => {
         if (result.isConfirmed) {
-          this.userService.deleteUser(usuario.id).subscribe((data) => {
-            swal.fire(
-              'Eliminado',
-              `El Usuario ${usuario.name} ha sido eliminado`,
-              'success'
-            );
-          });
-          this.cargarUsuarios();
+          this.userService.deleteUser(usuario.id).subscribe(
+            (data) => {
+              swal.fire(
+                'Eliminado',
+                `El Usuario ${usuario.name} ha sido eliminado`,
+                'success'
+              );
+              this.cargarUsuarios();
+            },
+            (error) => {
+              swal.fire({
+                title: 'Error',
+                text: 'Error al eliminar el permiso',
+                icon: 'error',
+              });
+            }
+          );
         }
       });
   }
@@ -108,6 +158,12 @@ export class UserComponent implements OnInit {
         );
 
         this.usuarioSub.reset();
+        this.usuarioSub.setValue({
+          id: '',
+          name: '',
+          email: '',
+          rol_id: '',
+        });
       } else {
         //editar usuario
 

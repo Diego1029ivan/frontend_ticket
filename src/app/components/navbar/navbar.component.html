@@ -1,132 +1,59 @@
 <div class="sidebar sidebar-style-2">
   <div class="sidebar-wrapper scrollbar scrollbar-inner">
-    <div class="sidebar-content">
+    <!--poner un texto de cargando-->
+    <app-carga *ngIf="cargando == false"></app-carga>
+    <div *ngIf="cargando == true" class="sidebar-content">
       <div class="user">
         <div class="avatar-sm float-left mr-2">
-          <img src="../../../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+          <img
+            src="../../../assets/img/profile.jpg"
+            alt="..."
+            class="avatar-img rounded-circle"
+          />
         </div>
         <div class="info">
           <a data-toggle="collapse" routerLink="./perfil" aria-expanded="true">
-
-            <span *ngIf=" userLogado != null">
-              {{userLogado.data[0].name}}
-              <span class="user-level">{{userLogado.data[0].rol_name}}</span>
-
+            <span *ngIf="userLogado != null">
+              {{ userLogado.data[0].name }}
+              <span class="user-level">{{ userLogado.data[0].rol_name }}</span>
             </span>
           </a>
         </div>
       </div>
       <ul class="nav nav-primary">
-        <li class="nav-item " routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
-            <i class="fas fa-home"></i>
-            <p>Dashboard</p>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          *ngFor="let navlink of transformedArray"
+        >
+          <a
+            data-toggle="collapse"
+            href="#{{ navlink.nombremodule }}"
+            class="collapsed"
+            aria-expanded="false"
+          >
+            <i class="{{ navlink.icon }}"></i>
+            <p>
+              {{ navlink.nombremodule }}
+            </p>
             <span class="caret"></span>
           </a>
-          <div class="collapse" id="dashboard">
+          <div class="collapse" id="{{ navlink.nombremodule }}">
             <ul class="nav nav-collapse">
-              <li>
-                <a routerLink="./reporte">
-                  <span class="sub-item">Reportes</span>
+              <li
+                *ngFor="let submodulonombre of navlink.submodulonombre"
+                class="nav-item"
+              >
+                <a routerLink="{{ submodulonombre.route }}">
+                  <span class="sub-item">{{
+                    submodulonombre.submodulonombre
+                  }}</span>
                 </a>
               </li>
-
             </ul>
           </div>
         </li>
-        <li class="nav-item " routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a data-toggle="collapse" href="#contabilidad" class="collapsed" aria-expanded="false">
-            <i class="
-            fas fa-money-bill"></i>
-            <p>Contabilidad</p>
-            <span class="caret"></span>
-          </a>
-          <div class="collapse" id="contabilidad">
-            <ul class="nav nav-collapse">
-              <li>
-                <a routerLink="./reporteContable">
-                  <span class="sub-item">Reporte Contable</span>
-                </a>
-              </li>
-
-            </ul>
-          </div>
-        </li>
-        <li class="nav-section">
-          <span class="sidebar-mini-icon">
-            <i class="fa fa-ellipsis-h"></i>
-          </span>
-          <h4 class="text-section">Bienes</h4>
-        </li>
-        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a data-toggle="collapse" href="#base">
-            <i class="fas fa-layer-group"></i>
-            <p>Tablas</p>
-            <span class="caret"></span>
-          </a>
-          <div class="collapse" id="base">
-            <ul class="nav nav-collapse">
-              <li>
-                <a routerLink="./inventario_off">
-                  <span class="sub-item">Tabla Excel</span>
-                </a>
-              </li>
-              <li>
-                <a routerLink="./inventario_filtro">
-                  <span class="sub-item">Tabla BD</span>
-                </a>
-              </li>
-
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a data-toggle="collapse" href="#sidebarLayouts">
-            <i class="fas fa-th-list"></i>
-            <p>Usuarios</p>
-            <span class="caret"></span>
-          </a>
-          <div class="collapse" id="sidebarLayouts">
-            <ul class="nav nav-collapse">
-              <li>
-                <a routerLink="./usarios">
-                  <span class="sub-item">Lista de Usuarios</span>
-                </a>
-              </li>
-              <li>
-                <a routerLink="./ResetiarPassword">
-                  <span class="sub-item">Reset Password</span>
-                </a>
-              </li>
-
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a data-toggle="collapse" href="#sidebarEstados">
-            <i class="fas fa-bookmark"></i>
-            <p>Estado</p>
-            <span class="caret"></span>
-          </a>
-          <div class="collapse" id="sidebarEstados">
-            <ul class="nav nav-collapse">
-              <li>
-                <a routerLink="./cambioQR/602204170004">
-                  <span class="sub-item">Cambio QR</span>
-                </a>
-              </li>
-              <li>
-                <a routerLink="./codigo-barras">
-                  <span class="sub-item">Lector de Barras</span>
-                </a>
-              </li>
-              
-
-            </ul>
-          </div>
-        </li>
-
-
       </ul>
     </div>
   </div>

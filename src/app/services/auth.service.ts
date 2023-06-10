@@ -37,6 +37,7 @@ export class AuthService {
     this._usuario.name = usuario1.name;
     this._usuario.email = usuario1.email;
     this._usuario.rol_id = usuario1.rol_id;
+    this._usuario.rol = usuario1.rol;
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
   }
   hasRole(rol_id: number): boolean {
