@@ -30,6 +30,9 @@ import { EstadosComponent } from './pages/estados/estados.component';
 import { ResetPasswordComponent } from './pages/Auth/reset-password/reset-password.component';
 import { LectorBarrasComponent } from './pages/lector-barras/lector-barras.component';
 import { ControllerUserComponent } from './pages/controller-user/controller-user.component';
+import { ReporteContableComponent } from './pages/reporte-contable/reporte-contable.component';
+import { PolarChartComponent } from './components/polar-chart/polar-chart.component';
+import { BarContaChartComponent } from './components/bar-conta-chart/bar-conta-chart.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +56,9 @@ import { ControllerUserComponent } from './pages/controller-user/controller-user
     ResetPasswordComponent,
     LectorBarrasComponent,
     ControllerUserComponent,
+    ReporteContableComponent,
+    PolarChartComponent,
+    BarContaChartComponent,
   ],
   imports: [
     BrowserModule,

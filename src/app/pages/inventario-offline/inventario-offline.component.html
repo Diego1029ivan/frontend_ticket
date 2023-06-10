@@ -13,7 +13,8 @@
         <form>
           <div class="row justify-content-around">
             <input type="file" class="form-control col-4" (change)="onFileChange($event)" accept=".xlsx">
-            <button type="submit" class="btn btn-primary col-2" (click)="enviarBienes()">Guardar</button>
+            <button type="submit" class="btn btn-primary col-2" (click)="enviarBienes()"
+            [disabled]="subir">Guardar</button>
           </div>
         </form>
         <!--poner un texto de cargando-->
@@ -33,10 +34,9 @@
                       <th scope="col">{{ header[1] }}</th>
                       <th scope="col">{{ header[2] }}</th>
                       <th scope="col">{{ header[6] }}</th>
-                      <th scope="col">{{ header[3] }}</th>
                       <th scope="col">{{ header[7] }}</th>
                       <th scope="col">{{ header[9] }}</th>
-                      <th scope="col">{{ header[10] }}</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
@@ -50,10 +50,9 @@
                       <td>{{ row.CODIGO_PATRIMONIAL}}</td>
                       <td>{{ row.DENOMINACION_BIEN}}</td>
                       <td>{{ row.FECHA_DOCUMENTO_ADQUIS}}</td>
-                      <td>{{ row.NRO_CTA_CONTABLE}}</td>
                       <td>{{ row.VALOR_ADQUIS}}</td>
                       <td>{{ row.NOM_EST_BIEN}}</td>
-                      <td>{{ row.OPC_ASEGURADO}}</td>
+                      
                     </tr>
                   </tbody>
                 </table>

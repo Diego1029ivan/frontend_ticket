@@ -23,7 +23,7 @@
 </div>
 <div class="card">
   <div class="card-body">
-    <div class="input-group buscar container mt-3">
+    <div class="input-group buscar container ">
       
       
         <input type="text" [(ngModel)]="busqueda" class="form-control" (keyup)="actualizarBusqueda($event)"
@@ -49,8 +49,11 @@
       </div>
 
       <app-carga *ngIf=" cargando == 0"></app-carga>
-      <div class="table-responsive overflow-auto tabla-excel">
-            <div class="row" *ngIf=" cargando == 1">
+      <div class="alert alert-danger mt-3" role="alert" *ngIf="items?.data.length == 0">
+        no hay bienes en la base de datos
+      </div>
+      <div class="table-responsive overflow-auto tabla-excel" *ngIf="items?.data.length != 0">
+            <div class="row" *ngIf=" cargando == 1" >
               <table id="basic-datatables" class="display table table-striped table-hover" >
 
                 <thead>
@@ -60,6 +63,7 @@
                     <th scope="col">{{ header[0] }}</th>
                     <th scope="col">{{ header[2] }}</th> <!--Código patrimonial -->
                     <th scope="col">{{ header[3] }}</th>
+                    <th scope="col">{{ header[16] }}</th>
                     <th scope="col">{{ header[6] }}</th>
                     <th scope="col">{{ header[10] }}</th>
                     <th scope="col">{{ header[7] }}</th>
@@ -94,6 +98,7 @@
                     <td>{{ row.id}}</td>
                     <td>{{ row.codigo_patrimonial}}</td>
                     <td>{{ row.denominacion_bien}}</td>
+                    <td>{{ row.desc_area}}</td>
                     <td>{{ row.fecha_adquisicion}}</td>
                     <td>{{ row.nro_cuenta_contable}}</td>
                     <td>{{ row.valor_adquisicion}}</td>

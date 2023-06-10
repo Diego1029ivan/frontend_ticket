@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 
 import { Chart } from 'chart.js';
 import {
@@ -16,13 +16,18 @@ Chart.register(BarController, BarElement, CategoryScale, LinearScale);
   styleUrls: ['./bar-chart.component.css'],
 })
 export class BarChartComponent {
+  carga: number = 0;
+
   @ViewChild('barChart', { static: true })
   pieChart!: ElementRef<HTMLCanvasElement>;
 
   constructor(private inventarioService: InventarioService) {}
   ngOnInit(): void {
     this.inventarioService.getCondicion().subscribe((condi) => {
+      this.carga = 1;
+      //console.log(condi)
       const ctx = this.pieChart.nativeElement.getContext('2d');
+      console.log(ctx);
       if (!ctx) {
         throw new Error('Error al obtener el contexto del canvas');
       }
@@ -54,6 +59,8 @@ export class BarChartComponent {
           },
         },
       });
+
+      //console.log(ctx)
     });
   }
 }

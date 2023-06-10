@@ -15,7 +15,8 @@ export class FiltroPipe implements PipeTransform {
       return (
         row.codigo_patrimonial.toString().includes(busqueda) ||
         row.denominacion_bien.toLowerCase().includes(busqueda) ||
-        row.fecha_adquisicion.toString().includes(busqueda)
+        row.fecha_adquisicion.toString().includes(busqueda) ||
+        row.desc_area.toLowerCase().includes(busqueda)
       );
     });
   }

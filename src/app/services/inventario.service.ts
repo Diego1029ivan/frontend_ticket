@@ -32,8 +32,8 @@ export class InventarioService {
   getCodigo(codigo: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/biencodigo/${codigo}`);
   }
-  postLista(data: Bien): Observable<any> {
-    return this.http.post<Bien>(`${this.baseUrl}/inventary`, data);
+  postLista(data: Bien[]): Observable<any> {
+    return this.http.post<Bien[]>(`${this.baseUrl}/inventary`, data);
   }
 
   //cargar un nuevo pdf con post
@@ -56,5 +56,10 @@ export class InventarioService {
   //actualizar el bien
   updateInventario(codigo: string,inventario:any): Observable<any>{
     return this.http.put<any>(`${this.baseUrl}/inventario/${codigo}`,inventario);
+  }
+
+  //Vista de area
+  getArea(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/area`);
   }
 }
