@@ -10,24 +10,20 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
-
-
-
-
 @Component({
   selector: 'app-inventario-offline',
   templateUrl: './inventario-offline.component.html',
   styleUrls: ['./inventario-offline.component.css'],
   providers: [FiltroPipe],
 })
-export class InventarioOfflineComponent implements OnInit,AfterViewInit {
+export class InventarioOfflineComponent implements OnInit, AfterViewInit {
   public urlCodigoBarra: string = environment.baseUrl;
   page: number = 1;
   pageSize: number = 10;
   collectionSize: number = 0;
   data: Bien[] = [];
   valor: Boolean = false;
-  cargando: number=2 ;
+  cargando: number = 2;
 
   tablaParcial: any = [];
   tablaParcial2: any = [];
@@ -40,22 +36,12 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
     private authService: AuthService,
     private router: Router,
     private filtro: FiltroPipe
-  ) {
-    
-  }
-  ngAfterViewInit(): void {
-    
-    
-    
-  }
-  ngOnInit(): void {
-    
-   
-    
-  }
+  ) {}
+  ngAfterViewInit(): void {}
+  ngOnInit(): void {}
 
   onFileChange(ev: any) {
-    this.cargando=0;
+    this.cargando = 0;
     let workBook: any = null;
     let jsonData: any = null;
     const reader = new FileReader();
@@ -72,7 +58,6 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
     }
 
     reader.onload = (event) => {
-      
       const data = reader.result;
       workBook = XLSX.read(data, { type: 'binary' });
       jsonData = workBook.SheetNames.reduce((initial: any, name: any) => {
@@ -81,7 +66,7 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
         return initial;
       }, {});
       this.data = jsonData[Object.keys(jsonData)[0]];
-      
+
       this.header = Object.keys(this.data[0]);
 
       // Convertir números de fecha a objetos Date
@@ -90,13 +75,16 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
         item.FECHA_DOCUMENTO_ADQUIS = new Date(item.FECHA_DOCUMENTO_ADQUIS);
         // Obtener los componentes de la fecha
         const year = item.FECHA_DOCUMENTO_ADQUIS.getFullYear();
-        const month = ("0" + (item.FECHA_DOCUMENTO_ADQUIS.getMonth() + 1)).slice(-2);
-        const day = ("0" + item.FECHA_DOCUMENTO_ADQUIS.getDate()).slice(-2);
+        const month = (
+          '0' +
+          (item.FECHA_DOCUMENTO_ADQUIS.getMonth() + 1)
+        ).slice(-2);
+        const day = ('0' + item.FECHA_DOCUMENTO_ADQUIS.getDate()).slice(-2);
 
         // Crear la cadena de fecha en formato MySQL
         item.FECHA_DOCUMENTO_ADQUIS = `${year}-${month}-${day}`;
-        item.NOM_EST_BIEN=item.NOM_EST_BIEN.charAt(0);
-        item.CONDICION=item.CONDICION.charAt(0);
+        item.NOM_EST_BIEN = item.NOM_EST_BIEN.charAt(0);
+        item.CONDICION = item.CONDICION.charAt(0);
       });
       //console.log(this.header)
       this.collectionSize = this.data.length;
@@ -105,7 +93,7 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
       this.tablaParcial2 = this.data;
       //console.log(this.data);
       this.refreshInventario();
-      this.cargando=1;
+      this.cargando = 1;
     };
     reader.readAsBinaryString(file);
   }
@@ -127,23 +115,26 @@ export class InventarioOfflineComponent implements OnInit,AfterViewInit {
   }
 
   /*====== POST EXCEL========*/
-  subir:boolean=false
+  subir: boolean = false;
   enviarBienes(): void {
-      this.subir==true;
-      console.log(this.tablaParcial)
-      this.inventarioService
-        .postLista(this.tablaParcial)
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            return throwError(error);
-          })
-        )
-        .subscribe((respo)=>{
-          console.log(respo)
-          this.subir==false;
+    this.subir == true;
+    console.log(this.tablaParcial);
+    this.inventarioService
+      .postLista(this.tablaParcial)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError(error);
+        })
+      )
+      .subscribe(
+        (respo) => {
+          console.log(respo);
+          this.subir == false;
+        },
+        (error) => {
+          console.log(error);
         }
-          
-        );
+      );
     //}
   }
 }
