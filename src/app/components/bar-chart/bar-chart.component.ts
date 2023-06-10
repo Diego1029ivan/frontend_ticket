@@ -21,37 +21,39 @@ export class BarChartComponent {
 
   constructor(private inventarioService: InventarioService) {}
   ngOnInit(): void {
-    // this.inventarioService.getCondicion().subscribe((condi)=>{
-    //       const ctx = this.pieChart.nativeElement.getContext('2d');
-    //       if (!ctx) {
-    //         throw new Error('Error al obtener el contexto del canvas');
-    //       }
-    //       const myChart = new Chart(ctx, {
-    //       type: 'bar',
-    //       data: {
-    //         labels: ['Bien Activo', 'Bien de Alta'],
-    //         datasets: [{
-    //           label: '# de bienes',
-    //           data: [parseInt(condi[0].cond_activo),parseInt(condi[0].cond_baja)],
-    //           backgroundColor: [
-    //             'rgba(255, 99, 132, 0.2)',
-    //             'rgba(54, 162, 235, 0.2)'
-    //           ],
-    //           borderColor: [
-    //             'rgba(255, 99, 132, 1)',
-    //             'rgba(54, 162, 235, 1)'
-    //           ],
-    //           borderWidth: 1
-    //         }]
-    //       },
-    //       options: {
-    //         scales: {
-    //           y: {
-    //             beginAtZero: true
-    //           }
-    //         }
-    //       }
-    //     });
-    //   })
+    this.inventarioService.getCondicion().subscribe((condi) => {
+      const ctx = this.pieChart.nativeElement.getContext('2d');
+      if (!ctx) {
+        throw new Error('Error al obtener el contexto del canvas');
+      }
+      const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Bien Activo', 'Bien de Alta'],
+          datasets: [
+            {
+              label: '# de bienes',
+              data: [
+                parseInt(condi[0].cond_activo),
+                parseInt(condi[0].cond_baja),
+              ],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+              ],
+              borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    });
   }
 }
