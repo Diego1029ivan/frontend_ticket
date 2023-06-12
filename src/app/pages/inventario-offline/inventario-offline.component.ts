@@ -9,6 +9,7 @@ import { catchError, delay, of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-inventario-offline',
@@ -31,12 +32,19 @@ export class InventarioOfflineComponent implements OnInit, AfterViewInit {
   busqueda: string = '';
   file: File | null = null;
   header: string[] = [];
+  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  permidoscrud: any = {};
+  cargando2: boolean = false;
   constructor(
     private inventarioService: InventarioService,
     private authService: AuthService,
     private router: Router,
-    private filtro: FiltroPipe
-  ) {}
+    private filtro: FiltroPipe,
+    private userService: UserService
+  ) {
+    this.permisosporusuario();
+    this.cargando2 = false;
+  }
   ngAfterViewInit(): void {}
   ngOnInit(): void {}
 
@@ -97,7 +105,20 @@ export class InventarioOfflineComponent implements OnInit, AfterViewInit {
     };
     reader.readAsBinaryString(file);
   }
-
+  permisosporusuario() {
+    this.userService.getPermisourlLogeado(this.username.rol).subscribe(
+      (data1) => {
+        this.permidoscrud = data1.data;
+        this.permidoscrud = this.permidoscrud.filter(
+          (permiso: any) => permiso.route === './inventario_off'
+        );
+        this.cargando2 = true;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
   public refreshInventario() {
     this.data = this.tablaParcial
       .map((country: any, i: any) => ({ id: i + 1, ...country }))
