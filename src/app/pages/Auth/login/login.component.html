@@ -78,6 +78,10 @@
               Ingresar
             </button>
           </div>
+          <div style="text-align: center">
+            <app-carga *ngIf="cargando == false"></app-carga>
+          </div>
+
           <!-- <div class="login-account">
             <span class="msg">Puedes registrar nueva cuenta</span>
             <a href="#" id="show-signup" class="link textnone">Registrarse</a>
