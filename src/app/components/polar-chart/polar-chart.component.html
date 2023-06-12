@@ -3,6 +3,9 @@
 </div>
 <div class="card-body">
     <div class="chart-container">
+        <div class="alert alert-danger mt-3" role="alert" *ngIf="mensaje">
+            {{mensaje}}
+          </div>
         <canvas #pieChart class="bar-conta"></canvas>
     </div>
     <div class="card-title">Leyenda de Valor Neto</div>

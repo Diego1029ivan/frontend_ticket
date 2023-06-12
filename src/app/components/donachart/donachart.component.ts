@@ -12,13 +12,21 @@ import { InventarioService } from 'src/app/services/inventario.service';
   templateUrl: './donachart.component.html',
   styleUrls: ['./donachart.component.css'],
 })
-export class DonachartComponent implements AfterViewInit, OnInit {
+export class DonachartComponent  {
   @ViewChild('pieChart', { static: true })
   pieChart!: ElementRef<HTMLCanvasElement>;
+carga:number=0;
+items: any;
+mensaje:string='';
 
   constructor(private inventarioServices: InventarioService) {}
   ngOnInit(): void {
+    if (this.pieChart && this.pieChart.nativeElement) {
     this.inventarioServices.getEstado().subscribe((estado) => {
+      this.carga==1;
+      this.items = estado;
+      console.log(this.items)
+      if(this.items[0].cant_regular){
       const ctx = this.pieChart.nativeElement.getContext('2d');
       if (!ctx) {
         throw new Error('Error al obtener el contexto del canvas');
@@ -66,8 +74,13 @@ export class DonachartComponent implements AfterViewInit, OnInit {
           },
         },
       });
+    }else{
+      this.mensaje="no existen datos"
+    }
     });
+  
+  }
   }
 
-  ngAfterViewInit() {}
+  
 }
