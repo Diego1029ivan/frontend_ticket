@@ -6,9 +6,12 @@
         <div class="card-body">
             
             <div class="chart-container">
-                
+                <div class="alert alert-danger mt-3" role="alert" *ngIf="mensaje">
+                    {{mensaje}}
+                  </div>
+                  <div >
                     <canvas  #barChart ></canvas>
-                    
+                </div>
             </div>
         </div>
     </div>

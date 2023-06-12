@@ -4,9 +4,12 @@
 <div class="card-body">
     
     <div class="chart-container ">
-       
-            <canvas  #barChart class="bar-conta"></canvas>
-    
+        <div class="alert alert-danger mt-3" role="alert" *ngIf="mensaje">
+            {{mensaje}}
+          </div>
+          <div>
+            <canvas  #barChart class="bar-conta" ></canvas>
+          </div>
     </div>
     <div class="card-title">Leyenda de Áreas</div>
     <div *ngFor="let nombre of nombres; let i = index;">
