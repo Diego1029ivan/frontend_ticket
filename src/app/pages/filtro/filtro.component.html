@@ -1,5 +1,9 @@
-
-<div class="page-header">
+<!--poner un texto de cargando-->
+<app-carga *ngIf="cargando2 == false"></app-carga>
+<div
+  class="page-header"
+  *ngIf="this.permidoscrud[0]?.read === 1 && cargando2 == true"
+>
   <h4 class="page-title">Buscar Inventario</h4>
   <ul class="breadcrumbs">
     <li class="nav-home">
@@ -21,102 +25,137 @@
     </li>
   </ul>
 </div>
-<div class="card">
+<div class="card" *ngIf="this.permidoscrud[0]?.read === 1 && cargando2 == true">
   <div class="card-body">
-    <div class="input-group buscar container ">
-      
-      
-        <input type="text" [(ngModel)]="busqueda" class="form-control" (keyup)="actualizarBusqueda($event)"
-          placeholder="Buscar...">
-        <span class="input-group-text">
-          <i class="fas fa-search"></i>
-        </span>
-      
+    <div class="input-group buscar container">
+      <input
+        type="text"
+        [(ngModel)]="busqueda"
+        class="form-control"
+        (keyup)="actualizarBusqueda($event)"
+        placeholder="Buscar..."
+      />
+      <span class="input-group-text">
+        <i class="fas fa-search"></i>
+      </span>
+
       <div class="mx-3">
-        <h3>Total de bienes {{total}}</h3>
+        <h3>Total de bienes {{ total }}</h3>
       </div>
     </div>
 
     <div class="container overflow-auto mt-3 text-center">
-
       <div class="row justify-content-center">
-        <div class="col-4">
-          <button class="btn btn-primary px-3" (click)="imprimirPaquete()">Imprimir {{selectedCount}} tickets</button>
+        <div class="col-4" *ngIf="this.permidoscrud[0]?.create === 1">
+          <button class="btn btn-primary px-3" (click)="imprimirPaquete()">
+            Imprimir {{ selectedCount }} tickets
+          </button>
         </div>
-        <div *ngIf="selectedCount==maxSelected" class="col-4">
-          <span class="text-danger">*Solo puede seleccionar {{maxSelected}} tickets</span>
+        <div *ngIf="selectedCount == maxSelected" class="col-4">
+          <span class="text-danger"
+            >*Solo puede seleccionar {{ maxSelected }} tickets</span
+          >
         </div>
       </div>
 
-      <app-carga *ngIf=" cargando == 0"></app-carga>
-      <div class="alert alert-danger mt-3" role="alert" *ngIf="items?.data.length == 0">
+      <app-carga *ngIf="cargando == 0"></app-carga>
+      <div
+        class="alert alert-danger mt-3"
+        role="alert"
+        *ngIf="items?.data.length == 0"
+      >
         no hay bienes en la base de datos
       </div>
-      <div class="table-responsive overflow-auto tabla-excel" *ngIf="items?.data.length != 0">
-            <div class="row" *ngIf=" cargando == 1" >
-              <table id="basic-datatables" class="display table table-striped table-hover" >
+      <div
+        class="table-responsive overflow-auto tabla-excel"
+        *ngIf="items?.data.length != 0"
+      >
+        <div class="row" *ngIf="cargando == 1">
+          <table
+            id="basic-datatables"
+            class="display table table-striped table-hover"
+          >
+            <thead>
+              <tr>
+                <th scope="col">Seleccionar</th>
+                <th scope="col">Imprimir</th>
+                <th scope="col">{{ header[0] }}</th>
+                <th scope="col">{{ header[2] }}</th>
+                <!--Código patrimonial -->
+                <th scope="col">{{ header[3] }}</th>
+                <th scope="col">{{ header[16] }}</th>
+                <th scope="col">{{ header[6] }}</th>
+                <th scope="col">{{ header[10] }}</th>
+                <th scope="col">{{ header[7] }}</th>
+                <th scope="col">{{ header[9] }}</th>
+                <th scope="col">{{ header[11] }}</th>
+              </tr>
+            </thead>
 
-                <thead>
-                  <tr>
-                    <th scope="col">Seleccionar</th>
-                    <th scope="col">Imprimir</th> 
-                    <th scope="col">{{ header[0] }}</th>
-                    <th scope="col">{{ header[2] }}</th> <!--Código patrimonial -->
-                    <th scope="col">{{ header[3] }}</th>
-                    <th scope="col">{{ header[16] }}</th>
-                    <th scope="col">{{ header[6] }}</th>
-                    <th scope="col">{{ header[10] }}</th>
-                    <th scope="col">{{ header[7] }}</th>
-                    <th scope="col">{{ header[9] }}</th>
-                    <th scope="col">{{ header[11] }}</th>
-                  </tr>
-                </thead>
-
-
-
-                <tbody *ngIf="filteredItems">
-
-                  <tr *ngFor="let row of filteredItems">
-                    <td>
-                      <div class="form-check">
-                        <label class="form-check-label">
-                          <input class="form-check-input" type="checkbox" value="{{ row.codigo_patrimonial}}" 
-                          (change)="disableCheckboxes()" (click)="getSelectedCount()">
-                          <span class="form-check-sign">Check</span>
-                        </label>
-                      </div>
-                      <!-- <div class="form-check">
+            <tbody *ngIf="filteredItems">
+              <tr *ngFor="let row of filteredItems">
+                <td>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="{{ row.codigo_patrimonial }}"
+                        (change)="disableCheckboxes()"
+                        (click)="getSelectedCount()"
+                      />
+                      <span class="form-check-sign">Check</span>
+                    </label>
+                  </div>
+                  <!-- <div class="form-check">
                         
                         <input class="form-check-input" type="checkbox" value="{{ row.codigo_patrimonial}}" id="flexCheckDefault"
                           (change)="disableCheckboxes()" (click)="getSelectedCount()">
 
                       </div> -->
-                    </td> 
-                    <td class=" text-center celda-icono"><a
-                        href="http://127.0.0.1:8000/inventaryPDF/{{row.codigo_patrimonial}}/{{row.fecha_adquisicion}}/{{row.denominacion_bien}}"
-                        target="_blank"><i class="fa fa-print icono-cursor"></i></a></td>
-                    <td>{{ row.id}}</td>
-                    <td>{{ row.codigo_patrimonial}}</td>
-                    <td>{{ row.denominacion_bien}}</td>
-                    <td>{{ row.desc_area}}</td>
-                    <td>{{ row.fecha_adquisicion}}</td>
-                    <td>{{ row.nro_cuenta_contable}}</td>
-                    <td>{{ row.valor_adquisicion}}</td>
-                    <td>{{ row.estado_bien}}</td>
-                    <td>{{ row.cta_con_seguro}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                </td>
+                <td class="text-center celda-icono">
+                  <a
+                    href="http://127.0.0.1:8000/inventaryPDF/{{
+                      row.codigo_patrimonial
+                    }}/{{ row.fecha_adquisicion }}/{{ row.denominacion_bien }}"
+                    target="_blank"
+                    ><i class="fa fa-print icono-cursor"></i
+                  ></a>
+                </td>
+                <td>{{ row.id }}</td>
+                <td>{{ row.codigo_patrimonial }}</td>
+                <td>{{ row.denominacion_bien }}</td>
+                <td>{{ row.desc_area }}</td>
+                <td>{{ row.fecha_adquisicion }}</td>
+                <td>{{ row.nro_cuenta_contable }}</td>
+                <td>{{ row.valor_adquisicion }}</td>
+                <td>{{ row.estado_bien }}</td>
+                <td>{{ row.cta_con_seguro }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
     </div>
     <div class="d-flex justify-content-between p-2 container">
-
-      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" [maxSize]="5" [rotate]="true"
-        [boundaryLinks]="true" (pageChange)="refreshBien()">
+      <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="refreshBien()"
+      >
       </ngb-pagination>
 
-      <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshBien()">
+      <select
+        class="form-select"
+        style="width: auto"
+        [(ngModel)]="pageSize"
+        (ngModelChange)="refreshBien()"
+      >
         <option [ngValue]="10">10 items</option>
         <option [ngValue]="50">50 items</option>
         <option [ngValue]="100">100 items</option>

@@ -8,13 +8,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ReporteComponent {
   permidoscrud: any = {};
-
+  cargando2: boolean = false;
   constructor(private userservice: UserService) {}
 
   username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
 
   ngOnInit(): void {
     this.permisosporusuario();
+    this.cargando2 = false;
   }
 
   permisosporusuario() {
@@ -24,6 +25,7 @@ export class ReporteComponent {
         this.permidoscrud = this.permidoscrud.filter(
           (permiso: any) => permiso.route === './reporte'
         );
+        this.cargando2 = true;
       },
       (err) => {
         console.log(err);

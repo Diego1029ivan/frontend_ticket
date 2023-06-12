@@ -4,6 +4,7 @@ import { ItemsSelect } from 'src/app/interfaces/itemsSelect';
 import { FiltroPipe } from 'src/app/pipes/filtro.pipe';
 
 import { InventarioService } from 'src/app/services/inventario.service';
+import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -21,37 +22,56 @@ export class FiltroComponent implements OnInit {
   pageSize: number = 10;
   collectionSize: number = 0;
   searchTerm = '';
-  cargando: number=2 ;
-  total:number=0;
+  cargando: number = 2;
+  total: number = 0;
   tablaFiltro: any = [];
 
   busqueda: string = '';
 
   public urlCodigoBarra: string = environment.baseUrl;
-
+  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  permidoscrud: any = {};
+  cargando2: boolean = false;
   constructor(
     private inventarioService: InventarioService,
     private http: HttpClient,
-    private filtro: FiltroPipe
-  ) {}
+    private filtro: FiltroPipe,
+    private userService: UserService
+  ) {
+    this.permisosporusuario();
+    this.cargando2 = false;
+  }
 
   ngOnInit(): void {
-    this.cargando=0
+    this.cargando = 0;
     this.inventarioService.getBienes().subscribe((respo) => {
       this.items = respo;
       //console.log(this.items)
-      this.cargando=1
-      if(this.items.data!=0){
-      this.cargaTabla();
+      this.cargando = 1;
+      if (this.items.data != 0) {
+        this.cargaTabla();
       }
     });
   }
-
+  permisosporusuario() {
+    this.userService.getPermisourlLogeado(this.username.rol).subscribe(
+      (data1) => {
+        this.permidoscrud = data1.data;
+        this.permidoscrud = this.permidoscrud.filter(
+          (permiso: any) => permiso.route === './inventario_filtro'
+        );
+        this.cargando2 = true;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
   public cargaTabla() {
     this.header = Object.keys(this.items.data[0]);
     //console.log(this.header)
     this.collectionSize = this.items.data.length;
-    this.total=this.collectionSize;
+    this.total = this.collectionSize;
     this.itemParcial = this.items.data;
     this.itemParcial2 = this.items.data;
     this.refreshBien();
@@ -64,7 +84,6 @@ export class FiltroComponent implements OnInit {
         (this.page - 1) * this.pageSize,
         (this.page - 1) * this.pageSize + this.pageSize
       );
-      
   }
 
   search() {
@@ -78,7 +97,6 @@ export class FiltroComponent implements OnInit {
           .includes(this.searchTerm.toLowerCase())
     );
     this.page = 1;
-    
   }
 
   // Función para obtener los datos de la tabla paginados y filtrados
@@ -96,7 +114,7 @@ export class FiltroComponent implements OnInit {
     this.itemParcial = this.tablaFiltro;
     this.itemParcial != null ? this.refreshBien() : console.log('buscando');
     this.collectionSize = this.itemParcial.length;
-    this.total=this.itemParcial.length;
+    this.total = this.itemParcial.length;
   }
 
   /*=========CheckBox=============*/
@@ -161,5 +179,4 @@ export class FiltroComponent implements OnInit {
         window.open(fileUrl);
       });
   }
-  
 }

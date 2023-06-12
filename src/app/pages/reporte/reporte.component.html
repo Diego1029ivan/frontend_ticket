@@ -1,4 +1,6 @@
-<div *ngIf="this.permidoscrud[0]?.read === 1">
+<!--poner un texto de cargando-->
+<app-carga *ngIf="cargando2 == false"></app-carga>
+<div *ngIf="this.permidoscrud[0]?.read === 1 && cargando2 == true">
   <div class="panel-header bg-success-gradient">
     <div class="page-inner py-5">
       <div
