@@ -3,8 +3,14 @@
         <div class="card-title">Estado de los bienes</div>
     </div>
     <div class="card-body">
+        
         <div class="chart-container">
-            <canvas #pieChart style="width: 50%; height: 50%"></canvas>
+            <div class="alert alert-danger mt-3" role="alert" *ngIf="mensaje">
+                {{mensaje}}
+              </div>
+            <div >
+                <canvas #pieChart style="width: 50%; height: 50%"></canvas>
+            </div>
         </div>
     </div>
 
