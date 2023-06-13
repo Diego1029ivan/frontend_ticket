@@ -23,10 +23,11 @@ mensaje:string='';
   ngOnInit(): void {
     if (this.pieChart && this.pieChart.nativeElement) {
     this.inventarioServices.getEstado().subscribe((estado) => {
-      this.carga==1;
+      //this.carga==1;
       this.items = estado;
       console.log(this.items)
       if(this.items[0].cant_regular){
+        this.carga=1
       const ctx = this.pieChart.nativeElement.getContext('2d');
       if (!ctx) {
         throw new Error('Error al obtener el contexto del canvas');

@@ -7,6 +7,7 @@
         <div class="alert alert-danger mt-3" role="alert" *ngIf="mensaje">
             {{mensaje}}
           </div>
+          <app-carga *ngIf="carga==0"></app-carga>
           <div>
             <canvas  #barChart class="bar-conta" ></canvas>
           </div>

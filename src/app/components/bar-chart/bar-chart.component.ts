@@ -33,7 +33,7 @@ export class BarChartComponent {
     //  console.log(this.mensaje)
     //  console.log(this.items.length)
      if(this.items[0]?.cond_activo){
-      
+        this.carga = 1
           const ctx = this.barChart.nativeElement.getContext('2d');
           console.log(ctx);
           if (!ctx) {
