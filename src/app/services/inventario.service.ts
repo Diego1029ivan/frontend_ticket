@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 import { Bien } from '../interfaces/bien';
 import { ItemsSelect } from '../interfaces/itemsSelect';
 @Injectable({
@@ -21,6 +21,14 @@ export class InventarioService {
     }),
     responseType: 'blob' as 'json',
   };
+
+  // private httpOptionsExcel= {
+  //   headers: new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  //   }),
+  //   responseType: 'blob' as 'json',
+  // };
 
   getticketPDF(codigo: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/ticketPDFExcel/${codigo}`);
@@ -62,4 +70,16 @@ export class InventarioService {
   getArea(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/area`);
   }
+
+  getFormato(): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/formato`, { responseType: 'blob' }).pipe(
+      catchError((error) => {
+        // Manejo de errores
+        return throwError(error);
+      })
+    );
+  }
+  
+    
+  
 }
