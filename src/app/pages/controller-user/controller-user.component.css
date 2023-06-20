@@ -1,14 +1,13 @@
 .tabla-excel {
   overflow-x: auto;
 }
-.table-responsive {
-  max-height: 19.2rem;
-  overflow-y: scroll;
-}
+
 input[type="checkbox"] {
   display: none; /* Ocultar el checkbox predeterminado */
 }
-
+.text-center {
+  text-align: center;
+}
 input[type="checkbox"] + label {
   position: relative;
   padding-left: 35px; /* Ajusta el tamaño del marcador */

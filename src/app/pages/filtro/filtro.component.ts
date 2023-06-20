@@ -179,15 +179,15 @@ export class FiltroComponent implements OnInit {
         window.open(fileUrl);
       });
   }
-  generarFormato(){
+  generarFormato() {
     this.inventarioService.getFormato().subscribe(
       (response: Blob) => {
         const fileURL = URL.createObjectURL(response);
-  
+
         // Descargar el archivo Excel
         const a = document.createElement('a');
         a.href = fileURL;
-        a.download = 'formato.xlsx';
+        a.download = 'formato.xlsm';
         a.click();
       },
       (error) => {
