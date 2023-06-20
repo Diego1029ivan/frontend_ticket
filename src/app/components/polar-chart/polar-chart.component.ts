@@ -13,6 +13,7 @@ export class PolarChartComponent {
 valor_neto:any=[]
 id2:any=[]
 items: any;
+carga: number = 0;
   mensaje:string='';
   @ViewChild('pieChart', { static: true })
   pieChart!: ElementRef<HTMLCanvasElement>;
@@ -20,12 +21,13 @@ items: any;
   constructor(private inventarioServices:InventarioService) {}
   ngOnInit(): void {
     this.inventarioServices.getArea().subscribe((area)=>{
+     
       console.log("area",area)
       this.items=area;
       if(this.items[0]){
           area.forEach((e:any,index:any)=> {
             //if(e.suma_valor_neto>250000){
-
+              this.carga=1;
               this.id2.push(index)
               this.nombres2.push(e.desc_area)
               this.valor_neto.push(e.suma_valor_neto)

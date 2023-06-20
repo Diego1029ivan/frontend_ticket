@@ -14,7 +14,7 @@ nombres:any=[]
 cantidad:any=[]
 items:any;
 id:any=[]
-
+carga: number = 0;
 
 mensaje:string='';
   @ViewChild('barChart', { static: true })
@@ -25,6 +25,7 @@ mensaje:string='';
     if (this.barChart && this.barChart.nativeElement) {
           this.inventarioService.getArea().subscribe((area)=>{
             this.items = area;
+            this.carga=1;
             console.log(this.items)
             //console.log(area)
             if(this.items[0]){
