@@ -25,6 +25,7 @@ export class InventarioOfflineComponent implements OnInit, AfterViewInit {
   data: Bien[] = [];
   valor: Boolean = false;
   cargando: number = 2;
+   
 
   tablaParcial: any = [];
   tablaParcial2: any = [];
@@ -98,8 +99,7 @@ export class InventarioOfflineComponent implements OnInit, AfterViewInit {
       this.collectionSize = this.data.length;
 
       this.tablaParcial = this.data;
-      this.tablaParcial2 = this.data;
-      //console.log(this.data);
+      this.tablaParcial = this.data;
       this.refreshInventario();
       this.cargando = 1;
     };

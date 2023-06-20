@@ -19,6 +19,10 @@ export class ControllerUserComponent {
 
   cargando: boolean = false;
   cargando2: boolean = false;
+  pRol!: number;
+  pModulo!: number;
+  pSubmodulo!: number;
+  pPermiso!: number;
 
   rolData: any = [];
   moduloData: any = [];
@@ -35,6 +39,8 @@ export class ControllerUserComponent {
   editModulo: boolean = false;
   editSubmodulo: boolean = false;
   editPermiso: boolean = false;
+
+  crudSubmodulo: any = {};
 
   constructor(
     private rolForm: FormBuilder,

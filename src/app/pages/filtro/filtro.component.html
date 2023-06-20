@@ -59,13 +59,13 @@
       </div>
 
       <app-carga *ngIf="cargando == 0"></app-carga>
-      <div
+      <!-- <div
         class="alert alert-danger mt-3"
         role="alert"
-        *ngIf="items?.data.length == 0"
+        *ngIf="items?.data.length === 0"
       >
         no hay bienes en la base de datos
-      </div>
+      </div> -->
       <div
         class="table-responsive overflow-auto tabla-excel"
         *ngIf="items?.data.length != 0"

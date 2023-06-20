@@ -20,6 +20,7 @@ export class UserComponent implements OnInit {
   edit: boolean = false;
   rolData: any = [];
   permidoscrud: any = {};
+  puser!: number;
 
   username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
   constructor(
