@@ -18,6 +18,7 @@ export class FiltroComponent implements OnInit {
   header: string[] = [];
   itemParcial: any = [];
   itemParcial2: any = [];
+  itemParcialPaginado: any = [];
   page: number = 1;
   pageSize: number = 10;
   collectionSize: number = 0;
@@ -73,17 +74,21 @@ export class FiltroComponent implements OnInit {
     this.collectionSize = this.items.data.length;
     this.total = this.collectionSize;
     this.itemParcial = this.items.data;
+    //console.log(this.itemParcial)
     this.itemParcial2 = this.items.data;
+    this.itemParcialPaginado = this.items.data;
     this.refreshBien();
   }
 
   public refreshBien() {
-    this.items.data = this.filteredItems
+    //console.log(this.page,this.pageSize,this.filteredItems)
+    this.items.data = this.itemParcialPaginado
       .map((country: any, i: any) => ({ id: i + 1, ...country }))
       .slice(
         (this.page - 1) * this.pageSize,
         (this.page - 1) * this.pageSize + this.pageSize
       );
+      //console.log(this.items.data)
   }
 
   search() {
@@ -103,6 +108,7 @@ export class FiltroComponent implements OnInit {
   get filteredItems() {
     const startIndex = (this.page - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
+    
     //this.collectionSize = this.itemParcial?.slice(startIndex, endIndex).length;
     return this.itemParcial?.slice(startIndex, endIndex);
   }
