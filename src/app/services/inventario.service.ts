@@ -37,6 +37,11 @@ export class InventarioService {
   getBienes(): Observable<Bien> {
     return this.http.get<Bien>(`${this.baseUrl}/inventaryAll`);
   }
+  getBienesPaginado(page: number, query: any): Observable<Bien> {
+    return this.http.get<any>(
+      `${this.baseUrl}/inventaryP?page=${page}&query=${query}`
+    );
+  }
   getCodigo(codigo: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/biencodigo/${codigo}`);
   }
@@ -62,8 +67,11 @@ export class InventarioService {
     return this.http.get<any>(`${this.baseUrl}/condiciones`);
   }
   //actualizar el bien
-  updateInventario(codigo: string,inventario:any): Observable<any>{
-    return this.http.put<any>(`${this.baseUrl}/inventario/${codigo}`,inventario);
+  updateInventario(codigo: string, inventario: any): Observable<any> {
+    return this.http.put<any>(
+      `${this.baseUrl}/inventario/${codigo}`,
+      inventario
+    );
   }
 
   //Vista de area
@@ -72,14 +80,13 @@ export class InventarioService {
   }
 
   getFormato(): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}/formato`, { responseType: 'blob' }).pipe(
-      catchError((error) => {
-        // Manejo de errores
-        return throwError(error);
-      })
-    );
+    return this.http
+      .get(`${this.baseUrl}/formato`, { responseType: 'blob' })
+      .pipe(
+        catchError((error) => {
+          // Manejo de errores
+          return throwError(error);
+        })
+      );
   }
-  
-    
-  
 }

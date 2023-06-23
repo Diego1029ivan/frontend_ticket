@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ItemsSelect } from 'src/app/interfaces/itemsSelect';
 import { FiltroPipe } from 'src/app/pipes/filtro.pipe';
 
@@ -18,14 +19,20 @@ export class FiltroComponent implements OnInit {
   header: string[] = [];
   itemParcial: any = [];
   itemParcial2: any = [];
-  page: number = 1;
+
+  page: any;
   pageSize: number = 10;
   collectionSize: number = 0;
   searchTerm = '';
+  //pagination
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalItems = 0;
+
   cargando: number = 2;
   total: number = 0;
   tablaFiltro: any = [];
-
+  datafiltro: any = {};
   busqueda: string = '';
 
   public urlCodigoBarra: string = environment.baseUrl;
@@ -36,22 +43,44 @@ export class FiltroComponent implements OnInit {
     private inventarioService: InventarioService,
     private http: HttpClient,
     private filtro: FiltroPipe,
-    private userService: UserService
+    private userService: UserService,
+    private paginationConfig: NgbPaginationConfig
   ) {
+    paginationConfig.boundaryLinks = true;
+    paginationConfig.maxSize = 5;
     this.permisosporusuario();
     this.cargando2 = false;
   }
 
   ngOnInit(): void {
+    let page = 0;
+    let query = '';
+    this.mostrarInventario(this.currentPage);
     this.cargando = 0;
-    this.inventarioService.getBienes().subscribe((respo) => {
-      this.items = respo;
-      //console.log(this.items)
-      this.cargando = 1;
-      if (this.items.data != 0) {
-        this.cargaTabla();
+    // this.inventarioService.getBienes().subscribe((respo) => {
+    //   this.items = respo;
+    //   console.log(this.items);
+    //   // if (this.items.data != 0) {
+    //   //   this.cargaTabla();
+    //   // }
+    // });
+  }
+  mostrarInventario(page: any) {
+    this.inventarioService.getBienesPaginado(page, this.busqueda).subscribe(
+      (respo: any) => {
+        this.datafiltro = respo;
+        console.log(this.datafiltro);
+        this.totalItems = respo.data.total;
+        this.cargando = 1;
+      },
+      (err) => {
+        console.log(err);
       }
-    });
+    );
+  }
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.mostrarInventario(this.currentPage);
   }
   permisosporusuario() {
     this.userService.getPermisourlLogeado(this.username.rol).subscribe(
@@ -109,12 +138,16 @@ export class FiltroComponent implements OnInit {
 
   actualizarBusqueda(event: KeyboardEvent) {
     this.busqueda = (event.target as HTMLInputElement).value;
+    console.log(this.busqueda);
+
     this.page = 1;
-    this.tablaFiltro = this.filtro.transform(this.itemParcial2, this.busqueda);
-    this.itemParcial = this.tablaFiltro;
-    this.itemParcial != null ? this.refreshBien() : console.log('buscando');
-    this.collectionSize = this.itemParcial.length;
-    this.total = this.itemParcial.length;
+    this.currentPage = 1;
+    this.mostrarInventario(this.currentPage);
+    // this.tablaFiltro = this.filtro.transform(this.itemParcial2, this.busqueda);
+    // this.itemParcial = this.tablaFiltro;
+    // this.itemParcial != null ? this.refreshBien() : console.log('buscando');
+    // this.collectionSize = this.itemParcial.length;
+    // this.total = this.itemParcial.length;
   }
 
   /*=========CheckBox=============*/

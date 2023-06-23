@@ -45,25 +45,23 @@
     </div>
 
     <div class="container overflow-auto mt-3 text-center">
-      
-        <div class="row justify-content-center">
-          <div class="col-4" >
-            <button class="btn btn-primary px-3" (click)="imprimirPaquete()">
-              Imprimir {{ selectedCount }} tickets
-            </button>
-          </div>
-          <div *ngIf="selectedCount == maxSelected" class="col-4">
-            <span class="text-danger"
-              >*Solo puede seleccionar {{ maxSelected }} tickets</span
-            >
-          </div>
-          <div class="col-4" >
-            <button class="btn btn-primary px-3" (click)="generarFormato()">
-              Descargar SINABIP
-            </button>
-          </div>
+      <div class="row justify-content-center">
+        <div class="col-4">
+          <button class="btn btn-primary px-3" (click)="imprimirPaquete()">
+            Imprimir {{ selectedCount }} tickets
+          </button>
         </div>
-      
+        <div *ngIf="selectedCount == maxSelected" class="col-4">
+          <span class="text-danger"
+            >*Solo puede seleccionar {{ maxSelected }} tickets</span
+          >
+        </div>
+        <div class="col-4">
+          <button class="btn btn-primary px-3" (click)="generarFormato()">
+            Descargar SINABIP
+          </button>
+        </div>
+      </div>
 
       <app-carga *ngIf="cargando == 0"></app-carga>
       <!-- <div
@@ -86,7 +84,7 @@
               <tr>
                 <th scope="col">Seleccionar</th>
                 <th scope="col">Imprimir</th>
-                <th scope="col">{{ header[0] }}</th>
+                <th scope="col">codigo_patrimonial</th>
                 <th scope="col">{{ header[2] }}</th>
                 <!--Código patrimonial -->
                 <th scope="col">{{ header[3] }}</th>
@@ -99,8 +97,8 @@
               </tr>
             </thead>
 
-            <tbody *ngIf="filteredItems">
-              <tr *ngFor="let row of filteredItems">
+            <tbody *ngIf="datafiltro.data?.data">
+              <tr *ngFor="let row of datafiltro.data?.data">
                 <td>
                   <div class="form-check">
                     <label class="form-check-label">
@@ -147,13 +145,10 @@
     </div>
     <div class="d-flex justify-content-between p-2 container">
       <ngb-pagination
-        [collectionSize]="collectionSize"
-        [(page)]="page"
-        [pageSize]="pageSize"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="refreshBien()"
+        [collectionSize]="totalItems"
+        [(page)]="currentPage"
+        [pageSize]="itemsPerPage"
+        (pageChange)="onPageChange($event)"
       >
       </ngb-pagination>
 
