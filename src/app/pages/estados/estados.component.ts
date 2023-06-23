@@ -75,8 +75,6 @@ export class EstadosComponent {
     const month = (this.hoy.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses en JavaScript son base 0
     const day = this.hoy.getDate().toString().padStart(2, '0');
     this.currentDateTime = `${year}-${month}-${day}`;
-    //console.log(this.currentDateTime )
-    // Actualizar cada segundo (1000 ms)
   }
   ngOnInit(): void {
     this.permisosporusuario();
@@ -84,7 +82,6 @@ export class EstadosComponent {
     this.cargando = 0;
     this.activatedRoute.params.subscribe((params) => {
       this.codigo = params['codigo'];
-      //console.log(this.codigo)
     });
     this.cargarBien(this.codigo);
 
@@ -108,7 +105,6 @@ export class EstadosComponent {
     this.inventarioService.getCodigo(codigo).subscribe((respo) => {
       this.cargando = 1;
       this.descripcion = respo;
-      //console.log(this.descripcion)
       this.formulario.codigo_patrimonial = this.descripcion.codigo_patrimonial;
       this.formulario.estado_bien1 = this.descripcion.estado_bien;
       this.formulario.condicion1 = this.descripcion.condicion;
@@ -151,7 +147,6 @@ export class EstadosComponent {
       this.inputValue = this.selectedOption.valueOf();
       this.formulario.estado_bien2 = this.selectedOption.valueOf();
     }
-    //console.log(this.inputValue)
   }
   onSelectOptionC(event: any) {
     this.selectedOptionC = event.target['value'];
@@ -169,7 +164,6 @@ export class EstadosComponent {
       this.inputValueC = this.selectedOptionC.valueOf();
       this.formulario.condicion2 = this.inputValueC;
     }
-    console.log(this.inputValueC);
   }
 
   /*========actualizar FECHA===========*/
@@ -182,7 +176,6 @@ export class EstadosComponent {
   updateFecha() {
     this.inputFecha = this.currentDateTime;
     this.formulario.fecha2 = this.currentDateTime;
-    console.log(this.currentDateTime);
   }
 
   /*========actualizar AREA===========*/
@@ -201,12 +194,9 @@ export class EstadosComponent {
       // Por ejemplo, puedes asignar un valor predeterminado a this.inputArea
       this.inputArea = ''; // Valor predeterminado vacío
     }
-
-    //console.log(this.formulario.area2)
   }
 
   enviarFormulario() {
-    //console.log(this.formulario)
     this.formulario.estado_bien2
       ? (this.enviarData.estado_bien = this.formulario.estado_bien2)
       : (this.enviarData.estado_bien = this.formulario.estado_bien1);
@@ -221,7 +211,7 @@ export class EstadosComponent {
       : (this.enviarData.desc_area = this.formulario.area1);
 
     this.enviarData.codigo_patrimonial = this.formulario.codigo_patrimonial;
-    console.log(this.enviarData);
+
     swal
       .fire({
         title: '¿Estas seguro?',
@@ -245,16 +235,10 @@ export class EstadosComponent {
                 `El inventario ${this.formulario.codigo_patrimonial} ha sido actualizado`,
                 'success'
               );
-
-              console.log(respo);
               this.formulario.condicion1 = respo[0].condicion1;
             });
         }
       });
-    // this.inventarioService.updateInventario(this.formulario.codigo_patrimonial,this.enviarData)
-    //   .subscribe((respo)=>{
-    //     console.log(respo)
-    //   })
 
     this.inputValue = '';
     this.inputFecha = '';

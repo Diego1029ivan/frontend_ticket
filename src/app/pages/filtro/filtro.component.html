@@ -40,42 +40,40 @@
       </span>
 
       <div class="mx-3">
-        <h3>Total de bienes {{ total }}</h3>
+        <h3>Total de bienes {{ this.totalItems }}</h3>
       </div>
     </div>
 
     <div class="container overflow-auto mt-3 text-center">
-      
-        <div class="row justify-content-center">
-          <div class="col-4" >
-            <button class="btn btn-primary px-3" (click)="imprimirPaquete()">
-              Imprimir {{ selectedCount }} tickets
-            </button>
-          </div>
-          <div *ngIf="selectedCount == maxSelected" class="col-4">
-            <span class="text-danger"
-              >*Solo puede seleccionar {{ maxSelected }} tickets</span
-            >
-          </div>
-          <div class="col-4" >
-            <button class="btn btn-primary px-3" (click)="generarFormato()">
-              Descargar SINABIP
-            </button>
-          </div>
+      <div class="row justify-content-center">
+        <div class="col-4">
+          <button class="btn btn-primary px-3" (click)="imprimirPaquete()">
+            Imprimir {{ selectedCount }} tickets
+          </button>
         </div>
-      
+        <div *ngIf="selectedCount == maxSelected" class="col-4">
+          <span class="text-danger"
+            >*Solo puede seleccionar {{ maxSelected }} tickets</span
+          >
+        </div>
+        <div class="col-4">
+          <button class="btn btn-primary px-3" (click)="generarFormato()">
+            Descargar SINABIP
+          </button>
+        </div>
+      </div>
 
       <app-carga *ngIf="cargando == 0"></app-carga>
-      <!-- <div
+      <div
         class="alert alert-danger mt-3"
         role="alert"
-        *ngIf="items?.data.length === 0"
+        *ngIf="datafiltro.data?.data.length === 0"
       >
         no hay bienes en la base de datos
-      </div> -->
+      </div>
       <div
         class="table-responsive overflow-auto tabla-excel"
-        *ngIf="items?.data.length != 0"
+        *ngIf="datafiltro.data?.data.length != 0"
       >
         <div class="row" *ngIf="cargando == 1">
           <table
@@ -86,21 +84,20 @@
               <tr>
                 <th scope="col">Seleccionar</th>
                 <th scope="col">Imprimir</th>
-                <th scope="col">{{ header[0] }}</th>
-                <th scope="col">{{ header[2] }}</th>
-                <!--Código patrimonial -->
-                <th scope="col">{{ header[3] }}</th>
-                <th scope="col">{{ header[16] }}</th>
-                <th scope="col">{{ header[6] }}</th>
-                <th scope="col">{{ header[10] }}</th>
-                <th scope="col">{{ header[7] }}</th>
-                <th scope="col">{{ header[9] }}</th>
-                <th scope="col">{{ header[11] }}</th>
+                <th scope="col">NRO</th>
+                <th scope="col">Cod. Patrimonial</th>
+                <th scope="col">Denom. Bien</th>
+                <th scope="col">Áreas</th>
+                <th scope="col">Fecha Adq.</th>
+                <th scope="col">Cuenta cont.</th>
+                <th scope="col">Valor del Bien</th>
+                <th scope="col">Tipo de Cuenta</th>
+                <th scope="col">Seguro</th>
               </tr>
             </thead>
 
-            <tbody *ngIf="filteredItems">
-              <tr *ngFor="let row of filteredItems">
+            <tbody *ngIf="datafiltro.data?.data">
+              <tr *ngFor="let row of datafiltro.data?.data">
                 <td>
                   <div class="form-check">
                     <label class="form-check-label">
@@ -147,13 +144,10 @@
     </div>
     <div class="d-flex justify-content-between p-2 container">
       <ngb-pagination
-        [collectionSize]="collectionSize"
-        [(page)]="page"
-        [pageSize]="pageSize"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="refreshBien()"
+        [collectionSize]="totalItems"
+        [(page)]="currentPage"
+        [pageSize]="itemsPerPage"
+        (pageChange)="onPageChange($event)"
       >
       </ngb-pagination>
 
@@ -161,7 +155,7 @@
         class="form-select"
         style="width: auto"
         [(ngModel)]="pageSize"
-        (ngModelChange)="refreshBien()"
+        (ngModelChange)="refreshBien($event)"
       >
         <option [ngValue]="10">10 items</option>
         <option [ngValue]="50">50 items</option>

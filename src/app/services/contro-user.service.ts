@@ -10,71 +10,71 @@ export class ControUserService {
   constructor(private http: HttpClient) {}
 
   //Rol
-  getAllRol() {
+  getAllRol(): Observable<any> {
     const url = `${this.baseUrl}/rol`;
-    return this.http.get(url);
+    return this.http.get<any>(url);
   }
-  addRol(rol: any) {
+  addRol(rol: any): Observable<any> {
     const url = `${this.baseUrl}/rol`;
     return this.http.post(url, rol);
   }
-  updateRol(rol: any) {
+  updateRol(rol: any): Observable<any> {
     const url = `${this.baseUrl}/rol/${rol.idrol}`;
-    return this.http.put(url, rol);
+    return this.http.put<any>(url, rol);
   }
-  deleteRol(id: number) {
+  deleteRol(id: number): Observable<any> {
     const url = `${this.baseUrl}/rol/${id}`;
-    return this.http.delete(url);
+    return this.http.delete<any>(url);
   }
   //Modulo
-  getAllModulo() {
+  getAllModulo(): Observable<any> {
     const url = `${this.baseUrl}/module`;
-    return this.http.get(url);
+    return this.http.get<any>(url);
   }
-  addModulo(modulo: any) {
+  addModulo(modulo: any): Observable<any> {
     const url = `${this.baseUrl}/module`;
-    return this.http.post(url, modulo);
+    return this.http.post<any>(url, modulo);
   }
-  updateModulo(modulo: any) {
+  updateModulo(modulo: any): Observable<any> {
     const url = `${this.baseUrl}/module/${modulo.idmodulo}`;
-    return this.http.put(url, modulo);
+    return this.http.put<any>(url, modulo);
   }
-  deleteModulo(id: number) {
+  deleteModulo(id: number): Observable<any> {
     const url = `${this.baseUrl}/module/${id}`;
-    return this.http.delete(url);
+    return this.http.delete<any>(url);
   }
   //Submodulo
-  getAllSubmodulo() {
+  getAllSubmodulo(): Observable<any> {
     const url = `${this.baseUrl}/submodule`;
     return this.http.get(url);
   }
-  addSubmodulo(submodulo: any) {
+  addSubmodulo(submodulo: any): Observable<any> {
     const url = `${this.baseUrl}/submodule`;
-    return this.http.post(url, submodulo);
+    return this.http.post<any>(url, submodulo);
   }
-  updateSubmodulo(submodulo: any) {
+  updateSubmodulo(submodulo: any): Observable<any> {
     const url = `${this.baseUrl}/submodule/${submodulo.idsubmodulo}`;
-    return this.http.put(url, submodulo);
+    return this.http.put<any>(url, submodulo);
   }
-  deleteSubmodulo(id: number) {
+  deleteSubmodulo(id: number): Observable<any> {
     const url = `${this.baseUrl}/submodule/${id}`;
-    return this.http.delete(url);
+    return this.http.delete<any>(url);
   }
   //Permiso
-  getAllPermisos() {
+  getAllPermisos(): Observable<any> {
     const url = `${this.baseUrl}/rolpermiso`;
-    return this.http.get(url);
+    return this.http.get<any>(url);
   }
   addPermiso(permiso: any) {
     const url = `${this.baseUrl}/rolpermiso`;
-    return this.http.post(url, permiso);
+    return this.http.post<any>(url, permiso);
   }
-  updatePermiso(permiso: any) {
+  updatePermiso(permiso: any): Observable<any> {
     const url = `${this.baseUrl}/rolpermiso/${permiso.idpermiso}`;
-    return this.http.put(url, permiso);
+    return this.http.put<any>(url, permiso);
   }
-  deletePermiso(id: number) {
+  deletePermiso(id: number): Observable<any> {
     const url = `${this.baseUrl}/rolpermiso/${id}`;
-    return this.http.delete(url);
+    return this.http.delete<any>(url);
   }
 }

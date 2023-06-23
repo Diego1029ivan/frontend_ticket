@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Bien } from '../interfaces/bien';
 import { ItemsSelect } from '../interfaces/itemsSelect';
 @Injectable({
@@ -13,7 +13,6 @@ export class InventarioService {
 
   constructor(private http: HttpClient) {}
 
-  private apiUrl = 'http://example.com/api/downloadpdf';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -22,20 +21,14 @@ export class InventarioService {
     responseType: 'blob' as 'json',
   };
 
-  // private httpOptionsExcel= {
-  //   headers: new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  //   }),
-  //   responseType: 'blob' as 'json',
-  // };
-
   getticketPDF(codigo: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/ticketPDFExcel/${codigo}`);
   }
 
-  getBienes(): Observable<Bien> {
-    return this.http.get<Bien>(`${this.baseUrl}/inventaryAll`);
+  getBienesPaginado(page: number, query: any, sort: number): Observable<Bien> {
+    return this.http.get<any>(
+      `${this.baseUrl}/inventaryP?page=${page}&query=${query}&perPage=${sort}`
+    );
   }
   getCodigo(codigo: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/biencodigo/${codigo}`);
@@ -62,8 +55,11 @@ export class InventarioService {
     return this.http.get<any>(`${this.baseUrl}/condiciones`);
   }
   //actualizar el bien
-  updateInventario(codigo: string,inventario:any): Observable<any>{
-    return this.http.put<any>(`${this.baseUrl}/inventario/${codigo}`,inventario);
+  updateInventario(codigo: string, inventario: any): Observable<any> {
+    return this.http.put<any>(
+      `${this.baseUrl}/inventario/${codigo}`,
+      inventario
+    );
   }
 
   //Vista de area
@@ -72,14 +68,13 @@ export class InventarioService {
   }
 
   getFormato(): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}/formato`, { responseType: 'blob' }).pipe(
-      catchError((error) => {
-        // Manejo de errores
-        return throwError(error);
-      })
-    );
+    return this.http
+      .get(`${this.baseUrl}/formato`, { responseType: 'blob' })
+      .pipe(
+        catchError((error) => {
+          // Manejo de errores
+          return throwError(error);
+        })
+      );
   }
-  
-    
-  
 }

@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Inventario } from 'src/app/interfaces/inventario';
 import { InventarioService } from 'src/app/services/inventario.service';
 import { UserService } from 'src/app/services/user.service';
-// import * as Quagga from 'quagga';
 import swal from 'sweetalert2';
 @Component({
   selector: 'app-lector-barras',
@@ -88,7 +87,6 @@ export class LectorBarrasComponent {
     const month = (this.hoy.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses en JavaScript son base 0
     const day = this.hoy.getDate().toString().padStart(2, '0');
     this.currentDateTime = `${year}-${month}-${day}`;
-    console.log(this.currentDateTime);
   }
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
@@ -121,12 +119,9 @@ export class LectorBarrasComponent {
           this.descripcion = respo;
 
           this.listaBienes.forEach((bien) => {
-            //console.log(bien,respo)
             if (bien.codigo_patrimonial === respo.codigo_patrimonial) {
               this.existe = 1;
             }
-
-            console.log(bien);
           });
           if (this.existe == 0) {
             const currentDate = new Date();
@@ -146,7 +141,6 @@ export class LectorBarrasComponent {
     this.inventarioService.getCodigo(codigo).subscribe((respo) => {
       this.cargando = 3;
       this.descripcion2 = respo;
-      console.log(this.descripcion2);
       this.formulario.codigo_patrimonial = this.descripcion.codigo_patrimonial;
       this.formulario.estado_bien2 = this.descripcion2.estado_bien;
       this.formulario.condicion2 = this.descripcion2.condicion;
@@ -193,7 +187,6 @@ export class LectorBarrasComponent {
       this.inputValue = this.selectedOption.valueOf();
       this.formulario.estado_bien3 = this.selectedOption.valueOf();
     }
-    console.log(this.inputValue);
   }
   onSelectOptionC(event: any) {
     this.selectedOptionC = event.target['value'];
@@ -211,7 +204,6 @@ export class LectorBarrasComponent {
       this.inputValueC = this.selectedOptionC.valueOf();
       this.formulario.condicion3 = this.inputValueC;
     }
-    console.log(this.inputValueC);
   }
 
   /*========actualizar FECHA===========*/
@@ -224,7 +216,6 @@ export class LectorBarrasComponent {
   updateFecha() {
     this.inputFecha = this.currentDateTime;
     this.formulario.fecha2 = this.currentDateTime;
-    console.log(this.currentDateTime);
   }
   /*========actualizar AREA===========*/
 
@@ -242,11 +233,8 @@ export class LectorBarrasComponent {
       // Por ejemplo, puedes asignar un valor predeterminado a this.inputArea
       this.inputArea = ''; // Valor predeterminado vacío
     }
-
-    console.log(this.formulario.area2);
   }
   enviarFormulario() {
-    console.log(this.formulario);
     this.formulario.estado_bien3
       ? (this.enviarData.estado_bien = this.formulario.estado_bien3)
       : (this.enviarData.estado_bien = this.formulario.estado_bien2);
@@ -261,7 +249,6 @@ export class LectorBarrasComponent {
       : (this.enviarData.desc_area = this.formulario.area1);
 
     this.enviarData.codigo_patrimonial = this.formulario.codigo_patrimonial;
-    //console.log(this.enviarData);
     swal
       .fire({
         title: '¿Estas seguro?',
@@ -284,7 +271,6 @@ export class LectorBarrasComponent {
                 `El inventario ${this.formulario.codigo_patrimonial} ha sido actualizado`,
                 'success'
               );
-              console.log(respo);
 
               this.inputValue = '';
               this.inputFecha = '';
@@ -293,10 +279,6 @@ export class LectorBarrasComponent {
             });
         }
       });
-    // this.inventarioService.updateInventario(this.formulario.codigo_patrimonial,this.enviarData)
-    //   .subscribe((respo)=>{
-    //     console.log(respo)
-    //   })
   }
   /*=========ÁREA===========*/
   area: any;

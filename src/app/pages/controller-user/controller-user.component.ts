@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ControUserService } from 'src/app/services/contro-user.service';
 import { UserService } from 'src/app/services/user.service';
-import Swal from 'sweetalert2';
 import swal from 'sweetalert2';
 @Component({
   selector: 'app-controller-user',
@@ -99,7 +98,6 @@ export class ControllerUserComponent {
           (permiso: any) => permiso.route === './ControllerUsuario'
         );
         this.cargando2 = true;
-        console.log(this.permidoscrud);
       },
       (err) => {
         console.log(err);
@@ -122,34 +120,36 @@ export class ControllerUserComponent {
     });
   }
   eliminarRol(rol: any) {
-    Swal.fire({
-      title: '¿Estas seguro?',
-      text: `¿Estas seguro que desea eliminar el rol ${rol.name}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Si, eliminar',
-      cancelButtonText: 'No, cancelar',
-    }).then((result) => {
-      if (result.value) {
-        this.controUser.deleteRol(rol.id).subscribe(
-          (data) => {
-            swal.fire({
-              title: 'Rol eliminado',
-              text: 'Rol eliminado correctamente',
-              icon: 'success',
-            });
-            this.motrarRol();
-          },
-          (err) => {
-            swal.fire({
-              title: 'Error',
-              text: 'Error al eliminar el rol',
-              icon: 'error',
-            });
-          }
-        );
-      }
-    });
+    swal
+      .fire({
+        title: '¿Estas seguro?',
+        text: `¿Estas seguro que desea eliminar el rol ${rol.name}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'No, cancelar',
+      })
+      .then((result) => {
+        if (result.value) {
+          this.controUser.deleteRol(rol.id).subscribe(
+            (data) => {
+              swal.fire({
+                title: 'Rol eliminado',
+                text: 'Rol eliminado correctamente',
+                icon: 'success',
+              });
+              this.motrarRol();
+            },
+            (err) => {
+              swal.fire({
+                title: 'Error',
+                text: 'Error al eliminar el rol',
+                icon: 'error',
+              });
+            }
+          );
+        }
+      });
   }
   agregarRol() {
     this.editRol = true;
@@ -158,7 +158,6 @@ export class ControllerUserComponent {
   submitRol() {
     if (this.rolContr.valid) {
       if (this.editRol) {
-        // console.log(this.rolContr.value);
         //agregar rol
         this.controUser.addRol(this.rolContr.value).subscribe(
           (data) => {
@@ -220,34 +219,36 @@ export class ControllerUserComponent {
     });
   }
   eliminarModulo(modulo: any) {
-    Swal.fire({
-      title: '¿Estas seguro?',
-      text: `¿Estas seguro que desea eliminar el modulo ${modulo.name}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Si, eliminar',
-      cancelButtonText: 'No, cancelar',
-    }).then((result) => {
-      if (result.value) {
-        this.controUser.deleteModulo(modulo.id).subscribe(
-          (data) => {
-            swal.fire({
-              title: 'Modulo eliminado',
-              text: 'Modulo eliminado correctamente',
-              icon: 'success',
-            });
-            this.mostrarModulo();
-          },
-          (err) => {
-            swal.fire({
-              title: 'Error',
-              text: 'Error al eliminar el modulo',
-              icon: 'error',
-            });
-          }
-        );
-      }
-    });
+    swal
+      .fire({
+        title: '¿Estas seguro?',
+        text: `¿Estas seguro que desea eliminar el modulo ${modulo.name}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'No, cancelar',
+      })
+      .then((result) => {
+        if (result.value) {
+          this.controUser.deleteModulo(modulo.id).subscribe(
+            (data) => {
+              swal.fire({
+                title: 'Modulo eliminado',
+                text: 'Modulo eliminado correctamente',
+                icon: 'success',
+              });
+              this.mostrarModulo();
+            },
+            (err) => {
+              swal.fire({
+                title: 'Error',
+                text: 'Error al eliminar el modulo',
+                icon: 'error',
+              });
+            }
+          );
+        }
+      });
   }
   agregarModulo() {
     this.editModulo = true;
@@ -317,37 +318,38 @@ export class ControllerUserComponent {
       delete: submodulo.delete,
       module_id: submodulo.module_id,
     });
-    console.log(submodulo);
   }
   eliminarSubmodulo(submodulo: any) {
-    Swal.fire({
-      title: '¿Estas seguro?',
-      text: `¿Estas seguro que desea eliminar el submodulo ${submodulo.name}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Si, eliminar',
-      cancelButtonText: 'No, cancelar',
-    }).then((result) => {
-      if (result.value) {
-        this.controUser.deleteSubmodulo(submodulo.id).subscribe(
-          (data) => {
-            swal.fire({
-              title: 'Submodulo eliminado',
-              text: 'Submodulo eliminado correctamente',
-              icon: 'success',
-            });
-            this.mostrarSubmodulo();
-          },
-          (err) => {
-            swal.fire({
-              title: 'Error',
-              text: 'Error al eliminar el submodulo',
-              icon: 'error',
-            });
-          }
-        );
-      }
-    });
+    swal
+      .fire({
+        title: '¿Estas seguro?',
+        text: `¿Estas seguro que desea eliminar el submodulo ${submodulo.name}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'No, cancelar',
+      })
+      .then((result) => {
+        if (result.value) {
+          this.controUser.deleteSubmodulo(submodulo.id).subscribe(
+            (data) => {
+              swal.fire({
+                title: 'Submodulo eliminado',
+                text: 'Submodulo eliminado correctamente',
+                icon: 'success',
+              });
+              this.mostrarSubmodulo();
+            },
+            (err) => {
+              swal.fire({
+                title: 'Error',
+                text: 'Error al eliminar el submodulo',
+                icon: 'error',
+              });
+            }
+          );
+        }
+      });
   }
   agregarSubmodulo() {
     this.editSubmodulo = true;
@@ -473,34 +475,36 @@ export class ControllerUserComponent {
     });
   }
   eliminarPermiso(permiso: any) {
-    Swal.fire({
-      title: '¿Estas seguro?',
-      text: `¿Estas seguro que desea eliminar el permiso ${permiso.submodulonombre}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Si, eliminar',
-      cancelButtonText: 'No, cancelar',
-    }).then((result) => {
-      if (result.value) {
-        this.controUser.deletePermiso(permiso.id).subscribe(
-          (data) => {
-            swal.fire({
-              title: 'Permiso eliminado',
-              text: 'Permiso eliminado correctamente',
-              icon: 'success',
-            });
-            this.mostrarPermisos();
-          },
-          (err) => {
-            swal.fire({
-              title: 'Error',
-              text: 'Error al eliminar el permiso',
-              icon: 'error',
-            });
-          }
-        );
-      }
-    });
+    swal
+      .fire({
+        title: '¿Estas seguro?',
+        text: `¿Estas seguro que desea eliminar el permiso ${permiso.submodulonombre}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'No, cancelar',
+      })
+      .then((result) => {
+        if (result.value) {
+          this.controUser.deletePermiso(permiso.id).subscribe(
+            (data) => {
+              swal.fire({
+                title: 'Permiso eliminado',
+                text: 'Permiso eliminado correctamente',
+                icon: 'success',
+              });
+              this.mostrarPermisos();
+            },
+            (err) => {
+              swal.fire({
+                title: 'Error',
+                text: 'Error al eliminar el permiso',
+                icon: 'error',
+              });
+            }
+          );
+        }
+      });
   }
   agregarPermiso() {
     this.editPermiso = true;
