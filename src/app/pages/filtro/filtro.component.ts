@@ -66,17 +66,19 @@ export class FiltroComponent implements OnInit {
     // });
   }
   mostrarInventario(page: any) {
-    this.inventarioService.getBienesPaginado(page, this.busqueda).subscribe(
-      (respo: any) => {
-        this.datafiltro = respo;
-        console.log(this.datafiltro);
-        this.totalItems = respo.data.total;
-        this.cargando = 1;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.inventarioService
+      .getBienesPaginado(page, this.busqueda, this.pageSize)
+      .subscribe(
+        (respo: any) => {
+          this.datafiltro = respo;
+          console.log(this.datafiltro);
+          this.totalItems = respo.data.total;
+          this.cargando = 1;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
   onPageChange(page: number) {
     this.currentPage = page;
@@ -103,30 +105,28 @@ export class FiltroComponent implements OnInit {
     this.total = this.collectionSize;
     this.itemParcial = this.items.data;
     this.itemParcial2 = this.items.data;
-    this.refreshBien();
+    // this.refreshBien();
   }
 
-  public refreshBien() {
-    this.items.data = this.filteredItems
-      .map((country: any, i: any) => ({ id: i + 1, ...country }))
-      .slice(
-        (this.page - 1) * this.pageSize,
-        (this.page - 1) * this.pageSize + this.pageSize
-      );
-  }
-
-  search() {
-    this.itemParcial = this.itemParcial2.filter(
-      (item: any) =>
-        item['denominacion_bien']
-          .toLowerCase()
-          .includes(this.searchTerm.toLowerCase()) ||
-        item['estado_bien']
-          .toLowerCase()
-          .includes(this.searchTerm.toLowerCase())
-    );
+  public refreshBien(sort: number) {
     this.page = 1;
+    this.currentPage = 1;
+    this.itemsPerPage = sort;
+    this.mostrarInventario(this.currentPage);
   }
+
+  // search() {
+  //   this.itemParcial = this.itemParcial2.filter(
+  //     (item: any) =>
+  //       item['denominacion_bien']
+  //         .toLowerCase()
+  //         .includes(this.searchTerm.toLowerCase()) ||
+  //       item['estado_bien']
+  //         .toLowerCase()
+  //         .includes(this.searchTerm.toLowerCase())
+  //   );
+  //   this.page = 1;
+  // }
 
   // Función para obtener los datos de la tabla paginados y filtrados
   get filteredItems() {

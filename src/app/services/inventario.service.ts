@@ -37,9 +37,9 @@ export class InventarioService {
   getBienes(): Observable<Bien> {
     return this.http.get<Bien>(`${this.baseUrl}/inventaryAll`);
   }
-  getBienesPaginado(page: number, query: any): Observable<Bien> {
+  getBienesPaginado(page: number, query: any, sort: number): Observable<Bien> {
     return this.http.get<any>(
-      `${this.baseUrl}/inventaryP?page=${page}&query=${query}`
+      `${this.baseUrl}/inventaryP?page=${page}&query=${query}&perPage=${sort}`
     );
   }
   getCodigo(codigo: string): Observable<any> {
