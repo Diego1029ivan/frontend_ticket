@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ItemsSelect } from 'src/app/interfaces/itemsSelect';
 import { FiltroPipe } from 'src/app/pipes/filtro.pipe';
 
@@ -18,15 +18,20 @@ export class FiltroComponent implements OnInit {
   header: string[] = [];
   itemParcial: any = [];
   itemParcial2: any = [];
-  itemParcialPaginado: any = [];
-  page: number = 1;
+
+  page: any;
   pageSize: number = 10;
   collectionSize: number = 0;
   searchTerm = '';
+  //pagination
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalItems = 0;
+
   cargando: number = 2;
   total: number = 0;
   tablaFiltro: any = [];
-
+  datafiltro: any = {};
   busqueda: string = '';
 
   public urlCodigoBarra: string = environment.baseUrl;
@@ -35,24 +40,36 @@ export class FiltroComponent implements OnInit {
   cargando2: boolean = false;
   constructor(
     private inventarioService: InventarioService,
-    private http: HttpClient,
-    private filtro: FiltroPipe,
-    private userService: UserService
+    private userService: UserService,
+    private paginationConfig: NgbPaginationConfig
   ) {
+    paginationConfig.boundaryLinks = true;
+    paginationConfig.maxSize = 5;
     this.permisosporusuario();
     this.cargando2 = false;
   }
 
   ngOnInit(): void {
+    this.mostrarInventario(this.currentPage);
     this.cargando = 0;
-    this.inventarioService.getBienes().subscribe((respo) => {
-      this.items = respo;
-      //console.log(this.items)
-      this.cargando = 1;
-      if (this.items.data != 0) {
-        this.cargaTabla();
-      }
-    });
+  }
+  mostrarInventario(page: any) {
+    this.inventarioService
+      .getBienesPaginado(page, this.busqueda, this.pageSize)
+      .subscribe(
+        (respo: any) => {
+          this.datafiltro = respo;
+          this.totalItems = respo.data.total;
+          this.cargando = 1;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.mostrarInventario(this.currentPage);
   }
   permisosporusuario() {
     this.userService.getPermisourlLogeado(this.username.rol).subscribe(
@@ -68,59 +85,19 @@ export class FiltroComponent implements OnInit {
       }
     );
   }
-  public cargaTabla() {
-    this.header = Object.keys(this.items.data[0]);
-    //console.log(this.header)
-    this.collectionSize = this.items.data.length;
-    this.total = this.collectionSize;
-    this.itemParcial = this.items.data;
-    //console.log(this.itemParcial)
-    this.itemParcial2 = this.items.data;
-    this.itemParcialPaginado = this.items.data;
-    this.refreshBien();
-  }
 
-  public refreshBien() {
-    //console.log(this.page,this.pageSize,this.filteredItems)
-    this.items.data = this.itemParcialPaginado
-      .map((country: any, i: any) => ({ id: i + 1, ...country }))
-      .slice(
-        (this.page - 1) * this.pageSize,
-        (this.page - 1) * this.pageSize + this.pageSize
-      );
-      //console.log(this.items.data)
-  }
-
-  search() {
-    this.itemParcial = this.itemParcial2.filter(
-      (item: any) =>
-        item['denominacion_bien']
-          .toLowerCase()
-          .includes(this.searchTerm.toLowerCase()) ||
-        item['estado_bien']
-          .toLowerCase()
-          .includes(this.searchTerm.toLowerCase())
-    );
+  public refreshBien(sort: number) {
     this.page = 1;
-  }
-
-  // Función para obtener los datos de la tabla paginados y filtrados
-  get filteredItems() {
-    const startIndex = (this.page - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    
-    //this.collectionSize = this.itemParcial?.slice(startIndex, endIndex).length;
-    return this.itemParcial?.slice(startIndex, endIndex);
+    this.currentPage = 1;
+    this.itemsPerPage = sort;
+    this.mostrarInventario(this.currentPage);
   }
 
   actualizarBusqueda(event: KeyboardEvent) {
     this.busqueda = (event.target as HTMLInputElement).value;
     this.page = 1;
-    this.tablaFiltro = this.filtro.transform(this.itemParcial2, this.busqueda);
-    this.itemParcial = this.tablaFiltro;
-    this.itemParcial != null ? this.refreshBien() : console.log('buscando');
-    this.collectionSize = this.itemParcial.length;
-    this.total = this.itemParcial.length;
+    this.currentPage = 1;
+    this.mostrarInventario(this.currentPage);
   }
 
   /*=========CheckBox=============*/
@@ -185,11 +162,11 @@ export class FiltroComponent implements OnInit {
         window.open(fileUrl);
       });
   }
-  generarFormato(){
+  generarFormato() {
     this.inventarioService.getFormato().subscribe(
       (response: Blob) => {
         const fileURL = URL.createObjectURL(response);
-  
+
         // Descargar el archivo Excel
         const a = document.createElement('a');
         a.href = fileURL;
@@ -197,7 +174,7 @@ export class FiltroComponent implements OnInit {
         a.click();
       },
       (error) => {
-        // Manejo de errores
+        console.log(error);
       }
     );
   }

@@ -34,6 +34,8 @@ import { ReporteContableComponent } from './pages/reporte-contable/reporte-conta
 import { PolarChartComponent } from './components/polar-chart/polar-chart.component';
 import { BarContaChartComponent } from './components/bar-conta-chart/bar-conta-chart.component';
 
+import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +69,7 @@ import { BarContaChartComponent } from './components/bar-conta-chart/bar-conta-c
     NgbModule,
     NgBoostrapModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
   ],
   providers: [
     {

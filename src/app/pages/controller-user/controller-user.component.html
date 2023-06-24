@@ -240,7 +240,17 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let rol of rolData.data">
+                              <tr
+                                *ngFor="
+                                  let rol of rolData.data
+                                    | paginate
+                                      : {
+                                          id: 'rol1',
+                                          itemsPerPage: 4,
+                                          currentPage: pRol
+                                        }
+                                "
+                              >
                                 <td>{{ rol.name }}</td>
                                 <td>
                                   <div class="form-button-action">
@@ -272,6 +282,14 @@
                               </tr>
                             </tbody>
                           </table>
+                          <div class="text-center">
+                            <pagination-controls
+                              id="rol1"
+                              (pageChange)="pRol = $event"
+                              previousLabel="Anterior"
+                              nextLabel="Siguente"
+                            ></pagination-controls>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -423,7 +441,17 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let modulo of moduloData.data">
+                              <tr
+                                *ngFor="
+                                  let modulo of moduloData.data
+                                    | paginate
+                                      : {
+                                          id: 'modulo1',
+                                          itemsPerPage: 4,
+                                          currentPage: pModulo
+                                        }
+                                "
+                              >
                                 <td>{{ modulo.name }}</td>
                                 <td>{{ modulo.icon }}</td>
                                 <td>
@@ -455,6 +483,14 @@
                               </tr>
                             </tbody>
                           </table>
+                          <div class="text-center">
+                            <pagination-controls
+                              id="modulo1"
+                              (pageChange)="pModulo = $event"
+                              previousLabel="Anterior"
+                              nextLabel="Siguente"
+                            ></pagination-controls>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -687,7 +723,17 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let submodulo of submoduloData.data">
+                              <tr
+                                *ngFor="
+                                  let submodulo of submoduloData.data
+                                    | paginate
+                                      : {
+                                          id: 'submodulo1',
+                                          itemsPerPage: 4,
+                                          currentPage: pSubmodulo
+                                        }
+                                "
+                              >
                                 <td>{{ submodulo.module_name }}</td>
                                 <td>{{ submodulo.name }}</td>
                                 <td>{{ submodulo.route }}</td>
@@ -790,6 +836,14 @@
                               </tr>
                             </tbody>
                           </table>
+                          <div class="text-center">
+                            <pagination-controls
+                              id="submodulo1"
+                              (pageChange)="pSubmodulo = $event"
+                              previousLabel="Anterior"
+                              nextLabel="Siguente"
+                            ></pagination-controls>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1027,7 +1081,17 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let permiso of permisoData.data">
+                              <tr
+                                *ngFor="
+                                  let permiso of permisoData.data
+                                    | paginate
+                                      : {
+                                          id: 'permiso1',
+                                          itemsPerPage: 4,
+                                          currentPage: pPermiso
+                                        }
+                                "
+                              >
                                 <td>{{ permiso.rolusuario }}</td>
                                 <td>{{ permiso.nombremodule }}</td>
                                 <td>{{ permiso.submodulonombre }}</td>
@@ -1130,6 +1194,15 @@
                               </tr>
                             </tbody>
                           </table>
+
+                          <div class="text-center">
+                            <pagination-controls
+                              id="permiso1"
+                              (pageChange)="pPermiso = $event"
+                              previousLabel="Anterior"
+                              nextLabel="Siguente"
+                            ></pagination-controls>
+                          </div>
                         </div>
                       </div>
                     </div>

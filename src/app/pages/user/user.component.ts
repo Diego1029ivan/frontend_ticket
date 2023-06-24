@@ -20,6 +20,7 @@ export class UserComponent implements OnInit {
   edit: boolean = false;
   rolData: any = [];
   permidoscrud: any = {};
+  puser!: number;
 
   username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
   constructor(
@@ -170,7 +171,6 @@ export class UserComponent implements OnInit {
         if (this.usuarioSub.value.email == this.correoActual) {
           this.usuarioSub.value.email = '';
         }
-        console.log(this.usuarioSub.value);
         this.userService.updateUser(this.usuarioSub.value).subscribe(
           (data) => {
             swal.fire(
@@ -188,8 +188,7 @@ export class UserComponent implements OnInit {
                 'error'
               );
             } else if (error.ok == false) {
-              // swal.fire('Error', `Algo salio mal, intente de nuevo `, 'error');
-              console.log(error);
+              swal.fire('Error', `Algo salio mal, intente de nuevo `, 'error');
             }
           }
         );

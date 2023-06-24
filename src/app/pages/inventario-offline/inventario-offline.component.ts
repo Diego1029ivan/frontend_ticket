@@ -2,10 +2,9 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { InventarioService } from 'src/app/services/inventario.service';
 import { environment } from 'src/environments/environment';
 import * as XLSX from 'xlsx';
-import * as moment from 'moment';
 import { Bien } from 'src/app/interfaces/bien';
 import { FiltroPipe } from 'src/app/pipes/filtro.pipe';
-import { catchError, delay, of, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -38,7 +37,6 @@ export class InventarioOfflineComponent implements OnInit, AfterViewInit {
   constructor(
     private inventarioService: InventarioService,
     private authService: AuthService,
-    private router: Router,
     private filtro: FiltroPipe,
     private userService: UserService
   ) {
@@ -98,8 +96,7 @@ export class InventarioOfflineComponent implements OnInit, AfterViewInit {
       this.collectionSize = this.data.length;
 
       this.tablaParcial = this.data;
-      this.tablaParcial2 = this.data;
-      //console.log(this.data);
+      this.tablaParcial = this.data;
       this.refreshInventario();
       this.cargando = 1;
     };
