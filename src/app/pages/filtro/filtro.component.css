@@ -29,4 +29,17 @@
   .tabla-excel{
     overflow-x: auto;
   }
-  
+  .pantalla{
+    display: flex;
+    
+    right: 0;
+    z-index: 1000;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.651);
+  }
+
+  .texto-carga{
+    color: rgba(229, 232, 235, 0.959);
+  }

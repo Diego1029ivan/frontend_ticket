@@ -1,5 +1,6 @@
-<!--poner un texto de cargando-->
+
 <app-carga *ngIf="cargando2 == false"></app-carga>
+
 <div
   class="page-header"
   *ngIf="this.permidoscrud[0]?.read === 1 && cargando2 == true"
@@ -47,15 +48,12 @@
     <div class="container overflow-auto mt-3 text-center">
       <div class="row justify-content-center">
         <div class="col-4">
-          <button class="btn btn-primary px-3" (click)="imprimirPaquete()">
+          <button class="btn btn-primary px-3" (click)="imprimirPaquete()" 
+          [disabled]="!isChecked">
             Imprimir {{ selectedCount }} tickets
           </button>
         </div>
-        <div *ngIf="selectedCount == maxSelected" class="col-4">
-          <span class="text-danger"
-            >*Solo puede seleccionar {{ maxSelected }} tickets</span
-          >
-        </div>
+        
         <div class="col-4">
           <button class="btn btn-primary px-3" (click)="generarFormato()">
             Descargar SINABIP
@@ -111,12 +109,7 @@
                       <span class="form-check-sign">Check</span>
                     </label>
                   </div>
-                  <!-- <div class="form-check">
-                        
-                        <input class="form-check-input" type="checkbox" value="{{ row.codigo_patrimonial}}" id="flexCheckDefault"
-                          (change)="disableCheckboxes()" (click)="getSelectedCount()">
-
-                      </div> -->
+                
                 </td>
                 <td class="text-center celda-icono">
                   <a

@@ -65,7 +65,7 @@ export class EstadosComponent {
   };
   descBien: any[] = [];
   constructor(
-    private router: Router,
+    
     private activatedRoute: ActivatedRoute,
     private inventarioService: InventarioService,
     private userService: UserService
@@ -229,13 +229,14 @@ export class EstadosComponent {
               this.enviarData
             )
             .subscribe((respo) => {
-              //this.router.navigate([this.router.url]);
+              
               swal.fire(
                 'Actualizando',
                 `El inventario ${this.formulario.codigo_patrimonial} ha sido actualizado`,
                 'success'
               );
               this.formulario.condicion1 = respo[0].condicion1;
+              window.location.reload(); // Recargar la página
             });
         }
       });

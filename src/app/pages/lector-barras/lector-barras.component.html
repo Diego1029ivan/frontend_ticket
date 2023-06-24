@@ -35,6 +35,7 @@
             class="form-control"
             [(ngModel)]="inputValue"
             (ngModelChange)="cargarBien()"
+            [maxlength]="12"
           />
         </div>
         <app-carga *ngIf="cargando == 0"></app-carga>
