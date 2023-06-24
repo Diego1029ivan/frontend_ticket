@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
+import { timeInterval } from 'rxjs';
 import { ItemsSelect } from 'src/app/interfaces/itemsSelect';
 import { FiltroPipe } from 'src/app/pipes/filtro.pipe';
 
 import { InventarioService } from 'src/app/services/inventario.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-filtro',
@@ -15,7 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export class FiltroComponent implements OnInit {
   items: any;
-  header: string[] = [];
+  
   itemParcial: any = [];
   itemParcial2: any = [];
 
@@ -29,10 +31,12 @@ export class FiltroComponent implements OnInit {
   totalItems = 0;
 
   cargando: number = 2;
-  total: number = 0;
-  tablaFiltro: any = [];
+  
+  
   datafiltro: any = {};
   busqueda: string = '';
+
+  isChecked:boolean=false
 
   public urlCodigoBarra: string = environment.baseUrl;
   username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
@@ -52,6 +56,7 @@ export class FiltroComponent implements OnInit {
   ngOnInit(): void {
     this.mostrarInventario(this.currentPage);
     this.cargando = 0;
+    
   }
   mostrarInventario(page: any) {
     this.inventarioService
@@ -114,8 +119,10 @@ export class FiltroComponent implements OnInit {
     checkboxes.forEach((checkbox: any) => {
       if (checkbox.checked === true) {
         count++;
+        //this.isChecked=true
       }
       this.selectedCount = count;
+      count==0?this.isChecked=false:this.isChecked=true
     });
   }
 
@@ -127,23 +134,40 @@ export class FiltroComponent implements OnInit {
       if (
         this.selectedCount >= this.maxSelected &&
         checkbox.checked === false
+        
       ) {
         checkbox.disabled = true;
+        Swal.fire({
+          icon: 'info',
+          title:'Advertencia',
+          text: 'Solo puede seleccionar '+this.maxSelected+' tickets',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          }
+        })
       } else {
         checkbox.disabled = false;
+        
       }
     });
   }
 
   imprimirPaquete() {
+    
     const checkboxes = document.querySelectorAll(
       'table input[type="checkbox"]'
     );
     this.arregloSelect.splice(0, this.arregloSelect.length);
     this.jsonSelect = {};
+
     checkboxes.forEach((checkbox: any) => {
       if (checkbox.checked === true) {
         this.arregloSelect.push(checkbox.value);
+        this.isChecked = true;
+        
       }
     });
     //equivalencia con nombre de variables
@@ -154,28 +178,80 @@ export class FiltroComponent implements OnInit {
       eval('this.jsonSelect.item' + i + '= this.arregloSelect[' + i + ']');
     }
 
-    this.inventarioService
-      .postpaqueteCodigo(this.jsonSelect)
-      .subscribe((pdf: Blob) => {
-        const blob = new Blob([pdf], { type: 'application/pdf' });
-        const fileUrl = URL.createObjectURL(blob);
-        window.open(fileUrl);
-      });
-  }
-  generarFormato() {
-    this.inventarioService.getFormato().subscribe(
-      (response: Blob) => {
-        const fileURL = URL.createObjectURL(response);
 
-        // Descargar el archivo Excel
-        const a = document.createElement('a');
-        a.href = fileURL;
-        a.download = 'formato.xlsm';
-        a.click();
+    Swal.fire({
+      title: 'Se esta procesando!',
+      html: 'Espere unos segundos porfavor...',
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        this.b = Swal.getHtmlContainer()?.querySelector('b');
+         
+        this.inventarioService
+        .postpaqueteCodigo(this.jsonSelect)
+        .subscribe((pdf: Blob) => {
+          const blob = new Blob([pdf], { type: 'application/pdf' });
+          const fileUrl = URL.createObjectURL(blob);
+          window.open(fileUrl);
+          Swal.close()
+        });
+          
       },
-      (error) => {
-        console.log(error);
+      willClose: () => {
+        
       }
-    );
+    });
+
+   
+  }
+  b:any
+  showSwal = true;
+  generarFormato() {
+    this.cargando = 4;
+    
+    // Mostrar el mensaje de carga inicial
+    Swal.fire({
+      title: 'Se esta procesando!',
+      html: 'Espere unos segundos porfavor...',
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        this.b = Swal.getHtmlContainer()?.querySelector('b');
+        this.inventarioService.getFormato().subscribe(
+          (response: Blob) => {
+            const fileURL = URL.createObjectURL(response);
+            this.cargando = 5;
+      
+            // Descargar el archivo Excel
+            const a = document.createElement('a');
+            a.href = fileURL;
+            a.download = 'formato.xlsm';
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            Swal.close()
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Descarga exitosa',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.showSwal = false; // Ocultar el Swal después de descargar el archivo
+            window.location.reload();
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      
+      },
+      willClose: () => {
+        
+      }
+    });
+  
+    
   }
 }
