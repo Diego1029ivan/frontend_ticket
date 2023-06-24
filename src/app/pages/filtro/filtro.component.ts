@@ -193,7 +193,7 @@ export class FiltroComponent implements OnInit {
         // Descargar el archivo Excel
         const a = document.createElement('a');
         a.href = fileURL;
-        a.download = 'formato.xlsx';
+        a.download = 'formato.xlsm';
         a.click();
       },
       (error) => {
