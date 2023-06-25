@@ -221,7 +221,7 @@ export class FiltroComponent implements OnInit {
           (response: Blob) => {
             const fileURL = URL.createObjectURL(response);
             this.cargando = 5;
-      
+            
             // Descargar el archivo Excel
             const a = document.createElement('a');
             a.href = fileURL;
@@ -230,6 +230,8 @@ export class FiltroComponent implements OnInit {
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+            this.currentPage = 1;
+            this.mostrarInventario(this.currentPage);
             Swal.close()
             Swal.fire({
               position: 'top-end',
@@ -239,7 +241,8 @@ export class FiltroComponent implements OnInit {
               timer: 1500
             })
             this.showSwal = false; // Ocultar el Swal después de descargar el archivo
-            window.location.reload();
+            
+            // window.location.reload();
           },
           (error) => {
             console.log(error);
