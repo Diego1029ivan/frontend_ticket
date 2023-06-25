@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://esa-heroes.herokuapp.com/api',
+  baseUrl: 'https://patrimonio.unsm.edu.pe/api',
 };
