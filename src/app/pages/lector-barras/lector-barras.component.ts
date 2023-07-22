@@ -27,7 +27,7 @@ export class LectorBarrasComponent {
   inputArea: string = '';
 
   selectedArea: string | null = null;
-  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  username = JSON.parse(localStorage.getItem('usuario') || '{}');
   descripcion: Inventario = {
     codigo_patrimonial: '123',
     denominacion_bien: 'prueba bien',

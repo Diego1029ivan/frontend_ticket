@@ -15,7 +15,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   isAuthenticated(): boolean {
-    if (sessionStorage.getItem('token') !== null) {
+    if (localStorage.getItem('token') !== null) {
       return true;
     }
     return false;
@@ -29,6 +29,7 @@ export class AuthService {
   guardarToken(accessToken: string): void {
     this._token = accessToken;
     sessionStorage.setItem('token', accessToken);
+    localStorage.setItem('token', accessToken);
   }
   guardarUsuario(usuario: Users): void {
     let usuario1 = usuario;
@@ -38,6 +39,7 @@ export class AuthService {
     this._usuario.email = usuario1.email;
     this._usuario.rol_id = usuario1.rol_id;
     this._usuario.rol = usuario1.rol;
+    localStorage.setItem('usuario', JSON.stringify(this._usuario));
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
   }
   hasRole(rol_id: number): boolean {
@@ -62,5 +64,7 @@ export class AuthService {
     sessionStorage.clear();
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('usuario');
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
   }
 }

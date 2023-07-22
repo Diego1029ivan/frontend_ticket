@@ -30,12 +30,13 @@ export class AuthGuard implements CanActivate {
       }
       return true;
     }
+    // console.log('No está autenticado');
     this.router.navigate(['/auth']);
-    return false;
+    return true;
   }
 
   isTokenExpirado(): boolean {
-    let token = sessionStorage.getItem('token') as string;
+    let token = localStorage.getItem('token') as string;
     let payload = this.authServices.obtenerDatosToken(token);
     let now = new Date().getTime() / 1000;
     if (payload.exp < now) {

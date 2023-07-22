@@ -14,7 +14,7 @@ export class ControllerUserComponent {
   @ViewChild('closebuttonSubmodulo') closebutton3: any;
   @ViewChild('closebuttonPermiso') closebutton4: any;
 
-  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  username = JSON.parse(localStorage.getItem('usuario') || '{}');
 
   cargando: boolean = false;
   cargando2: boolean = false;

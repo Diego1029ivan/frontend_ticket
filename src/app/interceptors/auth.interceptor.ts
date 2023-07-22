@@ -28,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }
 
         if (e.status == 403) {
-          let username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+          let username = JSON.parse(localStorage.getItem('usuario') || '{}');
           swal.fire(
             'Acceso denegado',
             `Hola ${username.name} no tienes acceso a este recurso!`,

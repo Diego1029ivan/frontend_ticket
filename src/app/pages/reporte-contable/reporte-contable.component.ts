@@ -7,7 +7,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./reporte-contable.component.css'],
 })
 export class ReporteContableComponent {
-  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  username = JSON.parse(localStorage.getItem('usuario') || '{}');
   permidoscrud: any = {};
   cargando2: boolean = false;
 

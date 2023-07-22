@@ -9,12 +9,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-inventario-offline',
   templateUrl: './inventario-offline.component.html',
   styleUrls: ['./inventario-offline.component.css'],
-  providers: [FiltroPipe],
+  providers: [FiltroPipe, DatePipe],
 })
 export class InventarioOfflineComponent implements OnInit, AfterViewInit {
   public urlCodigoBarra: string = environment.baseUrl;
@@ -31,14 +31,18 @@ export class InventarioOfflineComponent implements OnInit, AfterViewInit {
   busqueda: string = '';
   file: File | null = null;
   header: string[] = [];
-  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  username = JSON.parse(localStorage.getItem('usuario') || '{}');
   permidoscrud: any = {};
   cargando2: boolean = false;
+
+  numeroFecha = 43816;
+  fechaLegible: any;
   constructor(
     private inventarioService: InventarioService,
     private authService: AuthService,
     private filtro: FiltroPipe,
-    private userService: UserService
+    private userService: UserService,
+    private datePipe: DatePipe
   ) {
     this.permisosporusuario();
     this.cargando2 = false;
@@ -77,22 +81,21 @@ export class InventarioOfflineComponent implements OnInit, AfterViewInit {
 
       // Convertir números de fecha a objetos Date
       this.data.forEach((item: any) => {
-        // Reemplaza "numeroFecha" con el nombre de la propiedad que contiene el número de fecha en tu objeto de datos
-        item.FECHA_DOCUMENTO_ADQUIS = new Date(item.FECHA_DOCUMENTO_ADQUIS);
-        // Obtener los componentes de la fecha
-        const year = item.FECHA_DOCUMENTO_ADQUIS.getFullYear();
-        const month = (
-          '0' +
-          (item.FECHA_DOCUMENTO_ADQUIS.getMonth() + 1)
-        ).slice(-2);
-        const day = ('0' + item.FECHA_DOCUMENTO_ADQUIS.getDate()).slice(-2);
+        const fechaExcel = new Date(
+          Math.floor((item.FECHA_DOCUMENTO_ADQUIS - 25569) * 86400 * 1000)
+        );
+        const offset = fechaExcel.getTimezoneOffset() * 60 * 1000; // Obtener el desplazamiento de zona horaria en milisegundos
+        const fechaLegible = this.datePipe.transform(
+          new Date(fechaExcel.getTime() + offset),
+          'dd/MM/yyyy'
+        );
+        console.log(item.FECHA_DOCUMENTO_ADQUIS);
 
-        // Crear la cadena de fecha en formato MySQL
-        item.FECHA_DOCUMENTO_ADQUIS = `${year}-${month}-${day}`;
+        item.FECHA_DOCUMENTO_ADQUIS = fechaLegible;
         item.NOM_EST_BIEN = item.NOM_EST_BIEN.charAt(0);
         item.CONDICION = item.CONDICION.charAt(0);
       });
-      //console.log(this.header)
+
       this.collectionSize = this.data.length;
 
       this.tablaParcial = this.data;

@@ -11,7 +11,7 @@ export class ReporteComponent {
   cargando2: boolean = false;
   constructor(private userservice: UserService) {}
 
-  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  username = JSON.parse(localStorage.getItem('usuario') || '{}');
 
   ngOnInit(): void {
     this.permisosporusuario();

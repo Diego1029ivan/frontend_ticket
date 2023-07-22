@@ -13,7 +13,7 @@ import swal from 'sweetalert2';
   styleUrls: ['./perfil.component.css'],
 })
 export class PerfilComponent {
-  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  username = JSON.parse(localStorage.getItem('usuario') || '{}');
   usuarioedit!: FormGroup;
   usuarioContr!: FormGroup;
   userLogado: any = null;

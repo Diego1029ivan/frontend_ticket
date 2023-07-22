@@ -22,7 +22,7 @@ export class UserComponent implements OnInit {
   permidoscrud: any = {};
   puser!: number;
 
-  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  username = JSON.parse(localStorage.getItem('usuario') || '{}');
   constructor(
     private fb: FormBuilder,
     private userService: UserService,

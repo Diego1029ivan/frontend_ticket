@@ -25,7 +25,7 @@ export class EstadosComponent {
   selectedArea: string | null = null;
   cargando2: boolean = false;
   permidoscrud: any = {};
-  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  username = JSON.parse(localStorage.getItem('usuario') || '{}');
 
   descripcion: Inventario = {
     codigo_patrimonial: '123',
@@ -65,7 +65,6 @@ export class EstadosComponent {
   };
   descBien: any[] = [];
   constructor(
-    
     private activatedRoute: ActivatedRoute,
     private inventarioService: InventarioService,
     private userService: UserService
@@ -229,7 +228,6 @@ export class EstadosComponent {
               this.enviarData
             )
             .subscribe((respo) => {
-              
               swal.fire(
                 'Actualizando',
                 `El inventario ${this.formulario.codigo_patrimonial} ha sido actualizado`,

@@ -11,7 +11,8 @@ export class NavbarComponent {
   transformedArray: any = null;
   cargando: boolean = false;
   constructor(private userservice: UserService) {}
-  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  username = JSON.parse(localStorage.getItem('usuario') || '{}');
+
   ngOnInit(): void {
     this.navlinkConPermiso();
     this.cargando = false;

@@ -20,7 +20,7 @@ export class CambiarContraComponent implements OnInit {
   cargando2: boolean = false;
   permidoscrud: any = {};
   preset!: number;
-  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  username = JSON.parse(localStorage.getItem('usuario') || '{}');
 
   constructor(private fb: FormBuilder, private userService: UserService) {}
 

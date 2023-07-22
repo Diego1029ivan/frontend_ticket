@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.users.email = this.loginForm.value.email.trim();
     this.users.password = this.loginForm.value.password.trim();
-    this.cargando = false;
+
     this.authService.login(this.users).subscribe(
       (response) => {
         if (response.success == false) {
@@ -41,9 +41,10 @@ export class LoginComponent implements OnInit {
           this.loginForm.reset();
           return;
         }
-
-        this.router.navigate(['../sistemaInventario/reporte']);
-        //location.href = '../sistemaInventario/reporte'; //TODO: RECARGA LA PAGINA
+        this.cargando = false;
+        // this.router.navigate(['../sistemaInventario/reporte']);
+        location.href = '../sistemaInventario/reporte';
+        //TODO: RECARGA LA PAGINA
 
         this.authService.guardarToken(response.access_token);
         this.authService.guardarUsuario(response.user);

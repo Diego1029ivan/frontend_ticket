@@ -10,7 +10,7 @@ import swal from 'sweetalert2';
 })
 export class HeaderComponent {
   constructor(private authService: AuthService, private router: Router) {}
-  username = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  username = JSON.parse(localStorage.getItem('usuario') || '{}');
 
   perfil() {
     return this.username;
